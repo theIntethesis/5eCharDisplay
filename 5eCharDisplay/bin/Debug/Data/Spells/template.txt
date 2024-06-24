@@ -1,0 +1,8 @@
+name: 
+level: 
+duration: 
+castingTime: 
+range: 
+school: 
+components: 
+description: 

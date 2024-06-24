@@ -1,0 +1,9 @@
+name: Expeditious Retreat
+level: 1
+duration: 10 Minutes [C]
+castingTime: 1 Bonus Action
+range: Self
+school: Transmutation
+components: V, S
+ritual: false
+description: This spell allows you to move at an incredible pace. When you cast this spell, and then as a bonus action on each of your turns until the spell ends, you can take the Dash action.

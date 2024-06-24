@@ -1,0 +1,72 @@
+ - padded:
+	Name: Padded Armor
+	AC: 11
+	aType: Light
+	stealthDis: false
+	StrReq: 0
+ - leather:
+	Name: Leather Armor
+	AC: 11
+	aType: Light
+	stealthDis: false
+	StrReq: 0
+ - studded:
+	Name: Studded Leather
+	AC: 12
+	aType: Light
+	stealthDis: false
+	StrReq: 0
+ - breastplate:
+	Name: Breastplate
+	AC: 14
+	aType: Medium
+	stealthDis: false
+	StrReq: 0
+ - chainShirt:
+	Name: Chain Shirt
+	AC: 13
+	aType: Medium
+	stealthDis: false
+	StrReq: 0
+ - halfPlate:
+	Name: Half Plate
+	AC: 15
+	aType: Medium
+	stealthDis: true
+	StrReq: 0
+ - hide
+	Name: Hide
+	AC: 12
+	aType: Medium
+	stealthDis: false
+	StrReq: 0
+ - scale
+	Name: Scale Mail
+	AC: 14
+	aType: Medium
+	stealthDis: true
+	StrReq: 0
+ - chainMail:
+	Name: Chain Mail
+	AC: 16
+	aType: Heavy
+	stealthDis: true
+	StrReq: 13
+ - plate:
+	Name: Plate
+	AC: 18
+	aType: Heavy
+	stealthDis: true
+	StrReq: 15
+ - ring:
+	Name: Ring Mail
+	AC: 14
+	aType: Heavy
+	stealthDis: true
+	StrReq: 0
+ - splint
+	Name: Splint
+	AC: 17
+	aType: Heavy
+	stealthDis: true
+	StrReq: 15

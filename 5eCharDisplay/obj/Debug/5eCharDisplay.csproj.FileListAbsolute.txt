@@ -1,0 +1,16 @@
+C:\Users\Hayden\source\repos\5eCharDisplay\5eCharDisplay\bin\Debug\5eCharDisplay.exe.config
+C:\Users\Hayden\source\repos\5eCharDisplay\5eCharDisplay\bin\Debug\5eCharDisplay.exe
+C:\Users\Hayden\source\repos\5eCharDisplay\5eCharDisplay\bin\Debug\5eCharDisplay.pdb
+C:\Users\Hayden\source\repos\5eCharDisplay\5eCharDisplay\obj\Debug\5eCharDisplay.csproj.AssemblyReference.cache
+C:\Users\Hayden\source\repos\5eCharDisplay\5eCharDisplay\obj\Debug\5eCharDisplay.csproj.SuggestedBindingRedirects.cache
+C:\Users\Hayden\source\repos\5eCharDisplay\5eCharDisplay\obj\Debug\_5eCharDisplay.Properties.Resources.resources
+C:\Users\Hayden\source\repos\5eCharDisplay\5eCharDisplay\obj\Debug\5eCharDisplay.csproj.GenerateResource.cache
+C:\Users\Hayden\source\repos\5eCharDisplay\5eCharDisplay\obj\Debug\5eCharDisplay.csproj.CoreCompileInputs.cache
+C:\Users\Hayden\source\repos\5eCharDisplay\5eCharDisplay\obj\Debug\5eCharDisplay.exe
+C:\Users\Hayden\source\repos\5eCharDisplay\5eCharDisplay\obj\Debug\5eCharDisplay.pdb
+C:\Users\Hayden\source\repos\5eCharDisplay\5eCharDisplay\bin\Debug\YamlDotNet.NetCore.dll
+C:\Users\Hayden\source\repos\5eCharDisplay\5eCharDisplay\obj\Debug\5eCharDisplay.csproj.CopyComplete
+C:\Users\Hayden\source\repos\5eCharDisplay\5eCharDisplay\obj\Debug\_5eCharDisplay.CharacterPage.resources
+C:\Users\Hayden\source\repos\5eCharDisplay\5eCharDisplay\obj\Debug\_5eCharDisplay.SpellcastingPage.resources
+C:\Users\Hayden\source\repos\5eCharDisplay\5eCharDisplay\obj\Debug\_5eCharDisplay.CharacterSelect.resources
+C:\Users\Hayden\source\repos\5eCharDisplay\5eCharDisplay\obj\Debug\_5eCharDisplay.ArmorPage.resources

@@ -1,0 +1,30 @@
+spellSlots: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+PreparedSpells: []
+Skill1: Religion
+Skill2: Arcana
+OtherworldlyPatron: The Fiend
+EldritchInvocations: ["Agonizing Blast", "Beguiling Influence", "Thirsting Blade", "Lifedrinker", "Improved Pact Weapon", "Eldritch Sight", "Repelling Blast", "Minions of Chaos"]
+PactBoon: Pact of the Blade
+MysticArcanum: ["Circle of Death", "Power Word Pain", "Maddening Darkness", "Blade of Disaster"]
+ArcanumUsed: [False, False, False, False]
+EldritchMasterUsed: False
+Cantrips: ["Eldritch Blast", "Light", "Mending", "Shocking Grasp"]
+FirstLevelSpells: ["Shield", "Absorb Elements", "Burning Hands", "Catapult", "Command", "Detect Magic", "Feather Fall", "Identify"]
+SecondLevelSpells: [ "Hold Person", "Heat Metal", "Invisibility", "Mirror Image", "Melf's Acid Arrow"]
+ThirdLevelSpells: ["Fireball", "Vampiric Touch", "Haste"]
+FourthLevelSpells:
+FifthLevelSpells:
+SixthLevelSpells:
+SeventhLevelSpells:
+EighthLevelSpells:
+NinthLevelSpells:
+FeatNames: ["Ability Score Increase", "Ability Score Increase", "Ability Score Increase", "Ability Score Increase", "Ability Score Increase"]
+ASIChoices: ["CHA2", "CON2", "STR1CON1", "DEX1CON1", "CHA2" ]
+EntropicWard: False
+DarkOnesOwnLuck: False
+HurlThroughHell: False
+FeyPresence: False
+MistyEscape: False
+DarkDelirium: False
+HexbladesCurse: False
+AccursedSpecter: False

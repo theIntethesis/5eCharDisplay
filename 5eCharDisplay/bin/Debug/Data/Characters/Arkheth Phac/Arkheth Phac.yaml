@@ -1,0 +1,14 @@
+name: Arkheth Phac
+race: Elf
+subrace: Dark Elf
+baseStr: 16
+baseDex: 11
+baseCon: 14
+baseInt: 8
+baseWis: 10
+baseCha: 14
+charClass: ["Warlock"]
+level: [20]
+background: Urban Bounty Hunter
+alignment: Lawful Evil
+experience: 0

@@ -1,0 +1,5 @@
+Name: Chain Mail
+AC: 16
+aType: Heavy
+stealthDis: true
+StrReq: 13

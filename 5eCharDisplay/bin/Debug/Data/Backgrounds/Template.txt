@@ -1,0 +1,11 @@
+Feature:
+Skill1:
+Skill2:
+Tool1:
+Tool2:
+Lanugage1:
+Language2:
+PersonalityTraits:
+Ideals:
+Bonds:
+Flaws:

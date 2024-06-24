@@ -1,0 +1,9 @@
+name: Blood Transfusion
+level: 1
+duration: Instantaneous
+castingTime: 1 action
+range: Touch
+school: Hemomancy
+components: V, S, B(Hit Dice)
+ritual: false
+description: You prick your finger and mark a living creature (no constructs or undead) with your blood. You may spend one or more Hit Dice, up to half of your maximum available Hit Dice, adding your constitution modifier to each Hit Die spent in this way. The target regains hit points equal to the total.

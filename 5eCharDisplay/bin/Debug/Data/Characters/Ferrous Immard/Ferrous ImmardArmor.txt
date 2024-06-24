@@ -1,0 +1,8 @@
+# Armors
+---
+Name: Mage Armor
+AC: 13
+aType: Unarmored
+stealthDis: false
+StrReq: 0
+...

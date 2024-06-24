@@ -1,0 +1,5 @@
+Name: Plate
+AC: 18
+aType: Heavy
+stealthDis: true
+StrReq: 15

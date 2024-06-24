@@ -1,0 +1,14 @@
+name: Ferrous Immard
+race: Dragonborn
+subrace: Bronze Dragonborn
+baseStr: 11
+baseDex: 14
+baseCon: 14
+baseInt: 15
+baseWis: 10
+baseCha: 18
+charClass: ["Warlock", "Wizard"]
+level: [3, 6]
+background: Faction Agent
+alignment: Lawful Evil
+experience: 47270

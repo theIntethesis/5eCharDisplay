@@ -1,0 +1,30 @@
+spellSlots: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+PreparedSpells: []
+Skill1: Arcana
+Skill2: Deception
+OtherworldlyPatron: The Hexblade
+EldritchInvocations: ["Armor of Shadows", "Repelling Blast"]
+PactBoon: Pact of the Blade
+MysticArcanum: []
+ArcanumUsed: [False, False, False, False]
+EldritchMasterUsed: False
+Cantrips: ["Eldritch Blast", "Prestidigitation"]
+FirstLevelSpells: ["Armor of Agathys", "Expeditious Retreat"]
+SecondLevelSpells: ["Hold Person", "Misty Step"]
+ThirdLevelSpells: []
+FourthLevelSpells: []
+FifthLevelSpells: []
+SixthLevelSpells: []
+SeventhLevelSpells: []
+EighthLevelSpells: []
+NinthLevelSpells: []
+FeatNames: []
+ASIChoices: []
+EntropicWard: False
+DarkOnesOwnLuck: False
+HurlThroughHell: False
+FeyPresence: False
+MistyEscape: False
+DarkDelirium: False
+HexbladesCurse: False
+AccursedSpecter: False
