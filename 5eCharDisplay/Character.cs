@@ -51,7 +51,7 @@ namespace _5eCharDisplay
 		public List<charClass> myClasses = new List<charClass>();
 		public charRace myRace;
 		public charBackground myBackground;
-		public Armor wornArmor;
+		public List<Armor> wornArmor = new List<Armor>();
 
 		public bool Spellcasting = false;
 		public string getRace()

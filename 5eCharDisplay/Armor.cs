@@ -23,26 +23,20 @@ namespace _5eCharDisplay
 		public static Armor fromYaml(string aName = "", string fName = "")
 		{
 			Armor returned = null;
-			string file = $@".\Data\Armors.yaml";
-			if (string.IsNullOrEmpty(aName))
-				file = aName;
-			else
+			string file = "";
+			if (!string.IsNullOrEmpty(aName))
+				file = $@"./Data/Armors/{aName}.yaml";
+			else if (!string.IsNullOrEmpty(fName))
 				file = fName;
-			using (FileStream fin = File.OpenRead($@".\Data\Armors.yaml"))
+			else
+				return null;
+			using (FileStream fin = File.OpenRead(file))
 			{
 				TextReader reader = new StreamReader(fin);
 
 				var deserializer = new Deserializer();
 				returned = deserializer.Deserialize<Armor>(reader);
 			}
-			/* 
-			Regex pattern = new Regex(@"((\+\d+)|(\d{2,}))");
-			MatchCollection matches = pattern.Matches(returned.AC);
-			foreach (Match match in matches)
-            {
-				returned.ArmorClass = int.Parse(match.Value);
-            }
-			*/
 			return returned;
 		}
 	}

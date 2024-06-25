@@ -89,21 +89,30 @@ namespace _5eCharDisplay
 			FnTText.Text = "";
 			FnTText.Location = new Point(6, ylocation);
 
-			if(player.wornArmor != null)
+			Armor chestArmor = null;
+			foreach(Armor a in player.wornArmor)
+            {
+				if (a.aType != Armor.ArmorType.Shield)
+				{
+					chestArmor = a;
+					break;
+				}
+            }
+			if(chestArmor != null)
 			{
-				int dexMax = player.wornArmor.DexMax;
+				int dexMax = chestArmor.DexMax;
 				if(dexMax == 0)
 				{
 					dexMax = 10;
 				}
-				ACNum.Text = $"{player.wornArmor.ArmorClass + Math.Max(player.dexterity.getMod(), dexMax)}";
+				ACNum.Text = $"{chestArmor.ArmorClass + Math.Max(player.dexterity.getMod(), dexMax)}";
 			}
 			else
 			{
 				ACNum.Text = $"{10 + player.dexterity.getMod() + player.myRace.getACBoost()}";
 			}
 
-			if (player.wornArmor != null && player.wornArmor.stealthDis)
+			if (chestArmor != null && chestArmor.stealthDis)
 				SteLabel.Text = "Stealth [D]";
 			else
 				SteLabel.Text = "Stealth";
@@ -1557,18 +1566,38 @@ namespace _5eCharDisplay
 		}
 		protected void updateACOnClose(object sender, EventArgs e)
 		{
-			if (player.wornArmor != null)
+			Armor chestArmor = null;
+			Armor shield = null;
+			foreach (Armor a in player.wornArmor)
 			{
-				int dexMax = player.wornArmor.DexMax;
+				if (a.aType != Armor.ArmorType.Shield && chestArmor == null)
+				{
+					chestArmor = a;
+				}
+				else if(shield == null)
+                {
+					shield = a;
+                }
+			}
+			int AC = 10;
+			if (chestArmor != null)
+			{
+				int dexMax = chestArmor.DexMax;
 				if (dexMax == 0)
 				{
 					dexMax = 10;
 				}
-				ACNum.Text = $"{player.wornArmor.AC + Math.Max(player.dexterity.getMod(), dexMax)}";
+				AC = int.Parse(chestArmor.AC) + Math.Min(player.dexterity.getMod(), dexMax);
+			}
+			else
+				AC += player.dexterity.getMod();
+			if (shield != null)
+			{
+				AC += int.Parse(shield.AC.Substring(1));
 			}
 			else
 			{
-				ACNum.Text = $"{10 + player.dexterity.getMod() + player.myRace.getACBoost()}";
+				ACNum.Text = $"{AC + player.myRace.getACBoost()}";
 			}
 		}
 		protected void closeOnLostFocus(object sender, EventArgs e)
