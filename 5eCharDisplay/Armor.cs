@@ -25,7 +25,7 @@ namespace _5eCharDisplay
 			Armor returned = null;
 			string file = "";
 			if (!string.IsNullOrEmpty(aName))
-				file = $@"./Data/Armors/{aName}.yaml";
+				file = $@"./Data/Armor/{aName}.yaml";
 			else if (!string.IsNullOrEmpty(fName))
 				file = fName;
 			else
@@ -36,6 +36,18 @@ namespace _5eCharDisplay
 
 				var deserializer = new Deserializer();
 				returned = deserializer.Deserialize<Armor>(reader);
+			}
+			return returned;
+		}
+		public static List<Armor> listFromYaml(string fName)
+		{
+			List<Armor> returned = null;
+			using (FileStream fin = File.OpenRead(fName))
+			{
+				TextReader reader = new StreamReader(fin);
+
+				var deserializer = new Deserializer();
+				returned = deserializer.Deserialize<List<Armor>>(reader);
 			}
 			return returned;
 		}

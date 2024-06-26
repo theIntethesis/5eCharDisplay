@@ -51,7 +51,7 @@ namespace _5eCharDisplay
 		public List<charClass> myClasses = new List<charClass>();
 		public charRace myRace;
 		public charBackground myBackground;
-		public List<Armor> wornArmor = new List<Armor>();
+		public List<Armor> wornArmor;
 
 		public bool Spellcasting = false;
 		public string getRace()
@@ -462,6 +462,8 @@ namespace _5eCharDisplay
 					c.NinthLevelSpells = new List<string>();
 
 			}
+
+			returned.wornArmor = Armor.listFromYaml($@"./Data/Characters/{returned.name}/{returned.name}Armor.yaml");
 
 			return returned;
 		}

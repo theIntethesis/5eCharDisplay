@@ -161,7 +161,6 @@ namespace _5eCharDisplay
 			
 			if (player.myClasses[Classnum].FirstLevelSpells.Count > 0)
 			{
-				//Console.WriteLine("First Level Spells");
 				Label SpellLabel = new Label();
 				SpellLabel.Text = "1st Level Spells";
 				SpellLabel.Size = new Size(250, 17);
@@ -205,7 +204,6 @@ namespace _5eCharDisplay
 					}
 
 					yDiff += 20;
-					//Console.WriteLine(yDiff);
 					if (yDiff >= 660)
 					{
 						yDiff = 170;
@@ -216,7 +214,6 @@ namespace _5eCharDisplay
 			
 			if (player.myClasses[Classnum].SecondLevelSpells.Count > 0)
 			{
-				//Console.WriteLine("Second Level Spells");
 				Label SecondLabel = new Label();
 				SecondLabel.Text = "2nd Level Spells";
 				SecondLabel.Size = new Size(250, 20);
@@ -260,7 +257,6 @@ namespace _5eCharDisplay
 					}
 
 					yDiff += 20;
-					//Console.WriteLine(yDiff);
 					if (yDiff >= 660)
 					{
 						yDiff = 170;
@@ -271,7 +267,6 @@ namespace _5eCharDisplay
 			
 			if(player.myClasses[Classnum].ThirdLevelSpells.Count > 0)
 			{
-				//Console.WriteLine("Third Level Spells");
 				Label ThirdLabel = new Label();
 				ThirdLabel.Text = "3rd Level Spells";
 				ThirdLabel.Size = new Size(200, 17);
@@ -315,7 +310,6 @@ namespace _5eCharDisplay
 					}
 
 					yDiff += 20;
-					//Console.WriteLine(yDiff);
 					if (yDiff >= 660)
 					{
 						yDiff = 170;

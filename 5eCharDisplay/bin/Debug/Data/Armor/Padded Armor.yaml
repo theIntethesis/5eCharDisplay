@@ -1,5 +1,6 @@
 Name: Padded Armor
 AC: 11
 aType: Light
-stealthDis: false
+stealthDis: true
 StrReq: 0
+DexMax: -1

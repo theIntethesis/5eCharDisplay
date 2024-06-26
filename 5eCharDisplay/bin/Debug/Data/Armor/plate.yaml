@@ -3,3 +3,4 @@ AC: 18
 aType: Heavy
 stealthDis: true
 StrReq: 15
+DexMax: 0

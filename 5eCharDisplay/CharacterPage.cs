@@ -90,27 +90,38 @@ namespace _5eCharDisplay
 			FnTText.Location = new Point(6, ylocation);
 
 			Armor chestArmor = null;
-			foreach(Armor a in player.wornArmor)
-            {
-				if (a.aType != Armor.ArmorType.Shield)
+			Armor shield = null;
+			foreach (Armor a in player.wornArmor)
+			{
+				if (a.aType != Armor.ArmorType.Shield && chestArmor == null)
 				{
 					chestArmor = a;
-					break;
 				}
-            }
-			if(chestArmor != null)
+				else if (shield == null)
+				{
+					shield = a;
+				}
+			}
+			int AC = 10;
+			if (chestArmor != null)
 			{
 				int dexMax = chestArmor.DexMax;
-				if(dexMax == 0)
+				if (dexMax == -1)
 				{
 					dexMax = 10;
 				}
-				ACNum.Text = $"{chestArmor.ArmorClass + Math.Max(player.dexterity.getMod(), dexMax)}";
+				AC = int.Parse(chestArmor.AC);
+				if (chestArmor.aType != Armor.ArmorType.Heavy)
+					AC += Math.Min(player.dexterity.getMod(), dexMax);
 			}
 			else
+				AC += player.dexterity.getMod();
+			if (shield != null)
 			{
-				ACNum.Text = $"{10 + player.dexterity.getMod() + player.myRace.getACBoost()}";
+				AC += int.Parse(shield.AC.Substring(1));
 			}
+
+			ACNum.Text = $"{AC + player.myRace.getACBoost()}";
 
 			if (chestArmor != null && chestArmor.stealthDis)
 				SteLabel.Text = "Stealth [D]";
@@ -1583,11 +1594,13 @@ namespace _5eCharDisplay
 			if (chestArmor != null)
 			{
 				int dexMax = chestArmor.DexMax;
-				if (dexMax == 0)
+				if (dexMax == -1)
 				{
 					dexMax = 10;
 				}
-				AC = int.Parse(chestArmor.AC) + Math.Min(player.dexterity.getMod(), dexMax);
+				AC = int.Parse(chestArmor.AC);
+				if(chestArmor.aType != Armor.ArmorType.Heavy)
+					AC += Math.Min(player.dexterity.getMod(), dexMax);
 			}
 			else
 				AC += player.dexterity.getMod();
@@ -1595,10 +1608,13 @@ namespace _5eCharDisplay
 			{
 				AC += int.Parse(shield.AC.Substring(1));
 			}
-			else
-			{
-				ACNum.Text = $"{AC + player.myRace.getACBoost()}";
-			}
+
+			ACNum.Text = $"{AC + player.myRace.getACBoost()}";
+
+			var serializer = new YamlDotNet.Serialization.SerializerBuilder().Build();
+			var yaml = serializer.Serialize(player.wornArmor);
+			File.WriteAllText($@"./Data/Characters/{player.name}/{player.name}Armor.yaml", yaml);
+
 		}
 		protected void closeOnLostFocus(object sender, EventArgs e)
 		{

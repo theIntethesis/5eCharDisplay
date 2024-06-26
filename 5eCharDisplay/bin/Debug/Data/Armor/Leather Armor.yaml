@@ -3,3 +3,4 @@ AC: 11
 aType: Light
 stealthDis: false
 StrReq: 0
+DexMax: -1

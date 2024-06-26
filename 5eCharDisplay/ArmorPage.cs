@@ -21,16 +21,25 @@ namespace _5eCharDisplay
 			InitializeComponent();
 			player = PC;
 			var armorList = Directory.GetFiles($@"./Data/Armor/");
-			/*foreach(string s in player.inventory)
+			for(int i = 0; i < armorList.Count(); i++)
+            {
+				var cutOffExcessFront = armorList[i].Substring(armorList[i].LastIndexOf('/') + 1);
+				var cutOffExcessEnd = cutOffExcessFront.Length - 5;
+				armorList[i] = cutOffExcessFront.Substring(0, cutOffExcessEnd);
+            }
+			var CurrentlyWornArmor = Armor.listFromYaml($@"./Data/Characters/{player.name}/{player.name}Armor.yaml");
+			foreach(string s in player.inventory)
 			{
 				if (armorList.Contains(s))
 				{
-					armors.Add(Armor.fromYaml(aName: s));
+					var newA = Armor.fromYaml(aName: s);
+					if (armors.Count == 0)
+						armors.Add(newA);
+                    else if (!armors.Exists(a => a.Name == newA.Name))
+                    {
+						armors.Add(newA);
+                    }
 				}
-			}*/
-			foreach(string s in armorList)
-			{
-				armors.Add(Armor.fromYaml(fName: s));
 			}
 			ACLabel.Location = new Point(125, 12);
 			NameLabel.Location = new Point(12, 12);
@@ -66,6 +75,13 @@ namespace _5eCharDisplay
 
 				AutoSize = true;
 			}
+			if(CurrentlyWornArmor != null)
+			{
+				foreach (var a in CurrentlyWornArmor)
+				{
+					checkBoxes.Find(b => b.Text == a.Name).Checked = true;
+				}
+			}
 		}
 		private void EquipArmor(object sender, EventArgs e)
 		{
@@ -75,7 +91,8 @@ namespace _5eCharDisplay
 
 			if (box.Checked)
 			{
-				player.wornArmor.Add(releventArmor);
+				if(!player.wornArmor.Any(a => a.Name == releventArmor.Name))
+					player.wornArmor.Add(releventArmor);
 				if(releventArmor.aType != Armor.ArmorType.Shield)
                 {
 					for(int i = 0; i < armors.Count; i++)
@@ -99,7 +116,7 @@ namespace _5eCharDisplay
 			}
 			else
 			{
-				player.wornArmor.Remove(releventArmor);
+				player.wornArmor.RemoveAll(a => a.Name == releventArmor.Name);
 				if (releventArmor.aType != Armor.ArmorType.Shield)
 				{
 					for (int i = 0; i < armors.Count; i++)

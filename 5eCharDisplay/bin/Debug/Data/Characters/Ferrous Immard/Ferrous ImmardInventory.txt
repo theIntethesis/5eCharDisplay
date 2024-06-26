@@ -12,3 +12,6 @@ Dungeoneer's Pack
 2 Daggers
 Spellbook
 10gp
+Chain Shirt
+Mage Armor
+Shield

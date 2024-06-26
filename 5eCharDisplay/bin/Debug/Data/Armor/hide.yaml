@@ -3,3 +3,4 @@ AC: 12
 aType: Medium
 stealthDis: false
 StrReq: 0
+DexMax: 2
