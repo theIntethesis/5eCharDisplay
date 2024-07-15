@@ -1,0 +1,6 @@
+Name: Dart
+DamageDie:
+  - num: 1
+    sides: 4
+DamageType: ["Piercing"]
+Properties: ["Piercing", "Thrown (20/60)"]

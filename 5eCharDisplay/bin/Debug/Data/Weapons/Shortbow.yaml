@@ -1,0 +1,6 @@
+Name: Shortbow
+DamageDie:
+  - num: 1
+    sides: 6
+DamageType: ["Piercing"]
+Properties: ["Ammunition", "Range (80/320)" "Two-Handed"]

@@ -123,7 +123,7 @@ namespace _5eCharDisplay
 			throw new NotImplementedException();
 		}
 		protected string getClassFile(string charname)
-        {
+		{
 			return $@".\Data\Characters\{charname}\{charname}{name}.yaml";
 		}
 
@@ -249,10 +249,10 @@ namespace _5eCharDisplay
 			form.Close();
 		}
 		public bool isClass(Type t)
-        {
+		{
 			if (GetType() == t) return true;
 			else return false;
-        }
+		}
 	}
 
 }

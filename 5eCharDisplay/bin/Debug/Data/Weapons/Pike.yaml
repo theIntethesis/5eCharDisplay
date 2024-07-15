@@ -1,0 +1,8 @@
+Name: Pike
+DamageDie:
+  - num: 1
+    sides: 10
+DamageType: ["Piercing"]
+Properties: ["Heavy", "Reach", "Two-Handed"]
+MagicBonus: 0
+Effects: []

@@ -802,7 +802,7 @@ namespace _5eCharDisplay.Classes
 			// Reset Spell Slots
 			classInfo[0] = "spellSlots: [0, 0, 0, 0, 0, 0, 0, 0, 0]";
 			foreach(var box in warlockSlotBoxes)
-            {
+			{
 				box.Checked = false;
 			}
 			for (int i = 0; i < 9; i++)
@@ -820,9 +820,9 @@ namespace _5eCharDisplay.Classes
 
 			// Reset SR Groupboxes
 			foreach(CheckBox g in resetOnSR)
-            {
+			{
 				g.Checked = false;
-            }
+			}
 
 			// Write classInfo
 			File.WriteAllLines($@".\Data\Characters\{name}\{name}Warlock.yaml", classInfo);
@@ -866,13 +866,13 @@ namespace _5eCharDisplay.Classes
 
 			// Reset Groupbox Checks
 			foreach(var g in resetOnSR)
-            {
+			{
 				g.Checked = false;
-            }
+			}
 			foreach(var g in resetOnSR)
-            {
+			{
 				g.Checked = false;
-            }
+			}
 
 
 			// Write classInfo

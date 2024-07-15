@@ -1,0 +1,6 @@
+Name: Battleaxe
+DamageDie:
+  - num: 1
+    sides: 8
+DamageType: ["Slashing"]
+Properties: ["Versatile (1d10)"]

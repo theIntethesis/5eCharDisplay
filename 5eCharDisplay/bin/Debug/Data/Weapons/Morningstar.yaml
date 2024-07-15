@@ -1,0 +1,8 @@
+Name: Morningstar
+DamageDie:
+  - num: 1
+    sides: 8
+DamageType: ["Piercing"]
+Properties: []
+MagicBonus: 0
+Effects: []

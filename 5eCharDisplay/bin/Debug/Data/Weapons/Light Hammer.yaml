@@ -1,0 +1,6 @@
+Name: Light Hammer
+DamageDie:
+  - num: 1
+    sides: 4
+DamageType: ["Bludgeoning"]
+Properties: ["Light", "Thrown (20/60)"]

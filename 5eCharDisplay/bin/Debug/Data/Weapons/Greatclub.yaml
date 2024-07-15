@@ -1,0 +1,6 @@
+Name: Greatclub
+DamageDie:
+  - num: 1
+    sides: 8
+DamageType: ["Bludgeoning"]
+Properties: ["Two-Handed"]

@@ -19,6 +19,7 @@ namespace _5eCharDisplay.Classes
 		public string ArcaneTradition { set; get; }
 		public List<string> SpellMastery { set; get; }
 		public List<string> SignatureSpells { set; get; }
+		public int BloodChannelerUsed { set; get; }
 
 		private List<Label> SpellMasterLabels = new List<Label>();
 
@@ -161,9 +162,14 @@ namespace _5eCharDisplay.Classes
 			ArcaneRecovery = false;
 
 			foreach(var g in resetOnSR)
-            {
+			{
 				g.Checked = false;
-            }
+			}
+			if(ArcaneTradition == "Hematurgy")
+            {
+				HDrem += 1;
+				if (HDrem > level) HDrem = level;
+			}
 
 			// Write classInfo
 			File.WriteAllLines($@".\Data\Characters\{name}\{name}Wizard.yaml", classInfo);
@@ -172,6 +178,7 @@ namespace _5eCharDisplay.Classes
 		{
 			// Refresh Hit Dice
 			HDrem += (int)Math.Floor(level / 2.0);
+			if (ArcaneTradition == "Hematurgy") HDrem += proficiency;
 			if (HDrem > level) HDrem = level;
 
 			// Get classInfo
@@ -212,7 +219,8 @@ namespace _5eCharDisplay.Classes
 				// Spellcasting
 				infoBoxes.Add(AddSpellcastingBox());
 				// Arcane Recovery
-				infoBoxes.Add(AddArcaneRecovery());
+				if(ArcaneTradition != "Hematurgy")
+					infoBoxes.Add(AddArcaneRecovery());
 			}
 			if (level >= 2)
 			{
@@ -222,7 +230,6 @@ namespace _5eCharDisplay.Classes
 			if (level >= 4)
 			{
 				infoBoxes.Add(ASIBox(featList[0]));
-				infoBoxes.Add(AddSpellMastery());
 			}
 			if (level >= 6)
 			{
@@ -355,6 +362,41 @@ namespace _5eCharDisplay.Classes
 					}
 					low += label.Size.Height + 12;
 					break;
+				case "Hematurgy":
+					label.Text += $"  - Blood Channeler\n   - Once per turn, you can choose to inflict a wound upon yourself to cast a spell without expending a spell slot. To cast a spell this way, you expend a hit die and roll a number of d6 equal to the level of spell slot you're replacing. You lose hit points equal to the total amount rolled. If you are reduced to 0 hit points this way, the spell you cast takes effect before you fall unconcious. You cannot cast a spell at 6th level or higher this way.\nYou can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses of it when you finish a long rest.\n\n";
+					label.Text += $"  - Quickened Recovery\n   - Starting at second level, your wounds recover at expedited speed. At the end of a short rest, you regain an expended Hit Die. At the end of a long rest, you regain an additional amount of Hit Dice equal to your proficiency bonus.\n\n";
+					if (level >= 6)
+					{
+						label.Text += $"  - Siphon Blood\n   - Starting at sixth level, your control over your blood and the blood of others increases. You can use an action to create simple items as long as you have requisite blood to manifest them. For example, a small pool of blood might become a dagger, a small length of rope, or a stone.\n\n";
+					}
+					if (level >= 10)
+					{
+						label.Text += $"  - Blood Ties\n   - Starting at 10th level, spells you cast are empowered against creatures whose blood you fuse into the magic. Whenever you cast a spell, it has the following effects:\n    - The spell save DC is increased by 4 against creatures whose blood you possess.\n    - You have advantage on the spell attack roll against creatures whose blood you possess.\n    - If the spell restores hit points, it restores the maximum amount.\n\n";
+					}
+					if (level >= 14)
+					{
+						label.Text += $"  - Bloody Marionette\n   - Starting at 14th level, your control over blood extends to amounts of blood within people's bodies. As long as you have a creature's blood, you can cast Dominate Monster targeting that creature without expending a spell slot. A creature that succeeds on the saving throw can't be targeted again in this way for 24 hours.\n\n";
+					}
+					low += label.Size.Height + 12;
+					Label BloodChannelerLabel = new Label();
+					BloodChannelerLabel.AutoSize = true;
+					BloodChannelerLabel.Location = new Point(6, low);
+					BloodChannelerLabel.Text = "Blood Channeler";
+					box.Controls.Add(BloodChannelerLabel);
+					low += BloodChannelerLabel.Size.Height + 6;
+					int y = 12;
+					for(int i = 0; i < proficiency; i++)
+                    {
+						CheckBox cBox = new CheckBox();
+						cBox.AutoSize = true;
+						cBox.Location = new Point(y, low);
+						if (BloodChannelerUsed > i) cBox.Checked = true;
+						cBox.CheckedChanged += BloodChannelerCheck;
+						box.Controls.Add(cBox);
+						y += cBox.Size.Width + 6;
+                    }
+					low += 32;
+					break;
 				case "":
 					label.Text += $"  - \n   - \n\n";
 					if (level >= 6)
@@ -374,8 +416,7 @@ namespace _5eCharDisplay.Classes
 					label.Text += $"No Subclass chosen!";
 					break;
 			}
-			box.Size = new Size(180, low);
-			box.Size = new Size(180, low + 6);
+			box.AutoSize = true;
 			label.MouseDown += DisplayOnRightClick;
 			return box;
 		}
@@ -414,7 +455,7 @@ namespace _5eCharDisplay.Classes
 		}
 
 		private GroupBox AddSignatureSpells()
-        {
+		{
 			int low = 12;
 			GroupBox box = new GroupBox();
 			box.Text = "Signature Spells";
@@ -505,7 +546,7 @@ namespace _5eCharDisplay.Classes
 					c.Location = new Point(300, secondColumn);
 					secondColumn += c.Size.Height + 6;
 				}
-                if (firstOff)
+				if (firstOff)
 				{
 					foreach (var spellBox in spellMasteryBoxes1)
 					{
@@ -530,29 +571,29 @@ namespace _5eCharDisplay.Classes
 			}
 		}
 		private void ChangeLabels(object sender, EventArgs e)
-        {
+		{
 			if (SpellMastery[1] == "") SpellMastery.RemoveAt(1);
 			if (SpellMastery[0] == "") SpellMastery.RemoveAt(0);
 			if(SpellMasterLabels.Count >= SpellMastery.Count)
-            {
+			{
 				for (int i = 0; i < SpellMasterLabels.Count; i++)
 				{
 					string s;
-                    try
-                    {
+					try
+					{
 						s = SpellMastery[i];
-                    }
-                    catch
-                    {
+					}
+					catch
+					{
 						s = "";
-                    }
+					}
 					SpellMasterLabels[i].Text = s;
 				}
-            }
-            else
-            {
+			}
+			else
+			{
 				throw new Exception();
-            }
+			}
 		}
 		private void ChangeActiveSpellMastery(object sender, EventArgs e)
 		{
@@ -560,22 +601,22 @@ namespace _5eCharDisplay.Classes
 			if (c.Checked)
 			{
 				SpellMastery.Add(c.Text);
-                if (FirstLevelSpells.Contains(c.Text))
-                {
+				if (FirstLevelSpells.Contains(c.Text))
+				{
 					foreach(var box in spellMasteryBoxes1)
-                    {
+					{
 						if (!box.Checked) box.Enabled = false;
-                    }
-                }
+					}
+				}
 				else if (SecondLevelSpells.Contains(c.Text))
 				{
 					foreach(var box in spellMasteryBoxes2)
-                    {
+					{
 						if (!box.Checked) box.Enabled = false;
-                    }
-                }
+					}
+				}
 			}
-            else
+			else
 			{
 				SpellMastery.Remove(c.Text);
 
@@ -591,6 +632,12 @@ namespace _5eCharDisplay.Classes
 			var c = sender as CheckBox;
 			ArcaneRecovery = c.Checked;
 		}
+		private void BloodChannelerCheck(object sender, EventArgs e)
+        {
+			var c = sender as CheckBox;
+			if (c.Checked) BloodChannelerUsed++;
+			else BloodChannelerUsed--;
+        }
 		private void SaveSpellMastery(object sender, CancelEventArgs e)
 		{
 			string[] classInfo = File.ReadAllLines($@".\Data\Characters\{charname}\{charname}Wizard.yaml");

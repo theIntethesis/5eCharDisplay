@@ -1,0 +1,6 @@
+Name: Greataxe
+DamageDie:
+  - num: 1
+    sides: 12
+DamageType: ["Slashing"]
+Properties: ["Heavy", "Two-Handed"]

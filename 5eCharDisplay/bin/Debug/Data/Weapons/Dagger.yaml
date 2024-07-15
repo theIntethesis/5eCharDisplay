@@ -1,0 +1,6 @@
+Name: Dagger
+DamageDie:
+  - num: 1
+    sides: 4
+DamageType: ["Piercing"]
+Properties: ["Finesse", "Light", "Thrown (20/60)"]

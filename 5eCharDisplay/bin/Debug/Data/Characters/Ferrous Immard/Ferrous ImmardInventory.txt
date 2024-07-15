@@ -13,5 +13,4 @@ Dungeoneer's Pack
 Spellbook
 10gp
 Chain Shirt
-Mage Armor
 Shield

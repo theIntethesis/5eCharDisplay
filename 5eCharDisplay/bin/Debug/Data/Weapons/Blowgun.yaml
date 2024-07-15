@@ -1,0 +1,6 @@
+Name: Blowgun
+DamageDie:
+  - num: 1
+    sides: 1
+DamageType: ["Piercing"]
+Properties: ["Ammunition", "Loading", "Range (25/100)"]

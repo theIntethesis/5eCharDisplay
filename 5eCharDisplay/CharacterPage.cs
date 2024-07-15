@@ -183,6 +183,7 @@ namespace _5eCharDisplay
 			}
 
 			Inventory.Lines = player.inventory.ToArray();
+			Inventory.Leave += UpdateInventory;
 
 			FormClosing += new FormClosingEventHandler(OnFormClose);
 
@@ -913,6 +914,15 @@ namespace _5eCharDisplay
 			FeatureLabel.Text = player.myBackground.getFeature();
 		}
 
+		private void UpdateInventory(object sender, EventArgs e)
+        {
+			player.inventory.Clear();
+			foreach(var item in Inventory.Lines)
+            {
+				player.inventory.Add(item);
+            }
+        }
+
 		private void DiceInputPressEnter(object sender, KeyEventArgs e)
 		{
 			if (e.KeyValue == (int)Keys.Return)
@@ -1365,7 +1375,7 @@ namespace _5eCharDisplay
 
 		private void SaveInventory()
 		{
-			File.WriteAllLines($@".\Data\Characters\{player.name}\{player.name}Inventory.txt", Inventory.Lines);
+			File.WriteAllLines($@".\Data\Characters\{player.name}\{player.name}Inventory.txt", player.inventory.ToArray());
 			return;
 		}
 		private void SaveClassFeatures()
@@ -1586,9 +1596,9 @@ namespace _5eCharDisplay
 					chestArmor = a;
 				}
 				else if(shield == null)
-                {
+				{
 					shield = a;
-                }
+				}
 			}
 			int AC = 10;
 			if (chestArmor != null)

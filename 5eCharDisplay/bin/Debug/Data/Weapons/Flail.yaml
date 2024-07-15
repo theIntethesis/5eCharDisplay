@@ -1,0 +1,6 @@
+Name: Flail
+DamageDie:
+  - num: 1
+    sides: 8
+DamageType: ["Bludgeoning"]
+Properties: []

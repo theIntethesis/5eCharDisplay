@@ -2,7 +2,7 @@ spellSlots: [0, 0, 0, 0, 0, 0, 0, 0, 0]
 PreparedSpells: ["Shield", "Silvery Barbs", "Shatter", "Counterspell", "Sanguis Burst", "Galder's Tower", "Absorb Elements", "Comprehend Languages", "Magic Missile"]
 Skill1: 
 Skill2: 
-ArcaneTradition: School of Abjuration
+ArcaneTradition: Hematurgy
 Cantrips: ["Encode Thoughts", "Message", "Shocking Grasp", "Light"]
 FirstLevelSpells: ["Absorb Elements", "Blood Transfusion", "Comprehend Languages", "Identify", "Mage Armor", "Magic Missile", "Shield", "Silvery Barbs", "Snare", "Tasha's Hideous Laughter", "Unseen Servant"]
 SecondLevelSpells: ["Bonded by Blood", "Detect Thoughts", "Kinetic Jaunt", "Shatter", "Wither and Bloom"]
@@ -18,3 +18,4 @@ ASIChoices: ["INT1CHA1"]
 ArcaneRecovery: false
 SpellMastery: ["Magic Missile", "Wither and Bloom"]
 SignatureSpells: ["", ""]
+BloodChannelerUsed: 0

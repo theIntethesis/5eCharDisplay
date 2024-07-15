@@ -1,0 +1,8 @@
+Name: Rapier
+DamageDie:
+  - num: 1
+    sides: 8
+DamageType: ["Piercing"]
+Properties: ["Finesse"]
+MagicBonus: 0
+Effects: []

@@ -141,6 +141,7 @@
       <DependentUpon>SpellcastingPage.cs</DependentUpon>
     </Compile>
     <Compile Include="Statistic.cs" />
+    <Compile Include="Weapon.cs" />
     <EmbeddedResource Include="ArmorPage.resx">
       <DependentUpon>ArmorPage.cs</DependentUpon>
     </EmbeddedResource>

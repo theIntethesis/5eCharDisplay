@@ -1,0 +1,6 @@
+Name: Spear
+DamageDie:
+  - num: 1
+    sides: 6
+DamageType: ["Piercing"]
+Properties: ["Thrown (20/60)", "Versatile (1d8)"]

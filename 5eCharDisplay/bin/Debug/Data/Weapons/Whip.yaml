@@ -1,0 +1,8 @@
+Name: Whip
+DamageDie:
+  - num: 1
+    sides: 4
+DamageType: ["Slashing"]
+Properties: ["Finesse", "Reach"]
+MagicBonus: 0
+Effects: []

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _5eCharDisplay
 {
-    internal class Statistic
+	internal class Statistic
 	{
 		private double value;
 		private string name;
@@ -22,20 +22,20 @@ namespace _5eCharDisplay
 			name = alias;
 			value = 10;
 		}
-        public override string ToString()
-        {
+		public override string ToString()
+		{
 			if(getMod() < 0)
-            {
+			{
 				return $"{getMod()}";
-            }
+			}
 			else if (getMod() == 0)
-            {
+			{
 				return "0";
-            }
-            else
-            {
+			}
+			else
+			{
 				return $"+{getMod()}";
-            }
-        }
-    }
+			}
+		}
+	}
 }

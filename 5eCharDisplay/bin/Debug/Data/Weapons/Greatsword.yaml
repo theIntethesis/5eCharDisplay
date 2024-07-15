@@ -1,0 +1,6 @@
+Name: Greatsword
+DamageDie:
+  - num: 2
+    sides: 6
+DamageType: ["Slashing"]
+Properties: ["Heavy", "Two-Handed"]

@@ -1,0 +1,6 @@
+Name: Quarterstaff
+DamageDie:
+  - num: 1
+    sides: 6
+DamageType: ["Bludgeoning"]
+Properties: ["Versatile (1d8)"]

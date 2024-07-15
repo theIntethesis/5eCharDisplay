@@ -1,0 +1,6 @@
+Name: Hand Crossbow
+DamageDie:
+  - num: 1
+    sides: 6
+DamageType: ["Piercing"]
+Properties: ["Ammunition", "Range (30/120)", "Light", "Loading"]

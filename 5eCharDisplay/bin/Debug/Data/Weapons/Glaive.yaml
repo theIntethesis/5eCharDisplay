@@ -1,0 +1,6 @@
+Name: Glaive
+DamageDie:
+  - num: 1
+    sides: 10
+DamageType: ["Slashing"]
+Properties: ["Heavy", "Reach", "Two-Handed"]

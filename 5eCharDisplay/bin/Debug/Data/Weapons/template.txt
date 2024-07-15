@@ -1,0 +1,8 @@
+Name: 
+DamageDie:
+  - num: 
+    sides: 
+DamageType: [""]
+Properties: ["", ""]
+MagicBonus: 0
+Effects: []

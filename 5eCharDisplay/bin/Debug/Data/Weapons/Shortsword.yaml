@@ -1,0 +1,8 @@
+Name: Shortsword
+DamageDie:
+  - num: 1
+    sides: 6
+DamageType: ["Piercing"]
+Properties: ["Finesse", "Light"]
+MagicBonus: 0
+Effects: []

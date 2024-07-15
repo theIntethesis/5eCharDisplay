@@ -1,0 +1,6 @@
+Name: Javelin
+DamageDie:
+  - num: 1
+    sides: 6
+DamageType: ["Piercing"]
+Properties: ["Thrown (30/120)"]

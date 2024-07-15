@@ -1,0 +1,6 @@
+Name: Mace
+DamageDie:
+  - num: 1
+    sides: 6
+DamageType: ["Bludgeoning"]
+Properties: []

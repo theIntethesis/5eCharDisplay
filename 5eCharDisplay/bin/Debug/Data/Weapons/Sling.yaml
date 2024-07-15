@@ -1,0 +1,6 @@
+Name: Sling
+DamageDie:
+  - num: 1
+    sides: 4
+DamageType: ["Bludgeoning"]
+Properties: ["Ammunition", "Range (30/120)"]

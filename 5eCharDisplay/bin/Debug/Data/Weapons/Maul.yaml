@@ -1,0 +1,8 @@
+Name: Maul
+DamageDie:
+  - num: 2
+    sides: 6
+DamageType: ["Bludgeoning"]
+Properties: ["Heavy", "Two-Handed"]
+MagicBonus: 0
+Effects: [""]

@@ -1,0 +1,8 @@
+Name: Scimitar
+DamageDie:
+  - num: 1
+    sides: 6
+DamageType: ["Slashing"]
+Properties: ["Finesse", "Light"]
+MagicBonus: 0
+Effects: []

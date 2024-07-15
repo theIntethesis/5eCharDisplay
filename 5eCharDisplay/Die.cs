@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YamlDotNet.Serialization;
+using System.IO;
 
 namespace _5eCharDisplay
 {
     internal class Die
 	{
+		public int num { set; get; }
+		public int sides { set; get; }
 
 		private static Random rand = new Random();
-		private int sides, num;
 
 		public Die(int num, int sides)
 		{
@@ -19,9 +22,12 @@ namespace _5eCharDisplay
 		}
 		public Die(int sides)
 		{
-			this.num = 1;
+			num = 1;
 			this.sides = sides;
 		}
+
+		public Die() { }
+
 		public int roll()
 		{
 			int total = 0, numDice = num;
@@ -48,5 +54,17 @@ namespace _5eCharDisplay
 			if (sides == secondDie.sides && num == secondDie.num) return true;
 			else return false;
         }
-    }
+		public static Die fromYaml(string fName)
+		{
+			Die returned = null;
+			using (FileStream fin = File.OpenRead(fName))
+			{
+				TextReader reader = new StreamReader(fin);
+
+				var deserializer = new Deserializer();
+				returned = deserializer.Deserialize<Die>(reader);
+			}
+			return returned;
+		}
+	}
 }

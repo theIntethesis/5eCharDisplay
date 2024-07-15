@@ -1,0 +1,6 @@
+Name: Handaxe
+DamageDie:
+  - num: 1
+    sides: 6
+DamageType: ["Slashing"]
+Properties: ["Light", "Thrown (20/60)"]

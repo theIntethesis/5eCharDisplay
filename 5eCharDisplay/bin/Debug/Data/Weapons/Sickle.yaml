@@ -1,0 +1,6 @@
+Name: Sickle
+DamageDie:
+  - num: 1
+    sides: 4
+DamageType: ["Slashing"]
+Properties: ["Light"]
