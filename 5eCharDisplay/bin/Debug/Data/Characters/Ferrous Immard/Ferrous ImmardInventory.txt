@@ -1,16 +1,45 @@
-Rapier
-Dungeoneer's Pack
- - Backpack
- - Crowbar
- - Hammer
- - 10 Pitons
- - 10 Torches
- - Tinderbox
- - 10 Rations
- - Waterskin
- - 50 ft. Hempen Rope
-2 Daggers
-Spellbook
-10gp
-Chain Shirt
-Shield
+Equipment
+ > Shield
+ > Litany of Suffering
+ > Crown of Terror
+ > Bone Ring
+ > Cursebreaker
+ > Spellbook
+Poisons
+ > Carrion Crawler Mucus
+ > 2x Drow Poison
+Potions
+ > Potion of Death Ward
+ > Potion of Healing (2d4 + 2)
+ > Holy Water
+Vials
+ > 5x Vials of Humanoid Blood
+ > 10x Vials of Black Dragon Blood
+ > 40x Glass Vials
+ > Sample of Spell-Queller Mold
+Body Parts
+ > Black Dragon Heart
+ > Black Dragon Scales (Scalemail / 2 Shields)
+ > Goblin Skull
+Backpack
+ > Manacles
+ > Rope (50 ft.)
+ > Hammer
+Other
+ > Coin Pouch
+    > 3947gp
+    > 2700gp
+ > Pearl (100gp)
+ > Amber (5000gp)
+ > Sapphire (3500gp)
+ > Necrocite Garnet
+ > Red Elemental Gem
+ > 2x Deft Strike Runes
+ > Syndicate Codebook
+ > Jade Knife (Roth'ka Voss Key)
+ > Wish gem (1/30 days)
+ > 2x Memory Gem
+ > Invisible Ring
+ > Quill of Secrets
+ > Chronomancy Symbol
+ > Bone Skeleton Key

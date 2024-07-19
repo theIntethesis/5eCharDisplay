@@ -65,7 +65,7 @@ namespace _5eCharDisplay
             if (mouse.Button == MouseButtons.Right)
             {
                 Form from = new Form();
-                from.Icon = new Icon(@"C:\Users\Hayden\Downloads\881288450786082876.ico");
+                //from.Icon = new Icon(@"C:\Users\Hayden\Downloads\881288450786082876.ico");
                 from.Location = new Point(400, 50);
                 Label label1 = new Label();
                 label1.Location = new Point(6, 6);

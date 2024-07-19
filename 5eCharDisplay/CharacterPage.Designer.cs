@@ -158,7 +158,7 @@ namespace _5eCharDisplay
             this.HPUp = new System.Windows.Forms.Button();
             this.HPModify = new System.Windows.Forms.NumericUpDown();
             this.FnTBox = new System.Windows.Forms.GroupBox();
-            this.FnTText = new System.Windows.Forms.Label();
+            this.ClassTabControl = new System.Windows.Forms.TabControl();
             this.ProfBox = new System.Windows.Forms.GroupBox();
             this.ProfsText = new System.Windows.Forms.Label();
             this.PassivesBox = new System.Windows.Forms.GroupBox();
@@ -168,11 +168,9 @@ namespace _5eCharDisplay
             this.PasPerLabel = new System.Windows.Forms.Label();
             this.HitDiceBox = new System.Windows.Forms.GroupBox();
             this.HDPanel = new System.Windows.Forms.Panel();
-            this.FnTPanel = new System.Windows.Forms.Panel();
             this.LRButton = new System.Windows.Forms.PictureBox();
             this.SRButton = new System.Windows.Forms.PictureBox();
             this.Inventory = new System.Windows.Forms.TextBox();
-            this.InvLabel = new System.Windows.Forms.Label();
             this.MiscDiceBox = new System.Windows.Forms.GroupBox();
             this.LastRoll = new System.Windows.Forms.Label();
             this.MiscRollButton = new System.Windows.Forms.Button();
@@ -192,6 +190,9 @@ namespace _5eCharDisplay
             this.SRLabel = new System.Windows.Forms.Label();
             this.XPTicker = new System.Windows.Forms.NumericUpDown();
             this.XPButton = new System.Windows.Forms.Button();
+            this.InventoryManagement = new System.Windows.Forms.TabControl();
+            this.InventoryTab = new System.Windows.Forms.TabPage();
+            this.WeaponsTab = new System.Windows.Forms.TabPage();
             this.StrengthBox.SuspendLayout();
             this.DexBox.SuspendLayout();
             this.ConBox.SuspendLayout();
@@ -211,10 +212,10 @@ namespace _5eCharDisplay
             this.SpeedBox.SuspendLayout();
             this.HPBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HPModify)).BeginInit();
+            this.FnTBox.SuspendLayout();
             this.ProfBox.SuspendLayout();
             this.PassivesBox.SuspendLayout();
             this.HitDiceBox.SuspendLayout();
-            this.FnTPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LRButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SRButton)).BeginInit();
             this.MiscDiceBox.SuspendLayout();
@@ -224,6 +225,8 @@ namespace _5eCharDisplay
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.XPTicker)).BeginInit();
+            this.InventoryManagement.SuspendLayout();
+            this.InventoryTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // NameID
@@ -267,7 +270,7 @@ namespace _5eCharDisplay
             this.StrMod.Size = new System.Drawing.Size(41, 20);
             this.StrMod.TabIndex = 1;
             this.StrMod.Text = "Mod";
-            this.StrMod.Click += new System.EventHandler(this.StrMod_Click);
+            this.StrMod.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // StrScore
             // 
@@ -300,7 +303,7 @@ namespace _5eCharDisplay
             this.DexMod.Size = new System.Drawing.Size(41, 20);
             this.DexMod.TabIndex = 1;
             this.DexMod.Text = "Mod";
-            this.DexMod.Click += new System.EventHandler(this.DexMod_Click);
+            this.DexMod.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // DexScore
             // 
@@ -333,7 +336,7 @@ namespace _5eCharDisplay
             this.ConMod.Size = new System.Drawing.Size(41, 20);
             this.ConMod.TabIndex = 1;
             this.ConMod.Text = "Mod";
-            this.ConMod.Click += new System.EventHandler(this.ConMod_Click);
+            this.ConMod.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // ConScore
             // 
@@ -366,7 +369,7 @@ namespace _5eCharDisplay
             this.IntMod.Size = new System.Drawing.Size(41, 20);
             this.IntMod.TabIndex = 1;
             this.IntMod.Text = "Mod";
-            this.IntMod.Click += new System.EventHandler(this.IntMod_Click);
+            this.IntMod.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // IntScore
             // 
@@ -399,7 +402,7 @@ namespace _5eCharDisplay
             this.WisMod.Size = new System.Drawing.Size(41, 20);
             this.WisMod.TabIndex = 1;
             this.WisMod.Text = "Mod";
-            this.WisMod.Click += new System.EventHandler(this.WisMod_Click);
+            this.WisMod.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // WisScore
             // 
@@ -432,7 +435,7 @@ namespace _5eCharDisplay
             this.ChaMod.Size = new System.Drawing.Size(41, 20);
             this.ChaMod.TabIndex = 1;
             this.ChaMod.Text = "Mod";
-            this.ChaMod.Click += new System.EventHandler(this.ChaMod_Click);
+            this.ChaMod.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // ChaScore
             // 
@@ -590,7 +593,7 @@ namespace _5eCharDisplay
             this.ChaSaveNum.Size = new System.Drawing.Size(39, 20);
             this.ChaSaveNum.TabIndex = 16;
             this.ChaSaveNum.Text = "Cha";
-            this.ChaSaveNum.Click += new System.EventHandler(this.ChaSaveNum_Click);
+            this.ChaSaveNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // ChaSaveProf
             // 
@@ -619,7 +622,7 @@ namespace _5eCharDisplay
             this.WisSaveNum.Size = new System.Drawing.Size(38, 20);
             this.WisSaveNum.TabIndex = 13;
             this.WisSaveNum.Text = "Wis";
-            this.WisSaveNum.Click += new System.EventHandler(this.WisSaveNum_Click);
+            this.WisSaveNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // WisSaveProf
             // 
@@ -648,7 +651,7 @@ namespace _5eCharDisplay
             this.IntSaveNum.Size = new System.Drawing.Size(27, 20);
             this.IntSaveNum.TabIndex = 10;
             this.IntSaveNum.Text = "Int";
-            this.IntSaveNum.Click += new System.EventHandler(this.IntSaveNum_Click);
+            this.IntSaveNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // IntSaveProf
             // 
@@ -677,7 +680,7 @@ namespace _5eCharDisplay
             this.ConSaveNum.Size = new System.Drawing.Size(39, 20);
             this.ConSaveNum.TabIndex = 7;
             this.ConSaveNum.Text = "Con";
-            this.ConSaveNum.Click += new System.EventHandler(this.ConSaveNum_Click);
+            this.ConSaveNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // ConSaveProf
             // 
@@ -706,7 +709,7 @@ namespace _5eCharDisplay
             this.DexSaveNum.Size = new System.Drawing.Size(39, 20);
             this.DexSaveNum.TabIndex = 4;
             this.DexSaveNum.Text = "Dex";
-            this.DexSaveNum.Click += new System.EventHandler(this.DexSaveNum_Click);
+            this.DexSaveNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // DexSaveProf
             // 
@@ -735,7 +738,7 @@ namespace _5eCharDisplay
             this.StrSaveNum.Size = new System.Drawing.Size(31, 20);
             this.StrSaveNum.TabIndex = 1;
             this.StrSaveNum.Text = "Str";
-            this.StrSaveNum.Click += new System.EventHandler(this.StrSaveNum_Click);
+            this.StrSaveNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // StrSaveProf
             // 
@@ -848,7 +851,7 @@ namespace _5eCharDisplay
             this.SurNum.Size = new System.Drawing.Size(29, 20);
             this.SurNum.TabIndex = 52;
             this.SurNum.Text = "Su";
-            this.SurNum.Click += new System.EventHandler(this.SurNum_Click);
+            this.SurNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // SurProf
             // 
@@ -877,7 +880,7 @@ namespace _5eCharDisplay
             this.SteNum.Size = new System.Drawing.Size(25, 20);
             this.SteNum.TabIndex = 49;
             this.SteNum.Text = "St";
-            this.SteNum.Click += new System.EventHandler(this.SteNum_Click);
+            this.SteNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // SteProf
             // 
@@ -906,7 +909,7 @@ namespace _5eCharDisplay
             this.SleNum.Size = new System.Drawing.Size(24, 20);
             this.SleNum.TabIndex = 46;
             this.SleNum.Text = "Sl";
-            this.SleNum.Click += new System.EventHandler(this.SleNum_Click);
+            this.SleNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // SleProf
             // 
@@ -935,7 +938,7 @@ namespace _5eCharDisplay
             this.RelNum.Size = new System.Drawing.Size(30, 20);
             this.RelNum.TabIndex = 43;
             this.RelNum.Text = "Re";
-            this.RelNum.Click += new System.EventHandler(this.RelNum_Click);
+            this.RelNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // RelProf
             // 
@@ -964,7 +967,7 @@ namespace _5eCharDisplay
             this.PersNum.Size = new System.Drawing.Size(26, 20);
             this.PersNum.TabIndex = 40;
             this.PersNum.Text = "Pr";
-            this.PersNum.Click += new System.EventHandler(this.PersNum_Click);
+            this.PersNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // PersProf
             // 
@@ -993,7 +996,7 @@ namespace _5eCharDisplay
             this.PerfNum.Size = new System.Drawing.Size(25, 20);
             this.PerfNum.TabIndex = 37;
             this.PerfNum.Text = "Pf";
-            this.PerfNum.Click += new System.EventHandler(this.PerfNum_Click);
+            this.PerfNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // PerfProf
             // 
@@ -1022,7 +1025,7 @@ namespace _5eCharDisplay
             this.PercepNum.Size = new System.Drawing.Size(29, 20);
             this.PercepNum.TabIndex = 34;
             this.PercepNum.Text = "Pe";
-            this.PercepNum.Click += new System.EventHandler(this.PercepNum_Click);
+            this.PercepNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // PercepProf
             // 
@@ -1051,7 +1054,7 @@ namespace _5eCharDisplay
             this.NatNum.Size = new System.Drawing.Size(30, 20);
             this.NatNum.TabIndex = 31;
             this.NatNum.Text = "Na";
-            this.NatNum.Click += new System.EventHandler(this.NatNum_Click);
+            this.NatNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // NatProf
             // 
@@ -1080,7 +1083,7 @@ namespace _5eCharDisplay
             this.MedNum.Size = new System.Drawing.Size(32, 20);
             this.MedNum.TabIndex = 28;
             this.MedNum.Text = "Me";
-            this.MedNum.Click += new System.EventHandler(this.MedNum_Click);
+            this.MedNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // MedProf
             // 
@@ -1109,7 +1112,7 @@ namespace _5eCharDisplay
             this.InvestNum.Size = new System.Drawing.Size(21, 20);
             this.InvestNum.TabIndex = 25;
             this.InvestNum.Text = "Iv";
-            this.InvestNum.Click += new System.EventHandler(this.InvestNum_Click);
+            this.InvestNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // InvestProf
             // 
@@ -1138,7 +1141,7 @@ namespace _5eCharDisplay
             this.IntimNum.Size = new System.Drawing.Size(18, 20);
             this.IntimNum.TabIndex = 22;
             this.IntimNum.Text = "It";
-            this.IntimNum.Click += new System.EventHandler(this.IntimNum_Click);
+            this.IntimNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // IntimProf
             // 
@@ -1167,7 +1170,7 @@ namespace _5eCharDisplay
             this.InsightNum.Size = new System.Drawing.Size(22, 20);
             this.InsightNum.TabIndex = 19;
             this.InsightNum.Text = "Is";
-            this.InsightNum.Click += new System.EventHandler(this.InsightNum_Click);
+            this.InsightNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // InsightProf
             // 
@@ -1196,7 +1199,7 @@ namespace _5eCharDisplay
             this.HistNum.Size = new System.Drawing.Size(26, 20);
             this.HistNum.TabIndex = 16;
             this.HistNum.Text = "Hi";
-            this.HistNum.Click += new System.EventHandler(this.HistNum_Click);
+            this.HistNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // HistProf
             // 
@@ -1225,7 +1228,7 @@ namespace _5eCharDisplay
             this.DecepNum.Size = new System.Drawing.Size(31, 20);
             this.DecepNum.TabIndex = 13;
             this.DecepNum.Text = "De";
-            this.DecepNum.Click += new System.EventHandler(this.DecepNum_Click);
+            this.DecepNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // DecepProf
             // 
@@ -1254,7 +1257,7 @@ namespace _5eCharDisplay
             this.AthNum.Size = new System.Drawing.Size(25, 20);
             this.AthNum.TabIndex = 10;
             this.AthNum.Text = "At";
-            this.AthNum.Click += new System.EventHandler(this.AthNum_Click);
+            this.AthNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // AthProf
             // 
@@ -1283,7 +1286,7 @@ namespace _5eCharDisplay
             this.ArcanaNum.Size = new System.Drawing.Size(26, 20);
             this.ArcanaNum.TabIndex = 7;
             this.ArcanaNum.Text = "Ar";
-            this.ArcanaNum.Click += new System.EventHandler(this.ArcanaNum_Click);
+            this.ArcanaNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // ArcanaProf
             // 
@@ -1312,7 +1315,7 @@ namespace _5eCharDisplay
             this.AHandNum.Size = new System.Drawing.Size(33, 20);
             this.AHandNum.TabIndex = 4;
             this.AHandNum.Text = "AH";
-            this.AHandNum.Click += new System.EventHandler(this.AHandNum_Click);
+            this.AHandNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // AHandProf
             // 
@@ -1341,7 +1344,7 @@ namespace _5eCharDisplay
             this.AcroNum.Size = new System.Drawing.Size(29, 20);
             this.AcroNum.TabIndex = 1;
             this.AcroNum.Text = "Ac";
-            this.AcroNum.Click += new System.EventHandler(this.AcroNum_Click);
+            this.AcroNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // AcroProf
             // 
@@ -1379,6 +1382,7 @@ namespace _5eCharDisplay
             // 
             // DiceResult1
             // 
+            this.DiceResult1.AutoEllipsis = true;
             this.DiceResult1.AutoSize = true;
             this.DiceResult1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DiceResult1.Location = new System.Drawing.Point(15, 39);
@@ -1446,7 +1450,7 @@ namespace _5eCharDisplay
             this.InitNum.Size = new System.Drawing.Size(28, 25);
             this.InitNum.TabIndex = 0;
             this.InitNum.Text = "In";
-            this.InitNum.Click += new System.EventHandler(this.InitNum_Click);
+            this.InitNum.Click += new System.EventHandler(this.AbilityCheckRoll);
             // 
             // SpeedBox
             // 
@@ -1563,6 +1567,7 @@ namespace _5eCharDisplay
             // 
             // FnTBox
             // 
+            this.FnTBox.Controls.Add(this.ClassTabControl);
             this.FnTBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FnTBox.Location = new System.Drawing.Point(783, 155);
             this.FnTBox.Name = "FnTBox";
@@ -1571,16 +1576,14 @@ namespace _5eCharDisplay
             this.FnTBox.TabStop = false;
             this.FnTBox.Text = "Features and Traits";
             // 
-            // FnTText
+            // ClassTabControl
             // 
-            this.FnTText.AutoSize = true;
-            this.FnTText.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FnTText.Location = new System.Drawing.Point(6, 9);
-            this.FnTText.MaximumSize = new System.Drawing.Size(245, 0);
-            this.FnTText.Name = "FnTText";
-            this.FnTText.Size = new System.Drawing.Size(66, 16);
-            this.FnTText.TabIndex = 0;
-            this.FnTText.Text = "Text Here";
+            this.ClassTabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ClassTabControl.Location = new System.Drawing.Point(0, 20);
+            this.ClassTabControl.Name = "ClassTabControl";
+            this.ClassTabControl.SelectedIndex = 0;
+            this.ClassTabControl.Size = new System.Drawing.Size(287, 636);
+            this.ClassTabControl.TabIndex = 26;
             // 
             // ProfBox
             // 
@@ -1675,15 +1678,6 @@ namespace _5eCharDisplay
             this.HDPanel.Size = new System.Drawing.Size(87, 65);
             this.HDPanel.TabIndex = 1;
             // 
-            // FnTPanel
-            // 
-            this.FnTPanel.AutoScroll = true;
-            this.FnTPanel.Controls.Add(this.FnTText);
-            this.FnTPanel.Location = new System.Drawing.Point(789, 180);
-            this.FnTPanel.Name = "FnTPanel";
-            this.FnTPanel.Size = new System.Drawing.Size(275, 631);
-            this.FnTPanel.TabIndex = 25;
-            // 
             // LRButton
             // 
             this.LRButton.Image = ((System.Drawing.Image)(resources.GetObject("LRButton.Image")));
@@ -1708,21 +1702,12 @@ namespace _5eCharDisplay
             // 
             // Inventory
             // 
-            this.Inventory.Location = new System.Drawing.Point(441, 481);
+            this.Inventory.Location = new System.Drawing.Point(6, 6);
             this.Inventory.Multiline = true;
             this.Inventory.Name = "Inventory";
             this.Inventory.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.Inventory.Size = new System.Drawing.Size(326, 330);
+            this.Inventory.Size = new System.Drawing.Size(326, 302);
             this.Inventory.TabIndex = 28;
-            // 
-            // InvLabel
-            // 
-            this.InvLabel.AutoSize = true;
-            this.InvLabel.Location = new System.Drawing.Point(448, 458);
-            this.InvLabel.Name = "InvLabel";
-            this.InvLabel.Size = new System.Drawing.Size(61, 16);
-            this.InvLabel.TabIndex = 29;
-            this.InvLabel.Text = "Inventory";
             // 
             // MiscDiceBox
             // 
@@ -1919,12 +1904,45 @@ namespace _5eCharDisplay
             this.XPButton.UseVisualStyleBackColor = true;
             this.XPButton.Click += new System.EventHandler(this.XPButton_Click);
             // 
+            // InventoryManagement
+            // 
+            this.InventoryManagement.Controls.Add(this.InventoryTab);
+            this.InventoryManagement.Controls.Add(this.WeaponsTab);
+            this.InventoryManagement.Location = new System.Drawing.Point(431, 460);
+            this.InventoryManagement.Name = "InventoryManagement";
+            this.InventoryManagement.SelectedIndex = 0;
+            this.InventoryManagement.Size = new System.Drawing.Size(346, 346);
+            this.InventoryManagement.TabIndex = 41;
+            // 
+            // InventoryTab
+            // 
+            this.InventoryTab.Controls.Add(this.Inventory);
+            this.InventoryTab.Location = new System.Drawing.Point(4, 25);
+            this.InventoryTab.Name = "InventoryTab";
+            this.InventoryTab.Padding = new System.Windows.Forms.Padding(3);
+            this.InventoryTab.Size = new System.Drawing.Size(338, 317);
+            this.InventoryTab.TabIndex = 0;
+            this.InventoryTab.Text = "Inventory";
+            this.InventoryTab.UseVisualStyleBackColor = true;
+            // 
+            // WeaponsTab
+            // 
+            this.WeaponsTab.AutoScroll = true;
+            this.WeaponsTab.Location = new System.Drawing.Point(4, 25);
+            this.WeaponsTab.Name = "WeaponsTab";
+            this.WeaponsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.WeaponsTab.Size = new System.Drawing.Size(338, 317);
+            this.WeaponsTab.TabIndex = 1;
+            this.WeaponsTab.Text = "Weapons";
+            this.WeaponsTab.UseVisualStyleBackColor = true;
+            // 
             // CharacterPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1322, 818);
+            this.Controls.Add(this.InventoryManagement);
             this.Controls.Add(this.XPButton);
             this.Controls.Add(this.XPTicker);
             this.Controls.Add(this.SRLabel);
@@ -1936,11 +1954,8 @@ namespace _5eCharDisplay
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.SpellcastingToggle);
             this.Controls.Add(this.MiscDiceBox);
-            this.Controls.Add(this.InvLabel);
-            this.Controls.Add(this.Inventory);
             this.Controls.Add(this.SRButton);
             this.Controls.Add(this.LRButton);
-            this.Controls.Add(this.FnTPanel);
             this.Controls.Add(this.HitDiceBox);
             this.Controls.Add(this.PassivesBox);
             this.Controls.Add(this.ProfBox);
@@ -2006,13 +2021,12 @@ namespace _5eCharDisplay
             this.HPBox.ResumeLayout(false);
             this.HPBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HPModify)).EndInit();
+            this.FnTBox.ResumeLayout(false);
             this.ProfBox.ResumeLayout(false);
             this.ProfBox.PerformLayout();
             this.PassivesBox.ResumeLayout(false);
             this.PassivesBox.PerformLayout();
             this.HitDiceBox.ResumeLayout(false);
-            this.FnTPanel.ResumeLayout(false);
-            this.FnTPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LRButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SRButton)).EndInit();
             this.MiscDiceBox.ResumeLayout(false);
@@ -2028,6 +2042,9 @@ namespace _5eCharDisplay
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.XPTicker)).EndInit();
+            this.InventoryManagement.ResumeLayout(false);
+            this.InventoryTab.ResumeLayout(false);
+            this.InventoryTab.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2159,7 +2176,6 @@ namespace _5eCharDisplay
         private System.Windows.Forms.NumericUpDown HPModify;
         private System.Windows.Forms.Label HPIdentifier;
         private System.Windows.Forms.GroupBox FnTBox;
-        private System.Windows.Forms.Label FnTText;
         private System.Windows.Forms.GroupBox ProfBox;
         private System.Windows.Forms.Label ProfsText;
         private System.Windows.Forms.GroupBox PassivesBox;
@@ -2168,12 +2184,10 @@ namespace _5eCharDisplay
         private System.Windows.Forms.Label PassInsLabel;
         private System.Windows.Forms.Label PasPerLabel;
         private System.Windows.Forms.GroupBox HitDiceBox;
-        private System.Windows.Forms.Panel FnTPanel;
         private System.Windows.Forms.PictureBox LRButton;
         private System.Windows.Forms.PictureBox SRButton;
         private System.Windows.Forms.Button SetTHP;
         private System.Windows.Forms.TextBox Inventory;
-        private System.Windows.Forms.Label InvLabel;
 
         private List<System.Windows.Forms.GroupBox> featuresBox = new List<System.Windows.Forms.GroupBox>();
         private System.Windows.Forms.GroupBox MiscDiceBox;
@@ -2198,6 +2212,10 @@ namespace _5eCharDisplay
         private System.Windows.Forms.Label SRLabel;
         private System.Windows.Forms.NumericUpDown XPTicker;
         private System.Windows.Forms.Button XPButton;
+        private System.Windows.Forms.TabControl InventoryManagement;
+        private System.Windows.Forms.TabPage InventoryTab;
+        private System.Windows.Forms.TabPage WeaponsTab;
+        private System.Windows.Forms.TabControl ClassTabControl;
     }
 }
 

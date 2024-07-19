@@ -16,6 +16,46 @@ namespace _5eCharDisplay
 		public List<string> Properties { set; get; }
 		public int MagicBonus { set; get; }
 		public List<string> Effects { set; get; }
+		public WeaponType BaseType { set; get; }
+		public enum WeaponType
+		{
+			Battleaxe,
+			Blowgun,
+			Club,
+			Dagger,
+			Dart,
+			Flail,
+			Glaive,
+			Greataxe,
+			Greatclub,
+			Greatsword,
+			Halberd,
+			Hand_Crossbow,
+			Handaxe,
+			Heavy_Crossbow,
+			Javelin,
+			Lance,
+			Light_Crossbow,
+			Light_Hammer,
+			Longbow,
+			Longsword,
+			Mace,
+			Maul,
+			Morningstar,
+			Pike,
+			Quarterstaff,
+			Rapier,
+			Scimitar,
+			Shortbow,
+			Shortsword,
+			Sickle,
+			Sling,
+			Spear,
+			Trident,
+			War_Pick,
+			Warhammer,
+			Whip
+		}
 
 		public static Weapon fromYaml(string aName = "", string fName = "")
 		{
@@ -35,6 +75,19 @@ namespace _5eCharDisplay
 				returned = deserializer.Deserialize<Weapon>(reader);
 			}
 			 
+			return returned;
+		}
+
+		public static List<Weapon> listFromYaml(string fName)
+		{
+			List<Weapon> returned = null;
+			using (FileStream fin = File.OpenRead(fName))
+			{
+				TextReader reader = new StreamReader(fin);
+
+				var deserializer = new Deserializer();
+				returned = deserializer.Deserialize<List<Weapon>>(reader);
+			}
 			return returned;
 		}
 

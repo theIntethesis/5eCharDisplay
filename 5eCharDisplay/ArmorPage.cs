@@ -30,16 +30,19 @@ namespace _5eCharDisplay
 			var CurrentlyWornArmor = Armor.listFromYaml($@"./Data/Characters/{player.name}/{player.name}Armor.yaml");
 			foreach(string s in player.inventory)
 			{
-				if (armorList.Contains(s))
-				{
-					var newA = Armor.fromYaml(aName: s);
-					if (armors.Count == 0)
-						armors.Add(newA);
-					else if (!armors.Exists(a => a.Name == newA.Name))
-					{
-						armors.Add(newA);
+				foreach(var ar in armorList)
+                {
+                    if (s.Contains(ar))
+                    {
+						var newA = Armor.fromYaml(aName: ar);
+						if (armors.Count == 0)
+							armors.Add(newA);
+						else if (!armors.Exists(a => a.Name == newA.Name))
+						{
+							armors.Add(newA);
+						}
 					}
-				}
+                }
 			}
 			if(player.myClasses.Any(cClass => cClass.FirstLevelSpells.Contains("Mage Armor")))
             {

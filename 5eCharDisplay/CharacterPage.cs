@@ -55,39 +55,50 @@ namespace _5eCharDisplay
 			HPCurrent.Text = player.hitPoints.ToString();
 			TempHP.Text = "0";
 
-			int ylocation = 18;
+			int ylocation = 6;
 
-			Label label = new Label();
-			label.Location = new Point(6, 0);
-			label.Text = "===== Class Features =====";
-			FnTPanel.Controls.Add(label);
-			label.AutoSize = true;
-			foreach(var c in player.myClasses)
-			{
-				foreach (GroupBox g in c.getInfoBoxes())
-				{
-					FnTPanel.Controls.Add(g);
+			for(int i = 0; i < player.myClasses.Count; i++)
+            {
+				TabPage tab = new TabPage();
+				ClassTabControl.Controls.Add(tab);
+				tab.Font = new Font("Microsoft Sans Serif", 7.8F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+				tab.Text = player.myClasses[i].name.ToString();
+				tab.Size = new Size(279, 598);
+				tab.Padding = new Padding(3);
+				Panel panel = new Panel();
+				tab.Controls.Add(panel);
+				panel.AutoScroll = true;
+				panel.Location = new Point(0, 0);
+				panel.TabIndex = 25;
+
+				foreach(var g in player.myClasses[i].getInfoBoxes())
+                {
+					panel.Controls.Add(g);
 					g.Location = new Point(6, ylocation);
 					ylocation += g.Height + 12;
 				}
+				panel.Size = new Size(279, 485);
+
+				ylocation = 6;
 			}
-			FnTText.Text = "";
-			FnTText.Location = new Point(6, ylocation);
-			
-			Label label2 = new Label();
-			label2.Location = new Point(6, ylocation);
-			ylocation += 18;
-			label2.Text = "===== Racial Features =====";
-			FnTPanel.Controls.Add(label2);
-			label2.AutoSize = true;
+			TabPage RTab = new TabPage();
+			ClassTabControl.Controls.Add(RTab);
+			RTab.Font = new Font("Microsoft Sans Serif", 7.8F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+			RTab.Text = "Racial Features";
+			RTab.Size = new Size(279, 598);
+			RTab.Padding = new Padding(3);
+			Panel RPanel = new Panel();
+			RTab.Controls.Add(RPanel);
+			RPanel.AutoScroll = true;
+			RPanel.Location = new Point(0, 0);
+			RPanel.Size = new Size(279, 485);
+			RPanel.TabIndex = 25;
 			foreach (GroupBox g in player.myRace.getAbilityBoxes())
 			{
-				FnTPanel.Controls.Add(g);
+				RPanel.Controls.Add(g);
 				g.Location = new Point(6, ylocation);
 				ylocation += g.Height + 12;
 			}
-			FnTText.Text = "";
-			FnTText.Location = new Point(6, ylocation);
 
 			Armor chestArmor = null;
 			Armor shield = null;
@@ -127,6 +138,66 @@ namespace _5eCharDisplay
 				SteLabel.Text = "Stealth [D]";
 			else
 				SteLabel.Text = "Stealth";
+
+			foreach(Weapon w in player.equippedWeapons)
+            {
+				Label wName = new Label();
+				Button aBonus = new Button();
+				Button dRoll = new Button();
+				WeaponsTab.Controls.Add(wName);
+				WeaponsTab.Controls.Add(aBonus);
+				WeaponsTab.Controls.Add(dRoll);
+
+				wName.Text = $"{w.Name} | ";
+				if (w.MagicBonus > 0)
+					wName.Text += $"+{w.MagicBonus} ";
+				wName.Text += w.BaseType.ToString();
+				wName.AutoSize = true;
+				wName.Location = new Point(9, 9);
+
+				int bonus = 0;
+				if (w.Properties.Contains("Versatile"))
+					bonus += Math.Max(player.strength.getMod(), player.dexterity.getMod());
+				else
+					bonus += player.strength.getMod();
+				if (player.weaponProfs.Contains(w.BaseType.ToString()))
+					bonus += player.proficiency;
+				else if (player.weaponProfs.Contains("Simple Weapons") /* && [Weapon is a simple weapon] */)
+					bonus += player.proficiency;
+				else if (player.weaponProfs.Contains("Martial Weapons") /* && [Weapon is a martial weapon] */)
+					bonus += player.proficiency;
+				if (bonus >= 0) aBonus.Text = $"+{bonus}";
+				else aBonus.Text = $"{bonus}";
+				aBonus.Size = new Size(32, 23);
+				aBonus.Location = new Point(250 - aBonus.Size.Width, 6);
+				aBonus.Click += AttackRoll;
+
+				for(int i = 0; i < w.DamageDie.Count; i++)
+                {
+					if (i > 0) dRoll.Text += " + ";
+					dRoll.Text += $"{w.DamageDie[i]}";
+					int damageMod = 0;
+					if (i == 0)
+                    {
+						if (w.Properties.Contains("Versatile"))
+							damageMod += Math.Max(player.strength.getMod(), player.dexterity.getMod());
+						else
+							damageMod += player.strength.getMod();
+						damageMod += w.MagicBonus;
+					}
+					if (damageMod > 0)
+						dRoll.Text += $" + {damageMod}";
+					else if (damageMod < 0)
+						dRoll.Text += $" - {damageMod}";
+					dRoll.Text += $" {w.DamageType[i]}";
+				}
+				dRoll.AutoSize = true;
+				dRoll.Location = new Point(250 - dRoll.Size.Width, 30);
+				dRoll.MouseDown += DamageRoll;
+			}
+
+
+
 
 			SpeedNum.Text = $"{player.myRace.getSpeed()}";
 
@@ -183,7 +254,7 @@ namespace _5eCharDisplay
 			}
 
 			Inventory.Lines = player.inventory.ToArray();
-			Inventory.Leave += UpdateInventory;
+			Inventory.KeyDown += UpdateInventory;
 
 			FormClosing += new FormClosingEventHandler(OnFormClose);
 
@@ -914,15 +985,66 @@ namespace _5eCharDisplay
 			FeatureLabel.Text = player.myBackground.getFeature();
 		}
 
-		private void UpdateInventory(object sender, EventArgs e)
+		private void DamageRoll(object sender, EventArgs e)
         {
-			player.inventory.Clear();
-			foreach(var item in Inventory.Lines)
+			Thread.Sleep(250);
+			Regex pattern = new Regex(@"((\d+)d(\d+))( \+ \d+)? (\w+)");
+			/*
+			 * Match 0: 1d6 + 3 Piercing
+			 * Group 1: 1d6
+			 * Group 2: 1
+			 * Group 3: 6
+			 * Group 4:  + 3
+			 * Group 5: Piercing
+			 */
+			DiceResult1.Text = "";
+			MatchCollection matches = pattern.Matches((sender as Button).Text);
+			for(int i = 0; i < matches.Count; i++)
             {
-				player.inventory.Add(item);
-            }
+				if(i > 0)
+                {
+					DiceResult1.Text += "\n";
+                }
+				Die d = new Die(int.Parse(matches[i].Groups[2].Value), int.Parse(matches[i].Groups[3].Value));
+				int mod = 0;
+				if (matches[i].Groups[4].Success)
+					mod = int.Parse(matches[i].Groups[4].Value.Substring(matches[i].Groups[4].Value.Length - 2));
+				int roll = d.roll() + mod;
+				if ((e as MouseEventArgs).Button == MouseButtons.Right)
+					// Right Click = Critical Damage
+					roll += d.roll();
+				DiceResult1.Text += $"{roll} {matches[i].Groups[5].Value}";
+			}
+			DiceResult2.Text = "";
         }
 
+		private void AttackRoll(object sender, EventArgs e)
+        {
+			Thread.Sleep(250);
+			int modifier = int.Parse((sender as Button).Text.Substring(1));
+			int roll1 = d20.roll();
+			int roll2 = d20.roll();
+
+			DiceResult1.Text = $"{roll1 + modifier}";
+			if (roll1 == 20)
+				DiceResult1.Text += " (CRIT!)";
+			DiceResult2.Text = $"{roll2 + modifier}";
+			if (roll2 == 20)
+				DiceResult2.Text += " (CRIT!)";
+		}
+
+		private void UpdateInventory(object sender, EventArgs e)
+        {
+			var k = (e as KeyEventArgs).KeyCode;
+			if(k == Keys.Enter || k == Keys.Back || k == Keys.Delete)
+			{
+				player.inventory.Clear();
+				foreach (var item in Inventory.Lines)
+				{
+					player.inventory.Add(item);
+				}
+			}
+        }
 		private void DiceInputPressEnter(object sender, KeyEventArgs e)
 		{
 			if (e.KeyValue == (int)Keys.Return)
@@ -934,437 +1056,18 @@ namespace _5eCharDisplay
 				XPButton_Click(sender, e);
 		}
 
-		#region base ability checks
-		private void StrMod_Click(object sender, EventArgs e)
-		{
+		private void AbilityCheckRoll(object sender, EventArgs e)
+        {
 			Thread.Sleep(250);
-			DiceResult1.Text = $"{d20.roll() + player.strength.getMod()}";
-			DiceResult2.Text = $"{d20.roll() + player.strength.getMod()}";
-		}
-
-		private void DexMod_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			DiceResult1.Text = $"{d20.roll() + player.dexterity.getMod()}";
-			DiceResult2.Text = $"{d20.roll() + player.dexterity.getMod()}";
-		}
-
-		private void ConMod_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			DiceResult1.Text = $"{d20.roll() + player.constitution.getMod()}";
-			DiceResult2.Text = $"{d20.roll() + player.constitution.getMod()}";
-		}
-
-		private void IntMod_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			DiceResult1.Text = $"{d20.roll() + player.intelligence.getMod()}";
-			DiceResult2.Text = $"{d20.roll() + player.intelligence.getMod()}";
-		}
-
-		private void WisMod_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			DiceResult1.Text = $"{d20.roll() + player.wisdom.getMod()}";
-			DiceResult2.Text = $"{d20.roll() + player.wisdom.getMod()}";
-		}
-
-		private void ChaMod_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			DiceResult1.Text = $"{d20.roll() + player.charisma.getMod()}";
-			DiceResult2.Text = $"{d20.roll() + player.charisma.getMod()}";
-		}
-		#endregion base ability checks
-
-		#region Save Checks
-		private void StrSaveNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.strength.getMod();
-			if (player.expertise.Contains("StrSave"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("StrSave"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-
-		private void DexSaveNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.dexterity.getMod();
-			if (player.expertise.Contains("DexSave"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("DexSave"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-
-		private void ConSaveNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.constitution.getMod();
-			if (player.expertise.Contains("ConSave"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("ConSave"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-
-		private void IntSaveNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.intelligence.getMod();
-			if (player.expertise.Contains("IntSave"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("IntSave"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-
-		private void WisSaveNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.wisdom.getMod();
-			if (player.expertise.Contains("WisSave"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("WisSave"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-
-		private void ChaSaveNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.charisma.getMod();
-			if (player.expertise.Contains("ChaSave"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("ChaSave"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-		#endregion Save Checks
-
-		#region Ability Rolls
-		private void AcroNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.dexterity.getMod();
-			if (player.expertise.Contains("Acrobatics"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("Acrobatics"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-
-		private void AHandNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.wisdom.getMod();
-			if (player.expertise.Contains("Animal Handling"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("Animal Handling"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-
-		private void ArcanaNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.intelligence.getMod();
-			if (player.expertise.Contains("Arcana"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("Arcana"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-
-		private void AthNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.strength.getMod();
-			if (player.expertise.Contains("Athletics"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("Athletics"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-
-		private void DecepNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.charisma.getMod();
-			if (player.expertise.Contains("Deception"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("Deception"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-
-		private void HistNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.intelligence.getMod();
-			if (player.expertise.Contains("History"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("History"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-
-		private void InsightNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.wisdom.getMod();
-			if (player.expertise.Contains("Insight"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("Insight"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-
-		private void IntimNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.charisma.getMod();
-			if (player.expertise.Contains("Intimidation"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("Intimidation"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-
-		private void InvestNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.intelligence.getMod();
-			if (player.expertise.Contains("Investigation"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("Investigation"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-
-		private void MedNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.wisdom.getMod();
-			if (player.expertise.Contains("Medicine"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("Medicine"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-
-		private void NatNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.intelligence.getMod();
-			if (player.expertise.Contains("Nature"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("Nature"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-
-		private void PercepNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.wisdom.getMod();
-			if (player.expertise.Contains("Perception"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("Perception"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-
-		private void PerfNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.charisma.getMod();
-			if (player.expertise.Contains("Performance"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("Performance"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-
-		private void PersNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.charisma.getMod();
-			if (player.expertise.Contains("Persuasion"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("Persuasion"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-
-		private void RelNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.intelligence.getMod();
-			if (player.expertise.Contains("Religion"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("Religion"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-
-		private void SleNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.dexterity.getMod();
-			if (player.expertise.Contains("Sleight of Hand"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("Sleight of Hand"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-
-		private void SteNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.dexterity.getMod();
-			if (player.expertise.Contains("Stealth"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("Stealth"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-
-		private void SurNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			int modifier = player.wisdom.getMod();
-			if (player.expertise.Contains("Survival"))
-			{
-				modifier += 2 * player.proficiency;
-			}
-			else if (player.skillProf.Contains("Survival"))
-			{
-				modifier += player.proficiency;
-			}
-			DiceResult1.Text = $"{d20.roll() + modifier}";
-			DiceResult2.Text = $"{d20.roll() + modifier}";
-		}
-		#endregion Ability Rolls
+			int mod;
+			string modText = (sender as Label).Text;
+			if (modText.Contains("-") || !modText.Contains("+"))
+				mod = int.Parse(modText);
+			else
+				mod = int.Parse(modText.Substring(1));
+			DiceResult1.Text = $"{d20.roll() + mod}";
+			DiceResult2.Text = $"{d20.roll() + mod}";
+        }
 
 		private void OnFormClose(object sender, CancelEventArgs e)
 		{
@@ -1372,9 +1075,13 @@ namespace _5eCharDisplay
 			SaveClassFeatures();
 			SaveCharFeatures();
 		}
-
 		private void SaveInventory()
 		{
+			player.inventory.Clear();
+			foreach (var item in Inventory.Lines)
+			{
+				player.inventory.Add(item);
+			}
 			File.WriteAllLines($@".\Data\Characters\{player.name}\{player.name}Inventory.txt", player.inventory.ToArray());
 			return;
 		}
@@ -1409,13 +1116,6 @@ namespace _5eCharDisplay
 			HPCurrent.Text = player.hitPoints.ToString();
 			TempHP.Text = player.tempHP.ToString();
 			HPModify.Value = 0;
-		}
-
-		private void InitNum_Click(object sender, EventArgs e)
-		{
-			Thread.Sleep(250);
-			DiceResult1.Text = $"{d20.roll() + player.dexterity.getMod()}";
-			DiceResult2.Text = $"{d20.roll() + player.dexterity.getMod()}";
 		}
 
 		private void HitDieLabel_Click(object sender, EventArgs e)

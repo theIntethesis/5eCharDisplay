@@ -52,6 +52,7 @@ namespace _5eCharDisplay
 		public charRace myRace;
 		public charBackground myBackground;
 		public List<Armor> wornArmor;
+		public List<Weapon> equippedWeapons;
 
 		public bool Spellcasting = false;
 		public string getRace()
@@ -464,6 +465,7 @@ namespace _5eCharDisplay
 			}
 
 			returned.wornArmor = Armor.listFromYaml($@"./Data/Characters/{returned.name}/{returned.name}Armor.yaml");
+			returned.equippedWeapons = Weapon.listFromYaml($@"./Data/Characters/{returned.name}/{returned.name}Weapons.yaml");
 
 			return returned;
 		}

@@ -213,7 +213,6 @@ namespace _5eCharDisplay.Classes
 		public override List<GroupBox> getInfoBoxes()
 		{
 			var infoBoxes = new List<GroupBox>();
-			infoBoxes.Add(AddClassDelimiter("Wizard"));
 			if (level >= 1)
 			{
 				// Spellcasting
@@ -336,6 +335,7 @@ namespace _5eCharDisplay.Classes
 		private GroupBox AddSubclass()
 		{
 			GroupBox box = new GroupBox();
+			box.MaximumSize = new Size(180, int.MaxValue);
 			box.Text = "Arcane Tradition";
 			Label label = new Label();
 			label.MaximumSize = new Size(168, int.MaxValue);

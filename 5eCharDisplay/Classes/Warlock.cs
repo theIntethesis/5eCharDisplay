@@ -148,7 +148,6 @@ namespace _5eCharDisplay.Classes
 		public override List<GroupBox> getInfoBoxes()
 		{
 			var infoBoxes = new List<GroupBox>();
-			infoBoxes.Add(AddClassDelimiter("Warlock"));
 			if (level >= 1)
 			{
 				infoBoxes.Add(AddSubclassBox());
