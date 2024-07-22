@@ -8,7 +8,7 @@ using System.IO;
 
 namespace _5eCharDisplay
 {
-    internal class Die
+    public class Die
 	{
 		public int num { set; get; }
 		public int sides { set; get; }

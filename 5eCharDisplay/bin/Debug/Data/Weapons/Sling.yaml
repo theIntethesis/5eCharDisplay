@@ -4,3 +4,4 @@ DamageDie:
     sides: 4
 DamageType: ["Bludgeoning"]
 Properties: ["Ammunition", "Range (30/120)"]
+PType: Simple

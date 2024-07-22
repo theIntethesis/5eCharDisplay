@@ -4,3 +4,4 @@ DamageDie:
     sides: 6
 DamageType: ["Piercing"]
 Properties: ["Thrown (30/120)"]
+PType: Simple

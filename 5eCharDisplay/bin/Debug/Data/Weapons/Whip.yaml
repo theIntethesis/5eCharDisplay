@@ -6,3 +6,4 @@ DamageType: ["Slashing"]
 Properties: ["Finesse", "Reach"]
 MagicBonus: 0
 Effects: []
+PType: Martial

@@ -15,7 +15,6 @@ namespace _5eCharDisplay
 		[STAThread]
 		static void Main()
 		{
-			// This
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new CharacterSelect());

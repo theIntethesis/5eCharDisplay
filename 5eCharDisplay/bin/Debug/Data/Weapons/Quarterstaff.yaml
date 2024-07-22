@@ -4,3 +4,4 @@ DamageDie:
     sides: 6
 DamageType: ["Bludgeoning"]
 Properties: ["Versatile (1d8)"]
+PType: Simple

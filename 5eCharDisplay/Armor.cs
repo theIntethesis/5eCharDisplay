@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace _5eCharDisplay
 {
-	internal class Armor
+	public class Armor
 	{
 		public string Name { get; set; }
 		public string AC { get; set; }

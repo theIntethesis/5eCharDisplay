@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace _5eCharDisplay
 {
-	internal class Character
+	public class Character
 	{
 		#region Set / Get Constructors
 		public string name { get; set; }
@@ -40,17 +40,17 @@ namespace _5eCharDisplay
 		public int experience { set; get; }
 		#endregion Set / Get Constructors
 
-		public Statistic strength = new Statistic("Strength");
-		public Statistic dexterity = new Statistic("Dexterity");
-		public Statistic constitution = new Statistic("Constitution");
-		public Statistic intelligence = new Statistic("Intelligence");
-		public Statistic wisdom = new Statistic("Wisdom");
-		public Statistic charisma = new Statistic("Charisma");
+		internal Statistic strength = new Statistic("Strength");
+		internal Statistic dexterity = new Statistic("Dexterity");
+		internal Statistic constitution = new Statistic("Constitution");
+		internal Statistic intelligence = new Statistic("Intelligence");
+		internal Statistic wisdom = new Statistic("Wisdom");
+		internal Statistic charisma = new Statistic("Charisma");
 		public int proficiency;
 		public int tempHP = 0;
-		public List<charClass> myClasses = new List<charClass>();
-		public charRace myRace;
-		public charBackground myBackground;
+		internal List<charClass> myClasses = new List<charClass>();
+		internal charRace myRace;
+		internal charBackground myBackground;
 		public List<Armor> wornArmor;
 		public List<Weapon> equippedWeapons;
 
@@ -81,7 +81,10 @@ namespace _5eCharDisplay
 			}
 			return returnMe;
 		}
-
+		public enum Stat
+        {
+			Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma
+        }
 		public int affectHitPoints(int hps)
 		{
 			if(tempHP > 0 && hps < 0)

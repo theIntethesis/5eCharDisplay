@@ -4,3 +4,4 @@ DamageDie:
     sides: 4
 DamageType: ["Slashing"]
 Properties: ["Light"]
+PType: Simple

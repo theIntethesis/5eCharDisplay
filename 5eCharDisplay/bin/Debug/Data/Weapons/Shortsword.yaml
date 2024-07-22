@@ -6,3 +6,4 @@ DamageType: ["Piercing"]
 Properties: ["Finesse", "Light"]
 MagicBonus: 0
 Effects: []
+PType: Martial

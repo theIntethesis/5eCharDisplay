@@ -1,6 +1,6 @@
-- Name: Mage Armor
-  AC: 13
-  DexMax: -1
 - Name: Shield
   AC: +2
   aType: Shield
+- Name: Mage Armor
+  AC: 13
+  DexMax: -1

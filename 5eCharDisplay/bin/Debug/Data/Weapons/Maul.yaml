@@ -6,3 +6,4 @@ DamageType: ["Bludgeoning"]
 Properties: ["Heavy", "Two-Handed"]
 MagicBonus: 0
 Effects: [""]
+PType: Martial

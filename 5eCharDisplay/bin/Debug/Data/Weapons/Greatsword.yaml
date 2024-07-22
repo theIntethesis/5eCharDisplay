@@ -4,3 +4,4 @@ DamageDie:
     sides: 6
 DamageType: ["Slashing"]
 Properties: ["Heavy", "Two-Handed"]
+PType: Martial

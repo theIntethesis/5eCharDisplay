@@ -4,3 +4,4 @@ DamageDie:
     sides: 8
 DamageType: ["Bludgeoning"]
 Properties: ["Two-Handed"]
+PType: Simple

@@ -6,3 +6,4 @@ DamageType: ["Bludgeoning"]
 Properties: ["Versatile (1d10)"]
 MagicBonus: 0
 Effects: []
+PType: Martial

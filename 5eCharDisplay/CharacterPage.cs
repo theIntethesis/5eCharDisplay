@@ -7,6 +7,7 @@ using System.Linq;
 using System.IO;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using _5eCharDisplay;
 
 namespace _5eCharDisplay
 {
@@ -65,19 +66,14 @@ namespace _5eCharDisplay
 				tab.Text = player.myClasses[i].name.ToString();
 				tab.Size = new Size(279, 598);
 				tab.Padding = new Padding(3);
-				Panel panel = new Panel();
-				tab.Controls.Add(panel);
-				panel.AutoScroll = true;
-				panel.Location = new Point(0, 0);
-				panel.TabIndex = 25;
+				tab.AutoScroll = true;
 
 				foreach(var g in player.myClasses[i].getInfoBoxes())
                 {
-					panel.Controls.Add(g);
+					tab.Controls.Add(g);
 					g.Location = new Point(6, ylocation);
 					ylocation += g.Height + 12;
 				}
-				panel.Size = new Size(279, 485);
 
 				ylocation = 6;
 			}
@@ -87,58 +83,19 @@ namespace _5eCharDisplay
 			RTab.Text = "Racial Features";
 			RTab.Size = new Size(279, 598);
 			RTab.Padding = new Padding(3);
-			Panel RPanel = new Panel();
-			RTab.Controls.Add(RPanel);
-			RPanel.AutoScroll = true;
-			RPanel.Location = new Point(0, 0);
-			RPanel.Size = new Size(279, 485);
-			RPanel.TabIndex = 25;
+			RTab.AutoScroll = true;
 			foreach (GroupBox g in player.myRace.getAbilityBoxes())
 			{
-				RPanel.Controls.Add(g);
+				RTab.Controls.Add(g);
 				g.Location = new Point(6, ylocation);
 				ylocation += g.Height + 12;
 			}
 
-			Armor chestArmor = null;
-			Armor shield = null;
-			foreach (Armor a in player.wornArmor)
-			{
-				if (a.aType != Armor.ArmorType.Shield && chestArmor == null)
-				{
-					chestArmor = a;
-				}
-				else if (shield == null)
-				{
-					shield = a;
-				}
-			}
-			int AC = 10;
-			if (chestArmor != null)
-			{
-				int dexMax = chestArmor.DexMax;
-				if (dexMax == -1)
-				{
-					dexMax = 10;
-				}
-				AC = int.Parse(chestArmor.AC);
-				if (chestArmor.aType != Armor.ArmorType.Heavy)
-					AC += Math.Min(player.dexterity.getMod(), dexMax);
-			}
-			else
-				AC += player.dexterity.getMod();
-			if (shield != null)
-			{
-				AC += int.Parse(shield.AC.Substring(1));
-			}
+			ACNum.Text = $"{Controller.CPage_GetArmorClass(player) + player.myRace.getACBoost()}";
 
-			ACNum.Text = $"{AC + player.myRace.getACBoost()}";
+			SteLabel.Text = Controller.CPage_GetStealthLabel(player);
 
-			if (chestArmor != null && chestArmor.stealthDis)
-				SteLabel.Text = "Stealth [D]";
-			else
-				SteLabel.Text = "Stealth";
-
+			int WeaponYValues = 6;
 			foreach(Weapon w in player.equippedWeapons)
             {
 				Label wName = new Label();
@@ -148,97 +105,29 @@ namespace _5eCharDisplay
 				WeaponsTab.Controls.Add(aBonus);
 				WeaponsTab.Controls.Add(dRoll);
 
-				wName.Text = $"{w.Name} | ";
-				if (w.MagicBonus > 0)
-					wName.Text += $"+{w.MagicBonus} ";
-				wName.Text += w.BaseType.ToString();
-				wName.AutoSize = true;
-				wName.Location = new Point(9, 9);
+				var strings = Controller.CPage_GetWeaponButtonText(w, player);
 
-				int bonus = 0;
-				if (w.Properties.Contains("Versatile"))
-					bonus += Math.Max(player.strength.getMod(), player.dexterity.getMod());
-				else
-					bonus += player.strength.getMod();
-				if (player.weaponProfs.Contains(w.BaseType.ToString()))
-					bonus += player.proficiency;
-				else if (player.weaponProfs.Contains("Simple Weapons") /* && [Weapon is a simple weapon] */)
-					bonus += player.proficiency;
-				else if (player.weaponProfs.Contains("Martial Weapons") /* && [Weapon is a martial weapon] */)
-					bonus += player.proficiency;
-				if (bonus >= 0) aBonus.Text = $"+{bonus}";
-				else aBonus.Text = $"{bonus}";
+				wName.Text = strings.Item1;
+				wName.AutoSize = true;
+				wName.Location = new Point(9, WeaponYValues + 3);
+
+				if (strings.Item2 >= 0) aBonus.Text = $"+{strings.Item2}";
+				else aBonus.Text = $"{strings.Item2}";
 				aBonus.Size = new Size(32, 23);
-				aBonus.Location = new Point(250 - aBonus.Size.Width, 6);
+				aBonus.Location = new Point(250 - aBonus.Size.Width, WeaponYValues);
 				aBonus.Click += AttackRoll;
 
-				for(int i = 0; i < w.DamageDie.Count; i++)
-                {
-					if (i > 0) dRoll.Text += " + ";
-					dRoll.Text += $"{w.DamageDie[i]}";
-					int damageMod = 0;
-					if (i == 0)
-                    {
-						if (w.Properties.Contains("Versatile"))
-							damageMod += Math.Max(player.strength.getMod(), player.dexterity.getMod());
-						else
-							damageMod += player.strength.getMod();
-						damageMod += w.MagicBonus;
-					}
-					if (damageMod > 0)
-						dRoll.Text += $" + {damageMod}";
-					else if (damageMod < 0)
-						dRoll.Text += $" - {damageMod}";
-					dRoll.Text += $" {w.DamageType[i]}";
-				}
+				dRoll.Text = strings.Item3;
 				dRoll.AutoSize = true;
-				dRoll.Location = new Point(250 - dRoll.Size.Width, 30);
+				dRoll.Location = new Point(250 - dRoll.Size.Width, WeaponYValues + 24);
 				dRoll.MouseDown += DamageRoll;
+
+				WeaponYValues += 36 + dRoll.Size.Height;
 			}
-
-
-
 
 			SpeedNum.Text = $"{player.myRace.getSpeed()}";
 
-			ProfsText.Text = "";
-
-			for(int i = 0; i < player.languages.Count() - 1; i++)
-			{
-				ProfsText.Text += player.languages.ElementAt(i) + ", ";
-			}
-			if(player.languages.Count() != 0)
-				ProfsText.Text += player.languages.ElementAt(player.languages.Count() - 1) + "\n\n";
-
-			for(int i = 0; i < player.armorProfs.Count() - 1; i++)
-			{
-				ProfsText.Text += player.armorProfs.ElementAt(i) + ", ";
-			}
-			if(player.armorProfs.Count() != 0)
-				ProfsText.Text += player.armorProfs.ElementAt(player.armorProfs.Count() - 1) + "\n\n";
-
-			for (int i = 0; i < player.weaponProfs.Count() - 1; i++)
-			{
-				ProfsText.Text += player.weaponProfs.ElementAt(i) + ", ";
-			}
-
-			if (player.weaponProfs.Count() != 0)
-				ProfsText.Text += player.weaponProfs.ElementAt(player.weaponProfs.Count() - 1) + "\n\n";
-
-			for (int i = 0; i < player.toolProf.Count() - 1; i++)
-			{
-				ProfsText.Text += player.toolProf.ElementAt(i);
-				if (player.expertise.Contains(player.toolProf.ElementAt(i)))
-					ProfsText.Text += " [E]";
-				ProfsText.Text += ", ";
-			}
-			if (player.toolProf.Count() != 0)
-			{
-				ProfsText.Text += player.toolProf.ElementAt(player.toolProf.Count() - 1);
-				if (player.expertise.Contains(player.toolProf.ElementAt(player.toolProf.Count() - 1)))
-					ProfsText.Text += "[E]";
-			}
-			ProfsText.Text += "\n\n";
+			ProfsText.Text = Controller.CPage_GetProfList(player);
 
 			int low = 8;
 			foreach(charClass c in player.myClasses)
@@ -261,167 +150,13 @@ namespace _5eCharDisplay
 			if (!player.Spellcasting)
 				SpellcastingToggle.Hide();
 
-			#region Saving Throws
+			(StrSaveProf.Checked, StrSaveNum.Text) = Controller.CPage_GetSkillProfs(player, "StrSave", Character.Stat.Strength);
+			(DexSaveProf.Checked, DexSaveNum.Text) = Controller.CPage_GetSkillProfs(player, "DexSave", Character.Stat.Dexterity);
+			(ConSaveProf.Checked, ConSaveNum.Text) = Controller.CPage_GetSkillProfs(player, "ConSave", Character.Stat.Constitution);
+			(IntSaveProf.Checked, IntSaveNum.Text) = Controller.CPage_GetSkillProfs(player, "IntSave", Character.Stat.Intelligence);
+			(WisSaveProf.Checked, WisSaveNum.Text) = Controller.CPage_GetSkillProfs(player, "WisSave", Character.Stat.Wisdom);
+			(ChaSaveProf.Checked, ChaSaveNum.Text) = Controller.CPage_GetSkillProfs(player, "ChaSave", Character.Stat.Charisma);
 
-			if (player.expertise.Contains("StrSave"))
-			{
-				StrSaveProf.Checked = true;
-				StrSaveNum.Text = $"+{2 * player.proficiency + player.strength.getMod()}";
-			}
-			else if (player.skillProf.Contains("StrSave"))
-			{
-				StrSaveProf.Checked = true;
-				StrSaveNum.Text = $"+{player.proficiency + player.strength.getMod()}";
-			}
-			else
-			{
-				if(player.strength.getMod() == 0)
-				{
-					StrSaveNum.Text = "0";
-				}
-				else if(player.strength.getMod() > 0)
-				{
-					StrSaveNum.Text = $"+{player.strength.getMod()}";
-				}
-				else
-				{
-					StrSaveNum.Text = $"{player.strength.getMod()}";
-				}
-			}
-
-			if (player.expertise.Contains("DexSave"))
-			{
-				DexSaveProf.Checked = true;
-				DexSaveNum.Text = $"+{2 * player.proficiency + player.dexterity.getMod()}";
-			}
-			else if (player.skillProf.Contains("DexSave"))
-			{
-				DexSaveProf.Checked = true;
-				DexSaveNum.Text = $"+{player.proficiency + player.dexterity.getMod()}";
-			}
-			else
-			{
-				if (player.dexterity.getMod() == 0)
-				{
-					DexSaveNum.Text = "0";
-				}
-				else if (player.dexterity.getMod() > 0)
-				{
-					DexSaveNum.Text = $"+{player.dexterity.getMod()}";
-				}
-				else
-				{
-					DexSaveNum.Text = $"{player.dexterity.getMod()}";
-				}
-			}
-
-			if (player.expertise.Contains("ConSave"))
-			{
-				ConSaveProf.Checked = true;
-				ConSaveNum.Text = $"+{2 * player.proficiency + player.constitution.getMod()}";
-			}
-			else if (player.skillProf.Contains("ConSave"))
-			{
-				ConSaveProf.Checked = true;
-				ConSaveNum.Text = $"+{player.proficiency + player.strength.getMod()}";
-			}
-			else
-			{
-				if (player.constitution.getMod() == 0)
-				{
-					ConSaveNum.Text = "0";
-				}
-				else if (player.constitution.getMod() > 0)
-				{
-					ConSaveNum.Text = $"+{player.constitution.getMod()}";
-				}
-				else
-				{
-					ConSaveNum.Text = $"{player.constitution.getMod()}";
-				}
-			}
-
-
-			if (player.expertise.Contains("IntSave"))
-			{
-				IntSaveProf.Checked = true;
-				IntSaveNum.Text = $"+{2 * player.proficiency + player.intelligence.getMod()}";
-			}
-			else if (player.skillProf.Contains("IntSave"))
-			{
-				IntSaveProf.Checked = true;
-				IntSaveNum.Text = $"+{player.proficiency + player.intelligence.getMod()}";
-			}
-			else
-			{
-				if (player.intelligence.getMod() == 0)
-				{
-					IntSaveNum.Text = "0";
-				}
-				else if (player.intelligence.getMod() > 0)
-				{
-					IntSaveNum.Text = $"+{player.intelligence.getMod()}";
-				}
-				else
-				{
-					IntSaveNum.Text = $"{player.intelligence.getMod()}";
-				}
-			}
-
-
-			if (player.expertise.Contains("WisSave"))
-			{
-				WisSaveProf.Checked = true;
-				WisSaveNum.Text = $"+{2 * player.proficiency + player.wisdom.getMod()}";
-			}
-			else if (player.skillProf.Contains("WisSave"))
-			{
-				WisSaveProf.Checked = true;
-				WisSaveNum.Text = $"+{player.proficiency + player.strength.getMod()}";
-			}
-			else
-			{
-				if (player.wisdom.getMod() == 0)
-				{
-					WisSaveNum.Text = "0";
-				}
-				else if (player.wisdom.getMod() > 0)
-				{
-					WisSaveNum.Text = $"+{player.wisdom.getMod()}";
-				}
-				else
-				{
-					WisSaveNum.Text = $"{player.wisdom.getMod()}";
-				}
-			}
-
-
-			if (player.expertise.Contains("ChaSave"))
-			{
-				ChaSaveProf.Checked = true;
-				ChaSaveNum.Text = $"+{2 * player.proficiency + player.charisma.getMod()}";
-			}
-			else if (player.skillProf.Contains("ChaSave"))
-			{
-				ChaSaveProf.Checked = true;
-				ChaSaveNum.Text = $"+{player.proficiency + player.strength.getMod()}";
-			}
-			else
-			{
-				if (player.charisma.getMod() == 0)
-				{
-					ChaSaveNum.Text = "0";
-				}
-				else if (player.charisma.getMod() > 0)
-				{
-					ChaSaveNum.Text = $"+{player.charisma.getMod()}";
-				}
-				else
-				{
-					ChaSaveNum.Text = $"{player.charisma.getMod()}";
-				}
-			}
-			#endregion Saving Throws
 
 			#region Skill Checks
 			if (player.expertise.Contains("Acrobatics"))
@@ -1017,7 +752,6 @@ namespace _5eCharDisplay
 			}
 			DiceResult2.Text = "";
         }
-
 		private void AttackRoll(object sender, EventArgs e)
         {
 			Thread.Sleep(250);
@@ -1032,7 +766,6 @@ namespace _5eCharDisplay
 			if (roll2 == 20)
 				DiceResult2.Text += " (CRIT!)";
 		}
-
 		private void UpdateInventory(object sender, EventArgs e)
         {
 			var k = (e as KeyEventArgs).KeyCode;
@@ -1055,7 +788,6 @@ namespace _5eCharDisplay
 			if (e.KeyValue == (int)Keys.Return || e.KeyValue == (int)Keys.Enter)
 				XPButton_Click(sender, e);
 		}
-
 		private void AbilityCheckRoll(object sender, EventArgs e)
         {
 			Thread.Sleep(250);
@@ -1068,7 +800,6 @@ namespace _5eCharDisplay
 			DiceResult1.Text = $"{d20.roll() + mod}";
 			DiceResult2.Text = $"{d20.roll() + mod}";
         }
-
 		private void OnFormClose(object sender, CancelEventArgs e)
 		{
 			SaveInventory();
@@ -1101,7 +832,6 @@ namespace _5eCharDisplay
 			charInfo[13] = $"experience: {player.experience}";
 			File.WriteAllLines($@".\Data\Characters\{player.name}\{player.name}.yaml", charInfo);
 		}
-
 		private void HPUp_Click(object sender, EventArgs e)
 		{
 			player.affectHitPoints((int)HPModify.Value);
@@ -1109,7 +839,6 @@ namespace _5eCharDisplay
 			TempHP.Text = player.tempHP.ToString();
 			HPModify.Value = 0;
 		}
-
 		private void HPDown_Click(object sender, EventArgs e)
 		{
 			player.affectHitPoints(-(int)HPModify.Value);
@@ -1117,7 +846,6 @@ namespace _5eCharDisplay
 			TempHP.Text = player.tempHP.ToString();
 			HPModify.Value = 0;
 		}
-
 		private void HitDieLabel_Click(object sender, EventArgs e)
 		{
 			var labelText = sender as Label;
@@ -1138,7 +866,6 @@ namespace _5eCharDisplay
 				}
 			}
 		}
-
 		private void LRButton_Click(object sender, EventArgs e)
 		{
 			player.hitPoints = player.maxHitPoints;
@@ -1152,7 +879,6 @@ namespace _5eCharDisplay
 				i++;
 			}
 		}
-
 		private void SRButton_Click(object sender, EventArgs e)
 		{
 			int i = 0;
@@ -1161,7 +887,6 @@ namespace _5eCharDisplay
 				c.shortRest(player.name, ++i);
 			}
 		}
-
 		private void SetTHP_Click(object sender, EventArgs e)
 		{
 			player.tempHP = (int)HPModify.Value;
@@ -1210,7 +935,6 @@ namespace _5eCharDisplay
 
 			return totalResult;
 		}
-
 		private static int GetModifier(string input)
 		{
 			// Define a regular expression pattern to match modifiers (e.g., "+ 2")
@@ -1227,7 +951,6 @@ namespace _5eCharDisplay
 
 			return modifier;
 		}
-
 		private void LastRoll_Click(object sender, EventArgs e)
 		{
 			string ParseMe = LastRoll.Text;
@@ -1237,7 +960,6 @@ namespace _5eCharDisplay
 				DiceResult2.Text = "";
 			}
 		}
-
 		private void SpellcastingToggle_Click(object sender, EventArgs e)
 		{
 			for(int i = 0; i < player.myClasses.Count; i++)
@@ -1249,7 +971,6 @@ namespace _5eCharDisplay
 				}
 			}
 		}
-
 		private void detailsButton_Click(object sender, EventArgs e)
 		{
 			details = !details;
@@ -1262,7 +983,6 @@ namespace _5eCharDisplay
 				Width = defaultWidth;
 			}
 		}
-
 		private void XPButton_Click(object sender, EventArgs e)
 		{
 			player.experience += (int)XPTicker.Value;
@@ -1270,7 +990,6 @@ namespace _5eCharDisplay
 			
 			ClassBox.Text = player.getClassLevelEXP();
 		}
-
 		private void ACNum_Click(object sender, EventArgs e)
 		{
 			MouseEventArgs mouse = e as MouseEventArgs;
@@ -1324,7 +1043,6 @@ namespace _5eCharDisplay
 			var serializer = new YamlDotNet.Serialization.SerializerBuilder().Build();
 			var yaml = serializer.Serialize(player.wornArmor);
 			File.WriteAllText($@"./Data/Characters/{player.name}/{player.name}Armor.yaml", yaml);
-
 		}
 		protected void closeOnLostFocus(object sender, EventArgs e)
 		{

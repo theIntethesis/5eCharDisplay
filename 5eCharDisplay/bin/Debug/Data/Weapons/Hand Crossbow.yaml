@@ -4,3 +4,4 @@ DamageDie:
     sides: 6
 DamageType: ["Piercing"]
 Properties: ["Ammunition", "Range (30/120)", "Light", "Loading"]
+PType: Martial

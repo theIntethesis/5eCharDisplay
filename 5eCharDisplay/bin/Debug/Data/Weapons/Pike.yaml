@@ -6,3 +6,4 @@ DamageType: ["Piercing"]
 Properties: ["Heavy", "Reach", "Two-Handed"]
 MagicBonus: 0
 Effects: []
+PType: Martial

@@ -4,3 +4,4 @@ DamageDie:
     sides: 8
 DamageType: ["Piercing"]
 Properties: ["Ammunition", "Loading", "Range (80/320)", "Two-Handed"]
+PType: Simple

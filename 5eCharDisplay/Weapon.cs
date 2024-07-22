@@ -8,7 +8,7 @@ using System.IO;
 
 namespace _5eCharDisplay
 {
-    internal class Weapon
+    public class Weapon
     {
 		public string Name { get; set; }
 		public List<Die> DamageDie { get; set; }
@@ -17,6 +17,7 @@ namespace _5eCharDisplay
 		public int MagicBonus { set; get; }
 		public List<string> Effects { set; get; }
 		public WeaponType BaseType { set; get; }
+		public ProficiencyType PType { set; get; }
 		public enum WeaponType
 		{
 			Battleaxe,
@@ -56,7 +57,10 @@ namespace _5eCharDisplay
 			Warhammer,
 			Whip
 		}
-
+		public enum ProficiencyType
+        {
+			Unarmed, Simple, Martial, Exotic, Improvised
+        }
 		public static Weapon fromYaml(string aName = "", string fName = "")
 		{
 			Weapon returned = null;
