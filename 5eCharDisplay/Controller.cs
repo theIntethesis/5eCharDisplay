@@ -158,7 +158,7 @@ namespace _5eCharDisplay
 				check = true;
 				modifier += 2 * player.proficiency;
 			}
-			else if (player.skillProf.Contains("StrSave"))
+			else if (player.skillProf.Contains(prof))
 			{
 				check = true;
 				modifier += player.proficiency;
@@ -191,5 +191,41 @@ namespace _5eCharDisplay
 			else text = $"{modifier}";
 			return (check, text);
 		}
+		static internal string CPage_GetPassives(Character player, string prof, Character.Stat stat)
+		{
+            int modifier = 0;
+            if (player.expertise.Contains(prof))
+            {
+                modifier += 2 * player.proficiency;
+            }
+            else if (player.skillProf.Contains(prof))
+            {
+                modifier += player.proficiency;
+            }
+            switch (stat)
+            {
+                case Character.Stat.Strength:
+                    modifier += player.strength.getMod();
+                    break;
+                case Character.Stat.Dexterity:
+                    modifier += player.dexterity.getMod();
+                    break;
+                case Character.Stat.Constitution:
+                    modifier += player.constitution.getMod();
+                    break;
+                case Character.Stat.Intelligence:
+                    modifier += player.intelligence.getMod();
+                    break;
+                case Character.Stat.Wisdom:
+                    modifier += player.wisdom.getMod();
+                    break;
+                case Character.Stat.Charisma:
+                    modifier += player.charisma.getMod();
+                    break;
+                default:
+                    break;
+            }
+			return $"{modifier + 10}";
+        }
 	}
 }
