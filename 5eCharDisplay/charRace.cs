@@ -50,7 +50,8 @@ namespace _5eCharDisplay
                 label.AutoSize = true;
                 box.Controls.Add(label);
                 label.Location = new Point(6, 12);
-                box.Size = new Size(180, label.Size.Height + 18);
+                box.MaximumSize = new Size(180, int.MaxValue);
+                box.AutoSize = true;
                 label.MouseDown += DisplayOnRightClick;
                 boxes.Add(box);
             }

@@ -82,6 +82,7 @@ namespace _5eCharDisplay
 				aBonus += player.proficiency;
 			else if (player.weaponProfs.Contains("Martial Weapons") && w.PType == Weapon.ProficiencyType.Martial)
 				aBonus += player.proficiency;
+			aBonus += w.MagicBonus;
 
 			for (int i = 0; i < w.DamageDie.Count; i++)
 			{

@@ -8,10 +8,12 @@ using YamlDotNet.Serialization;
 using System.IO;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Runtime.Versioning;
 
 namespace _5eCharDisplay.Classes
 {
-	internal class Wizard : charClass
+    [SupportedOSPlatform("windows")]
+    internal class Wizard : charClass
 	{
 		public string Skill1 { set; get; }
 		public string Skill2 { set; get; }
@@ -21,7 +23,7 @@ namespace _5eCharDisplay.Classes
 		public List<string> SignatureSpells { set; get; }
 		public int BloodChannelerUsed { set; get; }
 
-		private List<Label> SpellMasterLabels = new List<Label>();
+		private List<Label> SpellMasterLabels = new();
 
 		public Wizard()
 		{
@@ -295,13 +297,14 @@ namespace _5eCharDisplay.Classes
 			label.Text += $" - Spellcasting Ability\n  - Intelligence is your spellcasting for your wizard spells, since you learn your spells through dedicated study and memorization. You use your intelligence whenever a spell refers to your spellcasting ability.\n\n";
 			label.Text += $" - Ritual Casting\n  - You can cast a wizard spell as a ritual if that spell has the ritual tag and you have the spell in your spellbook. You don't need to have the spell prepared.\n\n";
 			label.Text += $" - Spellcasting Focus\n  - You can use an arcane focus as a spellcasting focus for your wizard spells.\n\n";
-			label.Text += $" - Learning Spells of 1st Level or Higher\n  - Each time you gain a wizard level, you can add two wizard spells of your choice to your spellbook for free. Each of these spells must be of a level for which you have spell slots.\n  - In addition, you can add spells that you might find on your adventures to your spellbook. When you find a wizard spell of 1st level or higher, you can add it to your spellbook if it is of a spell level you can prepare and if you can spare the time to decipher it and copy it. For each level of the spell, this process takes 2 hours and costs 50 gp in material components needed to practice the spell, as well as the fine inks needed to record it.\n\n";
+			label.Text += $" - Learning Spells of 1st Level or Higher\n  - Each time you gain a wizard level, you can add two wizard spells of your choice to your spellbook for free. Each of these spells must be of a level for which you have spell slots.\n  - In addition, you can add spells that you might find on your adventures to your spellbook. When you find a wizard spell of 1st level or higher, you can add it to your spellbook if it is of a spell level you can prepare and if you can spare the time to decipher it and copy it. For each level of the spell, this process takes 2 hours and costs 50 gp in material components needed to practice the spell, as well as the fine inks needed to record it.";
 			Spellcasting = true;
 			label.MaximumSize = new Size(168, int.MaxValue);
 			label.AutoSize = true;
 			box.Controls.Add(label);
 			label.Location = new Point(6, 12);
-			box.Size = new Size(180, label.Size.Height + 18);
+            box.MaximumSize = new Size(180, int.MaxValue);
+            box.AutoSize = true;
 			label.MouseDown += DisplayOnRightClick;
 			return box;
 		}
@@ -324,10 +327,11 @@ namespace _5eCharDisplay.Classes
 			resetOnLR.Add(ArcaneRecoveryBox);
 			box.Controls.Add(ArcaneRecoveryBox);
 			
-			ArcaneRecoveryBox.Location = new Point(6, label.Size.Height + 18);
+			ArcaneRecoveryBox.Location = new Point(6, label.Bottom - 115);
 			ArcaneRecoveryBox.CheckedChanged += ToggleArcaneRecovery;
 
-			box.Size = new Size(180, label.Size.Height + 30 + ArcaneRecoveryBox.Size.Height);
+            box.MaximumSize = new Size(180, int.MaxValue);
+            box.AutoSize = true;
 			label.MouseDown += DisplayOnRightClick;
 			return box;
 		}
@@ -338,9 +342,8 @@ namespace _5eCharDisplay.Classes
 			box.MaximumSize = new Size(180, int.MaxValue);
 			box.Text = "Arcane Tradition";
 			Label label = new Label();
-			label.MaximumSize = new Size(168, int.MaxValue);
-			label.AutoSize = true;
 			box.Controls.Add(label);
+			label.MaximumSize = new Size(168, 0);
 			label.Location = new Point(6, 12);
 			int low = 0;
 			switch (ArcaneTradition)
@@ -377,11 +380,12 @@ namespace _5eCharDisplay.Classes
 					{
 						label.Text += $"  - Bloody Marionette\n   - Starting at 14th level, your control over blood extends to amounts of blood within people's bodies. As long as you have a creature's blood, you can cast Dominate Monster targeting that creature without expending a spell slot. A creature that succeeds on the saving throw can't be targeted again in this way for 24 hours.\n\n";
 					}
-					low += label.Size.Height + 12;
+					label.AutoSize = true;
+					low += label.Bottom - 115;
 					Label BloodChannelerLabel = new Label();
 					BloodChannelerLabel.AutoSize = true;
 					BloodChannelerLabel.Location = new Point(6, low);
-					BloodChannelerLabel.Text = "Blood Channeler";
+					BloodChannelerLabel.Text = $"Blood Channeler";
 					box.Controls.Add(BloodChannelerLabel);
 					low += BloodChannelerLabel.Size.Height + 6;
 					int y = 12;
@@ -389,7 +393,7 @@ namespace _5eCharDisplay.Classes
                     {
 						CheckBox cBox = new CheckBox();
 						cBox.AutoSize = true;
-						cBox.Location = new Point(y, low);
+						cBox.Location = new Point(y, BloodChannelerLabel.Bottom);
 						if (BloodChannelerUsed > i) cBox.Checked = true;
 						cBox.CheckedChanged += BloodChannelerCheck;
 						box.Controls.Add(cBox);
@@ -448,8 +452,9 @@ namespace _5eCharDisplay.Classes
 				SpellMasterLabels.Add(spell);
 				low += spell.Size.Height + 6;
 				spell.MouseDown += DisplaySpellOnRightClick;
-			}
-			box.Size = new Size(180, low + 18);
+            }
+            box.MaximumSize = new Size(180, int.MaxValue);
+            box.AutoSize = true;
 			label.MouseDown += ChangeSpellMastery;
 			return box;
 		}
@@ -481,7 +486,9 @@ namespace _5eCharDisplay.Classes
 				spell.MouseDown += DisplaySpellOnRightClick;
 				AlwaysPrepared.Add(s);
 			}
-			box.Size = new Size(180, low + 18);
+			label.MaximumSize = new Size(168, int.MaxValue);
+            box.MaximumSize = new Size(180, int.MaxValue);
+            box.AutoSize = true;
 			label.MouseDown += DisplayOnRightClick;
 			return box;
 		}
