@@ -56,13 +56,14 @@ namespace _5eCharDisplay
 				Console.WriteLine("In Prep Box");
 				GroupBox PrepNum = new GroupBox();
 				PrepNum.Text = "Max Prepared Spells";
-				PrepNum.Size = new Size(150, 70);
-				PrepNum.Location = new Point(860, 12);
+				PrepNum.Size = new Size(118, 66);
+				PrepNum.Location = new Point(748, 11);
 				Label label = new Label();
 				maxNumPrepared = spellmod + player.myClasses[Classnum].SpellPrepLevel;
 				label.Text = $"{maxNumPrepared}";
 				PrepNum.Controls.Add(label);
 				label.Location = new Point(35, 31);
+				label.AutoSize = true;
 				
 				Controls.Add(PrepNum);
 			}

@@ -9,6 +9,8 @@ using System.IO;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Runtime.Versioning;
+using System.Text.RegularExpressions;
+using System.Runtime.CompilerServices;
 
 namespace _5eCharDisplay.Classes
 {
@@ -151,6 +153,7 @@ namespace _5eCharDisplay.Classes
 				spells += $"{spellSlots[i]}, ";
 			spells += $"{spellSlots[8]}]";
 			classInfo[0] = spells;
+			classInfo[20] = $"BloodChannelerUsed: {BloodChannelerUsed}";
 
 			return classInfo;
 		}
@@ -218,15 +221,15 @@ namespace _5eCharDisplay.Classes
 			if (level >= 1)
 			{
 				// Spellcasting
-				infoBoxes.Add(AddSpellcastingBox());
+				infoBoxes.Add(AddAbility($@".\Data\Classes\Wizard\Spellcasting.yaml"));
 				// Arcane Recovery
 				if(ArcaneTradition != "Hematurgy")
-					infoBoxes.Add(AddArcaneRecovery());
-			}
+                    infoBoxes.Add(AddAbility($@".\Data\Classes\Wizard\Arcane Recovery.yaml"));
+            }
 			if (level >= 2)
 			{
 				// Arcane Tradition (Subclass)
-				infoBoxes.Add(AddSubclass());
+				AddAbilityFromList($@".\Data\Classes\Wizard\{ArcaneTradition}.yaml").ForEach(box => infoBoxes.Add(box));
 			}
 			if (level >= 4)
 			{
@@ -259,8 +262,8 @@ namespace _5eCharDisplay.Classes
 			if (level >= 18)
 			{
 				// Spell Mastery
-				infoBoxes.Add(AddSpellMastery());
-			}
+                infoBoxes.Add(AddAbility($@".\Data\Classes\Wizard\Spell Mastery.yaml"));
+            }
 			if (level >= 19)
 			{
 				infoBoxes.Add(ASIBox(featList[4]));
@@ -268,74 +271,62 @@ namespace _5eCharDisplay.Classes
 			if (level >= 20)
 			{
 				// Signature Spells
-				infoBoxes.Add(AddSignatureSpells());
-			}
+                infoBoxes.Add(AddAbility($@".\Data\Classes\Wizard\Signature Spells.yaml"));
+            }
 			return infoBoxes;
 		}
+        private GroupBox AddArcaneRecovery()
+        {
+            GroupBox box = new GroupBox();
+            box.Text = "Arcane Recovery";
+            Label label = new Label();
+            label.Text = $"You have learned to regain some of your magical energy by studying your spellbook. Once per day when you finish a short rest, you can choose expended spell slots to recover. The spell slots can have a combined level that is equal to or less than {Math.Ceiling(level / 2.0)}, and none of the slots can be 6th level or higher.\n\n";
+            label.MaximumSize = new Size(168, int.MaxValue);
+            label.AutoSize = true;
+            box.Controls.Add(label);
+            label.Location = new Point(6, 12);
 
-		private GroupBox AddSpellcastingBox()
-		{
-			int numCantrips = 3;
-			if (level >= 4)
-				numCantrips = 4;
-			if (level >= 10)
-				numCantrips = 5;
+            CheckBox ArcaneRecoveryBox = new CheckBox();
+            ArcaneRecoveryBox.Checked = ArcaneRecovery;
+            ArcaneRecoveryBox.AutoSize = true;
+            ArcaneRecoveryBox.Text = "Arcane Recovery / LR";
+            resetOnLR.Add(ArcaneRecoveryBox);
+            box.Controls.Add(ArcaneRecoveryBox);
 
-			int numSpells = 2;
-			if (level < 10)
-				numSpells = level + 1;
-			else
-				numSpells = 10 + ((level - 10) / 2);
-
-			GroupBox box = new GroupBox();
-			box.Text = "Spellcasting";
-			Label label = new Label();
-			label.Text = "As a student of arcane magic, you have a spellbook containing spells that show the first glimmerings of your true power.\n\n";
-			label.Text += $" - Cantrips\n  - You know {numCantrips} cantrips of your choice from the wizard spell list. You learn additional wizard cantrips of your choice at higher levels.\n\n";
-			label.Text += $" - Spellbook\n  - You have a spellbook containing {4 + 2*level} wizard spells of your choice. To cast a spell from among them, you must expend a slot of the spell's level or higher. You regain all expended spell slots when you finish a long rest.\n\n";
-			label.Text += $" - Preparing and Casting Spells\n  - You prepare the list of wizard spells for you to cast. To do so, choose {/* INT + LEVEL */ 1} wizard spells from your spellbook. The spells must be of a level for which you have spell slots.\n  - You can change your list of prepared spells when you finish a long rest.\n\n";
-			label.Text += $" - Spellcasting Ability\n  - Intelligence is your spellcasting for your wizard spells, since you learn your spells through dedicated study and memorization. You use your intelligence whenever a spell refers to your spellcasting ability.\n\n";
-			label.Text += $" - Ritual Casting\n  - You can cast a wizard spell as a ritual if that spell has the ritual tag and you have the spell in your spellbook. You don't need to have the spell prepared.\n\n";
-			label.Text += $" - Spellcasting Focus\n  - You can use an arcane focus as a spellcasting focus for your wizard spells.\n\n";
-			label.Text += $" - Learning Spells of 1st Level or Higher\n  - Each time you gain a wizard level, you can add two wizard spells of your choice to your spellbook for free. Each of these spells must be of a level for which you have spell slots.\n  - In addition, you can add spells that you might find on your adventures to your spellbook. When you find a wizard spell of 1st level or higher, you can add it to your spellbook if it is of a spell level you can prepare and if you can spare the time to decipher it and copy it. For each level of the spell, this process takes 2 hours and costs 50 gp in material components needed to practice the spell, as well as the fine inks needed to record it.";
-			Spellcasting = true;
-			label.MaximumSize = new Size(168, int.MaxValue);
-			label.AutoSize = true;
-			box.Controls.Add(label);
-			label.Location = new Point(6, 12);
-            box.MaximumSize = new Size(180, int.MaxValue);
-            box.AutoSize = true;
-			label.MouseDown += DisplayOnRightClick;
-			return box;
-		}
-
-		private GroupBox AddArcaneRecovery()
-		{
-			GroupBox box = new GroupBox();
-			box.Text = "Arcane Recovery";
-			Label label = new Label();
-			label.Text = $"You have learned to regain some of your magical energy by studying your spellbook. Once per day when you finish a short rest, you can choose expended spell slots to recover. The spell slots can have a combined level that is equal to or less than {Math.Ceiling(level/2.0)}, and none of the slots can be 6th level or higher.\n\n";
-			label.MaximumSize = new Size(168, int.MaxValue);
-			label.AutoSize = true;
-			box.Controls.Add(label);
-			label.Location = new Point(6, 12);
-
-			CheckBox ArcaneRecoveryBox = new CheckBox();
-			ArcaneRecoveryBox.Checked = ArcaneRecovery;
-			ArcaneRecoveryBox.AutoSize = true;
-			ArcaneRecoveryBox.Text = "Arcane Recovery / LR";
-			resetOnLR.Add(ArcaneRecoveryBox);
-			box.Controls.Add(ArcaneRecoveryBox);
-			
-			ArcaneRecoveryBox.Location = new Point(6, label.Bottom - 115);
-			ArcaneRecoveryBox.CheckedChanged += ToggleArcaneRecovery;
+            ArcaneRecoveryBox.Location = new Point(6, label.Bottom - 115);
+            ArcaneRecoveryBox.CheckedChanged += ToggleArcaneRecovery;
 
             box.MaximumSize = new Size(180, int.MaxValue);
             box.AutoSize = true;
-			label.MouseDown += DisplayOnRightClick;
-			return box;
-		}
-
+            label.MouseDown += DisplayOnRightClick;
+            return box;
+        }
+        internal override string GetValue(string variable)
+        {
+			string retMe = "";
+			switch (variable)
+			{
+				case "{numCantrips}":
+                    retMe = "3";
+                    if (level >= 4)
+                        retMe = "4";
+                    if (level >= 10)
+                        retMe = "5";
+                    break;
+                case "{numSpells}":
+					retMe = $"{4 + 2 * level}";
+                    break;
+                case "{numPreparedSpells}":
+					retMe = $"{abilityModifiers[3] + level}";
+                    break;
+				case "{RecoverySlots}":
+					retMe = $"{Math.Ceiling(level / 2.0)}";
+						break;
+                default:
+					break;
+			}
+			return retMe;
+        }
 		private GroupBox AddSubclass()
 		{
 			GroupBox box = new GroupBox();

@@ -1,0 +1,25 @@
+- Name: Blood Channeler
+  Description: Once per turn, you can choose to inflict a wound upon yourself to cast a spell without expending a spell slot. To cast a spell this way, you expend a hit die and roll a number of d6 equal to the level of spell slot you're replacing. You lose hit points equal to the total amount rolled. If you are reduced to 0 hit points this way, the spell you cast takes effect before you fall unconcious.\nYou cannot cast a spell at 6th level or higher this way, nor can you cast a spell at a level higher than you have spell slots for.
+  uses: Proficiency
+  refresh: LongRest
+  levelAt: 2
+- Name: Quickened Recovery
+  Description: Starting at second level, your wounds recover at expedited speed. At the end of a short rest, you regain an expended Hit Die. At the end of a long rest, you regain an additional amount of Hit Dice equal to your proficiency bonus.
+  uses: NoAbility
+  refresh: NoRefresh
+  levelAt: 2
+- Name: Siphon Blood
+  Description: Starting at sixth level, your control over your blood and the blood of others increases. You can use an action to create simple items as long as you have requisite blood to manifest them. For example, a small pool of blood might become a dagger, a small length of rope, or a stone.
+  uses: NoAbility
+  refresh: NoRefresh
+  levelAt: 6
+- Name: Blood Ties
+  Description: Starting at 10th level, spells you cast are empowered against creatures whose blood you fuse into the magic. Whenever you cast a spell, it has the following effects:\n\t- The spell save DC is increased by 4 against creatures whose blood you possess.\n\t- You have advantage on the spell attack roll against creatures whose blood you possess.\n\t- If the spell restores hit points, it restores the maximum amount.
+  uses: NoAbility
+  refresh: NoRefresh
+  levelAt: 10
+- Name: Bloody Marionette
+  Description: Starting at 14th level, your control over blood extends to amounts of blood within people's bodies. As long as you have a creature's blood, you can cast Dominate Monster targeting that creature without expending a spell slot. A creature that succeeds on the saving throw can't be targeted again in this way for 24 hours.
+  uses: NoAbility
+  refresh: NoRefresh
+  levelAt: 14

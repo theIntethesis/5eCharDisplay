@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace _5eCharDisplay
 {
-    public class Controller
-    {
-        static internal int CPage_GetArmorClass(Character player)
-        {
+	public class Controller
+	{
+		static internal int CPage_GetArmorClass(Character player)
+		{
 			Armor chestArmor = null;
 			Armor shield = null;
 			foreach (Armor a in player.wornArmor)
@@ -43,7 +44,6 @@ namespace _5eCharDisplay
 			}
 			return AC;
 		}
-    
 		static internal string CPage_GetStealthLabel(Character player)
 		{
 			Armor chestArmor = null;
@@ -61,9 +61,8 @@ namespace _5eCharDisplay
 			else
 				return "Stealth";
 		}
-		
 		static internal (string, int, string) CPage_GetWeaponButtonText(Weapon w, Character player)
-        {
+		{
 			StringBuilder dRoll = new StringBuilder();
 			string wName;
 			int aBonus = 0;
@@ -105,10 +104,9 @@ namespace _5eCharDisplay
 			}
 
 			return (wName, aBonus, dRoll.ToString());
-        }
-
+		}
 		static internal string CPage_GetProfList(Character player)
-        {
+		{
 			StringBuilder s = new StringBuilder();
 			for (int i = 0; i < player.languages.Count() - 1; i++)
 			{
@@ -147,10 +145,9 @@ namespace _5eCharDisplay
 			}
 			s.Append("\n\n");
 			return s.ToString();
-        }
-
+		}
 		static internal (bool, string) CPage_GetSkillProfs(Character player, string prof, Character.Stat stat)
-        {
+		{
 			bool check = false;
 			int modifier = 0;
 			string text;
@@ -194,39 +191,68 @@ namespace _5eCharDisplay
 		}
 		static internal string CPage_GetPassives(Character player, string prof, Character.Stat stat)
 		{
-            int modifier = 0;
-            if (player.expertise.Contains(prof))
-            {
-                modifier += 2 * player.proficiency;
-            }
-            else if (player.skillProf.Contains(prof))
-            {
-                modifier += player.proficiency;
-            }
-            switch (stat)
-            {
-                case Character.Stat.Strength:
-                    modifier += player.strength.getMod();
-                    break;
-                case Character.Stat.Dexterity:
-                    modifier += player.dexterity.getMod();
-                    break;
-                case Character.Stat.Constitution:
-                    modifier += player.constitution.getMod();
-                    break;
-                case Character.Stat.Intelligence:
-                    modifier += player.intelligence.getMod();
-                    break;
-                case Character.Stat.Wisdom:
-                    modifier += player.wisdom.getMod();
-                    break;
-                case Character.Stat.Charisma:
-                    modifier += player.charisma.getMod();
-                    break;
-                default:
-                    break;
-            }
+			int modifier = 0;
+			if (player.expertise.Contains(prof))
+			{
+				modifier += 2 * player.proficiency;
+			}
+			else if (player.skillProf.Contains(prof))
+			{
+				modifier += player.proficiency;
+			}
+			switch (stat)
+			{
+				case Character.Stat.Strength:
+					modifier += player.strength.getMod();
+					break;
+				case Character.Stat.Dexterity:
+					modifier += player.dexterity.getMod();
+					break;
+				case Character.Stat.Constitution:
+					modifier += player.constitution.getMod();
+					break;
+				case Character.Stat.Intelligence:
+					modifier += player.intelligence.getMod();
+					break;
+				case Character.Stat.Wisdom:
+					modifier += player.wisdom.getMod();
+					break;
+				case Character.Stat.Charisma:
+					modifier += player.charisma.getMod();
+					break;
+				default:
+					break;
+			}
 			return $"{modifier + 10}";
-        }
+		}
+		static internal string CPage_DamageRoll(string input, bool critical)
+		{
+			Regex pattern = new Regex(@"((\d+)d(\d+))( \+ \d+)? (\w+)");
+			/*
+			 * Match 0: 1d6 + 3 Piercing
+			 * Group 1: 1d6
+			 * Group 2: 1
+			 * Group 3: 6
+			 * Group 4:  + 3
+			 * Group 5: Piercing
+			 */
+			StringBuilder sb = new StringBuilder();
+			MatchCollection matches = pattern.Matches(input);
+			for(int i = 0; i < matches.Count; i++)
+			{
+				if(i > 0)
+				{
+					sb.AppendLine();
+				}
+				Die d = new Die(int.Parse(matches[i].Groups[2].Value), int.Parse(matches[i].Groups[3].Value));
+				int roll = d.roll();
+				if (matches[i].Groups[4].Success)
+					roll += int.Parse(matches[i].Groups[4].Value.Substring(matches[i].Groups[4].Value.Length - 1));
+				if (critical)
+					roll += d.roll();
+				sb.Append($"{roll} {matches[i].Groups[5].Value}");
+			}
+			return sb.ToString();
+		}
 	}
 }

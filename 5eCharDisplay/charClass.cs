@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using System.Runtime.Versioning;
 
 namespace _5eCharDisplay
 {
-	internal class charClass
+    [SupportedOSPlatform("windows")]
+    internal class charClass
 	{
 		protected Die hitDie;
 		protected List<string> armorProfs;
@@ -87,11 +89,115 @@ namespace _5eCharDisplay
 			abilityModifiers = modifiers;
 		}
 
-		public virtual List<string> getInfo()
+        public virtual List<string> getInfo()
 		{
 			return null;
 		}
-		public virtual List<GroupBox> getInfoBoxes()
+        public virtual List<GroupBox> getInfoBoxes()
+		{
+			return null;
+		}
+        internal virtual List<GroupBox> AddAbilityFromList(string fPath)
+		{
+            var path = $@".\Data\Classes\Wizard\Hematurgy.yaml";
+
+            List<GroupBox> boxes = new List<GroupBox>();
+            List<Ability> abilities = Ability.ListFromYaml(fPath);
+            foreach (var ability in abilities)
+            {
+                if (ability.levelAt > level)
+                    continue;
+                GroupBox box = new GroupBox();
+                box.MaximumSize = new Size(180, 0);
+                box.Text = ability.Name;
+                Label label = new Label();
+                box.Controls.Add(label);
+                label.MaximumSize = new Size(168, 0);
+                label.Location = new Point(6, 12);
+                label.AutoSize = true;
+                label.Text = ability.Description;
+                int number = 0;
+                switch (ability.uses)
+                {
+                    case Ability.AbilityUses.NoAbility:
+                        break;
+                    case Ability.AbilityUses.AbilityMod:
+                        number = abilityModifiers[(int)ability.numUsesStat];
+                        break;
+                    case Ability.AbilityUses.Proficiency:
+                        number = proficiency;
+						break;
+					case Ability.AbilityUses.Number1:
+						number = 1;
+                        break;
+                }
+                int y = 12;
+                for (int i = 0; i < number; i++)
+                {
+                    CheckBox cBox = new CheckBox();
+                    cBox.AutoSize = true;
+                    cBox.Location = new Point(y, label.Bottom - 60);
+                    box.Controls.Add(cBox);
+                    y += cBox.Size.Width + 6;
+					switch (ability.refresh)
+					{
+						case Ability.RefreshOn.NoRefresh:
+							break;
+						case Ability.RefreshOn.ShortRest:
+							resetOnSR.Add(cBox);
+							break;
+						case Ability.RefreshOn.LongRest:
+							resetOnLR.Add(cBox);
+							break;
+						default:
+							break;
+					}
+                }
+                box.AutoSize = true;
+                label.MouseDown += DisplayOnRightClick;
+                boxes.Add(box);
+            }
+            return boxes;
+        }
+		internal virtual GroupBox AddAbility(string fPath)
+		{
+            var abil = Ability.fromYaml(fPath);
+            GroupBox box = new GroupBox();
+            box.MaximumSize = new Size(180, 0);
+            box.Text = abil.Name;
+            Label label = new Label();
+            box.Controls.Add(label);
+            label.MaximumSize = new Size(168, 0);
+            label.Location = new Point(6, 12);
+            label.AutoSize = true;
+            abil.Description = Regex.Replace(abil.Description, @"{(.*)}", match => GetValue(match.Value));
+            label.Text = abil.Description;
+            int number = 0;
+            switch (abil.uses)
+            {
+                case Ability.AbilityUses.NoAbility:
+                    break;
+                case Ability.AbilityUses.AbilityMod:
+                    number = abilityModifiers[(int)abil.numUsesStat];
+                    break;
+                case Ability.AbilityUses.Proficiency:
+                    number = proficiency;
+                    break;
+            }
+            int y = 12;
+            for (int i = 0; i < number; i++)
+            {
+                CheckBox cBox = new CheckBox();
+                cBox.AutoSize = true;
+                cBox.Location = new Point(y, label.Bottom - 60);
+                box.Controls.Add(cBox);
+                y += cBox.Size.Width + 6;
+            }
+            box.AutoSize = true;
+            label.MouseDown += DisplayOnRightClick;
+            return box;
+        }
+		internal virtual string GetValue(string variable)
 		{
 			return null;
 		}
@@ -109,16 +215,16 @@ namespace _5eCharDisplay
 		public int affectHD(int mod) { HDrem += mod; return HDrem; }
 		public int getLevel() { return level; }
 		public int getAbilityModifiers(int i) { return abilityModifiers[i]; }
-		public virtual void longRest(string name)
+        public virtual void longRest(string name)
 		{
 			HDrem += (int)Math.Floor(level/2.0);
 			if(HDrem > level) HDrem = level;
 		}
-		public virtual void shortRest(string name, int classnum)
+        public virtual void shortRest(string name, int classnum)
 		{
 			
 		}
-		public virtual string[] getClassDetails(string name, string className = "")
+        public virtual string[] getClassDetails(string name, string className = "")
 		{
 			throw new NotImplementedException();
 		}
@@ -127,18 +233,6 @@ namespace _5eCharDisplay
 			return $@".\Data\Characters\{charname}\{charname}{name}.yaml";
 		}
 
-		protected GroupBox AddClassDelimiter(string cName)
-		{
-			GroupBox box = new GroupBox();
-			Label label = new Label();
-			label.Text = $"========= {cName} =========";
-			label.MaximumSize = new Size(168, int.MaxValue);
-			label.AutoSize = true;
-			box.Controls.Add(label);
-			label.Location = new Point(6, 12);
-			box.Size = new Size(180, label.Size.Height + 18);
-			return box;
-		}
 		public virtual GroupBox ASIBox(Feat feature)
 		{
 			GroupBox box = new GroupBox();
