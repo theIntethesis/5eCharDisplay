@@ -136,7 +136,7 @@ namespace _5eCharDisplay
                 {
                     CheckBox cBox = new CheckBox();
                     cBox.AutoSize = true;
-                    cBox.Location = new Point(y, label.Bottom - 60);
+                    cBox.Location = new Point(y, label.Bottom);
                     box.Controls.Add(cBox);
                     y += cBox.Size.Width + 6;
 					switch (ability.refresh)

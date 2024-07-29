@@ -7,10 +7,12 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using _5eCharDisplay.Classes;
+using System.Runtime.Versioning;
 
 namespace _5eCharDisplay
 {
-	public partial class SpellcastingPage : Form
+    [SupportedOSPlatform("windows")]
+    public partial class SpellcastingPage : Form
 	{
 		Character player;
 		int numPrepared = 0, maxNumPrepared = 0;
@@ -53,7 +55,6 @@ namespace _5eCharDisplay
 			// Add "Max Preprared Spells" Box 
 			if (player.myClasses[Classnum].prepMethod == charClass.SpellPrepMethod.KnowSomePrepSome || player.myClasses[Classnum].prepMethod == charClass.SpellPrepMethod.KnowAllPrepSome)
 			{
-				Console.WriteLine("In Prep Box");
 				GroupBox PrepNum = new GroupBox();
 				PrepNum.Text = "Max Prepared Spells";
 				PrepNum.Size = new Size(118, 66);
@@ -803,19 +804,7 @@ namespace _5eCharDisplay
 				//from.Icon = new Icon(@"C:\Users\Hayden\Downloads\881288450786082876.ico");
 				from.Location = new Point(400, 50);
 				Label SpellArgs = new Label();
-				SpellArgs.Text = $"{theSpell.name}:\n\n";
-				if (theSpell.level == 0)
-					SpellArgs.Text += $"{theSpell.school} Cantrip\n\n";
-				else
-					SpellArgs.Text += $"Level {theSpell.level} {theSpell.school}\n\n";
-				SpellArgs.Text += $"Casting Time: {theSpell.castingTime}\n\nRange: {theSpell.range}\n\nComponents: {theSpell.components}\n\nDuration: {theSpell.duration}\n\n\n\n";
-				if(player.myClasses[classnumber].name == charClass.ClassName.Warlock)
-				{
-					SpellArgs.Text += $"{theSpell.getDescription(player.myClasses[classnumber])}";
-				}
-				else
-					SpellArgs.Text += $"{theSpell.getDescription()}";
-
+				SpellArgs.Text = Controller.SPage_GetSpellDisplay(theSpell, player, classnumber);
 				SpellArgs.Location = new Point(6, 12);
 				SpellArgs.Size = new Size(175, 575);
 				from.Controls.Add(SpellArgs);
@@ -838,29 +827,7 @@ namespace _5eCharDisplay
 		private void SaveSpellSlots()
 		{
 			string[] classInfo = File.ReadAllLines($@".\Data\Characters\{player.name}\{player.name}{player.charClass[classnumber]}.yaml");
-			StringBuilder spells = new StringBuilder();
-			spells.Append("spellSlots: [");
-			for(int i = 0; i < 8; i++)
-			{
-				spells.Append($"{player.myClasses[classnumber].spellSlots[i]}, ");
-			}
-			spells.Append($"{player.myClasses[classnumber].spellSlots[8]}]");
-			classInfo[0] = spells.ToString();
-			spells.Clear();
-			spells.Append("PreparedSpells: [");
-			if (player.myClasses[classnumber].prepMethod != charClass.SpellPrepMethod.KnowSomePrepNone)
-			{
-				for (int i = 0; i < player.myClasses[classnumber].PreparedSpells.Count - 1; i++)
-				{
-					spells.Append($"\"{player.myClasses[classnumber].PreparedSpells[i]}\", ");
-				}
-				spells.Append($"\"{player.myClasses[classnumber].PreparedSpells[player.myClasses[classnumber].PreparedSpells.Count - 1]}\"]");
-			}
-			else
-			{
-				spells.Append("]");
-			}
-			classInfo[1] = spells.ToString();
+			(classInfo[0], classInfo[1]) = Controller.SPage_SaveSpellSlots(player, classnumber);
 			File.WriteAllLines($@".\Data\Characters\{player.name}\{player.name}{player.charClass[classnumber]}.yaml", classInfo);
 		}
 	}

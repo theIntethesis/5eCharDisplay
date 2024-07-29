@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Runtime.Versioning;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace _5eCharDisplay
 {
@@ -59,33 +60,25 @@ namespace _5eCharDisplay
 			TempHP.Text = "0";
 
 			int ylocation = 6;
-
-			for (int i = 0; i < player.myClasses.Count; i++)
+			foreach(var cla in player.myClasses)
 			{
 				TabPage tab = new TabPage();
 				ClassTabControl.Controls.Add(tab);
 				tab.Font = new Font("Microsoft Sans Serif", 7.8F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
-				tab.Text = player.myClasses[i].name.ToString();
+				tab.Text = cla.name.ToString();
 				tab.Size = new Size(279, 598);
 				tab.Padding = new Padding(3);
 				tab.AutoScroll = true;
-				/*if (player.myClasses[i].name == charClass.ClassName.Wizard)
-                    foreach (var g in player.myClasses[i].AddAbilityFromList())
-                    {
-                        tab.Controls.Add(g);
-                        g.Location = new Point(6, ylocation);
-                        ylocation += g.Height + 12;
-                    }
-				else*/
-					foreach (var g in player.myClasses[i].getInfoBoxes())
-					{
-						tab.Controls.Add(g);
-						g.Location = new Point(6, ylocation);
-						ylocation += g.Height + 12;
-					}
+				foreach (var g in cla.getInfoBoxes())
+				{
+					tab.Controls.Add(g);
+					g.Location = new Point(6, ylocation);
+					ylocation += g.Height + 12;
+				}
 
 				ylocation = 6;
 			}
+
 			TabPage RTab = new TabPage();
 			ClassTabControl.Controls.Add(RTab);
 			RTab.Font = new Font("Microsoft Sans Serif", 7.8F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
@@ -120,6 +113,8 @@ namespace _5eCharDisplay
 				wName.AutoSize = true;
 				wName.Location = new Point(9, WeaponYValues + 3);
 
+				wName.Click += ShowWeaponDetails;
+
 				if (strings.Item2 >= 0) aBonus.Text = $"+{strings.Item2}";
 				else aBonus.Text = $"{strings.Item2}";
 				aBonus.Size = new Size(32, 23);
@@ -133,6 +128,7 @@ namespace _5eCharDisplay
 
 				WeaponYValues += 36 + dRoll.Size.Height;
 			}
+			weaponEquipButton.Click += equipWeapons;
 
 			SpeedNum.Text = $"{player.myRace.getSpeed()}";
 
@@ -209,8 +205,8 @@ namespace _5eCharDisplay
 			if ((e as MouseEventArgs).Button == MouseButtons.Right)
 				crit = true;
 			
-            DiceResult1.Text = $"{Controller.CPage_DamageRoll((sender as Button).Text, crit)}";
-            DiceResult2.Text = "";
+			DiceResult1.Text = $"{Controller.CPage_DamageRoll((sender as Button).Text, crit)}";
+			DiceResult2.Text = "";
 		}
 		private void AttackRoll(object sender, EventArgs e)
 		{
@@ -228,9 +224,9 @@ namespace _5eCharDisplay
 			DiceResult2.Text = $"{roll2 + modifier}";
 			if (roll2 == 20)
 				DiceResult2.Text += " (CRIT!)";
-            else if (roll2 == 1)
-                DiceResult2.Text += " (FAIL!)";
-        }
+			else if (roll2 == 1)
+				DiceResult2.Text += " (FAIL!)";
+		}
 		private void UpdateInventory(object sender, EventArgs e)
 		{
 			var k = (e as KeyEventArgs).KeyCode;
@@ -469,18 +465,50 @@ namespace _5eCharDisplay
 				from.Show();
 			}
 		}
+		private void equipWeapons(object sender, EventArgs e)
+		{
+			Form from = new WeaponPage(player);
+			from.Location = new Point(400, 50);
+			from.AutoSize = true;
+			from.LostFocus += closeOnLostFocus;
+			from.Show();
+		}
+		private void ShowWeaponDetails(object sender, EventArgs e)
+		{
+			if((e as MouseEventArgs).Button == MouseButtons.Right)
+			{
+				Weapon weapon = Weapon.fromYaml(name: (sender as Label).Text.Substring(0, (sender as Label).Text.IndexOf('|') - 1));
+				Form from = new();
+				from.Size = new Size(300, 600);
+				from.AutoSize = true;
+				from.Location = new Point(400, 50);
+				Label WeaponProperties = new();
+				from.Controls.Add(WeaponProperties);
+                WeaponProperties.Location = new Point(6, 12);
+                WeaponProperties.MaximumSize = new Size(276, 0);
+                WeaponProperties.AutoSize = true;
+                WeaponProperties.Text = Controller.CPage_GetWeaponDisplay(weapon);
+
+
+				from.Show();
+				from.LostFocus += (f, o) => (f as Form).Close();
+			}
+		}
 		protected void updateACOnClose(object sender, EventArgs e)
 		{
-            ACNum.Text = $"{Controller.CPage_GetArmorClass(player) + player.myRace.getACBoost()}";
+			ACNum.Text = $"{Controller.CPage_GetArmorClass(player) + player.myRace.getACBoost()}";
 
-            var serializer = new YamlDotNet.Serialization.SerializerBuilder().Build();
+			var serializer = new YamlDotNet.Serialization.SerializerBuilder().Build();
 			var yaml = serializer.Serialize(player.wornArmor);
 			File.WriteAllText($@"./Data/Characters/{player.name}/{player.name}Armor.yaml", yaml);
 		}
+		protected void updateWeaponsOnClose(object sender, EventArgs e)
+		{
+
+		}
 		protected void closeOnLostFocus(object sender, EventArgs e)
 		{
-			Form form = sender as Form;
-			form.Close();
+			(sender as Form).Close();
 		}
 
 	}

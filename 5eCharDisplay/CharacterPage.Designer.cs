@@ -193,6 +193,7 @@ namespace _5eCharDisplay
             InventoryManagement = new System.Windows.Forms.TabControl();
             InventoryTab = new System.Windows.Forms.TabPage();
             WeaponsTab = new System.Windows.Forms.TabPage();
+            weaponEquipButton = new System.Windows.Forms.Button();
             StrengthBox.SuspendLayout();
             DexBox.SuspendLayout();
             ConBox.SuspendLayout();
@@ -1922,10 +1923,19 @@ namespace _5eCharDisplay
             WeaponsTab.Location = new System.Drawing.Point(4, 24);
             WeaponsTab.Name = "WeaponsTab";
             WeaponsTab.Padding = new System.Windows.Forms.Padding(3);
-            WeaponsTab.Size = new System.Drawing.Size(287, 314);
+            WeaponsTab.Size = new System.Drawing.Size(287, 381);
             WeaponsTab.TabIndex = 1;
             WeaponsTab.Text = "Weapons";
             WeaponsTab.UseVisualStyleBackColor = true;
+            // 
+            // weaponEquipButton
+            // 
+            weaponEquipButton.Location = new System.Drawing.Point(578, 277);
+            weaponEquipButton.Name = "weaponEquipButton";
+            weaponEquipButton.Size = new System.Drawing.Size(56, 22);
+            weaponEquipButton.TabIndex = 42;
+            weaponEquipButton.Text = "Equip";
+            weaponEquipButton.UseVisualStyleBackColor = true;
             // 
             // CharacterPage
             // 
@@ -1933,6 +1943,7 @@ namespace _5eCharDisplay
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             ClientSize = new System.Drawing.Size(1088, 711);
+            Controls.Add(weaponEquipButton);
             Controls.Add(detailsButton);
             Controls.Add(XPTicker);
             Controls.Add(XPButton);
@@ -2207,6 +2218,7 @@ namespace _5eCharDisplay
         private System.Windows.Forms.TabPage InventoryTab;
         private System.Windows.Forms.TabPage WeaponsTab;
         private System.Windows.Forms.TabControl ClassTabControl;
+        private System.Windows.Forms.Button weaponEquipButton;
     }
 }
 

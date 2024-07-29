@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
+using System.Runtime.Versioning;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using System.IO;
 
 namespace _5eCharDisplay
 {
 	public class Controller
-	{
-		static internal int CPage_GetArmorClass(Character player)
+    {
+        [SupportedOSPlatform("windows")]
+        static internal int CPage_GetArmorClass(Character player)
 		{
 			Armor chestArmor = null;
 			Armor shield = null;
@@ -245,14 +250,96 @@ namespace _5eCharDisplay
 					sb.AppendLine();
 				}
 				Die d = new Die(int.Parse(matches[i].Groups[2].Value), int.Parse(matches[i].Groups[3].Value));
-				int roll = d.roll();
+				int total = d.roll();
 				if (matches[i].Groups[4].Success)
-					roll += int.Parse(matches[i].Groups[4].Value.Substring(matches[i].Groups[4].Value.Length - 1));
+					total += int.Parse(matches[i].Groups[4].Value.Substring(matches[i].Groups[4].Value.Length - 1));
 				if (critical)
-					roll += d.roll();
-				sb.Append($"{roll} {matches[i].Groups[5].Value}");
+					total += d.roll();
+				sb.Append($"{total} {matches[i].Groups[5].Value}");
 			}
 			return sb.ToString();
 		}
+		static internal string CPage_GetWeaponDisplay(Weapon w)
+		{
+            StringBuilder sb = new();
+			if (w.MagicBonus > 0)
+                sb.AppendLine($"{w.Name} | +{w.MagicBonus} {w.BaseType}\n");
+            else
+                sb.AppendLine($"{w.Name} | {w.BaseType}\n");
+            sb.Append("Damage: ");
+            for (int i = 0; i < w.DamageDie.Count; i++)
+            {
+                if (i > 0) sb.Append(" + ");
+                sb.Append(w.DamageDie[i].ToString());
+                if (w.MagicBonus > 0 && i == 0)
+                    sb.Append($" + {w.MagicBonus}");
+                sb.Append($" {w.DamageType[i]}");
+            }
+			sb.AppendLine("\n");
+
+			sb.Append("Properties: ");
+            for (int i = 0; i < w.Properties.Count; i++)
+            {
+                if (i > 0)
+                    sb.Append(", ");
+                sb.Append(w.Properties[i]);
+            }
+			sb.AppendLine("\n");
+
+            sb.Append("Effects: \n");
+            foreach (var p in w.Effects)
+            {
+                sb.AppendLine($"   - {p}");
+                sb.AppendLine();
+            }
+
+			return sb.ToString();
+        }
+		static internal string SPage_GetSpellDisplay(Spell s, Character player, int classnumber)
+		{
+			StringBuilder sb = new();
+
+            sb.Append($"{s.name}:\n\n");
+            if (s.level == 0)
+                sb.Append($"{s.school} Cantrip\n\n");
+            else
+                sb.Append($"Level {s.level} {s.school}\n\n");
+            sb.Append($"Casting Time: {s.castingTime}\n\nRange: {s.range}\n\nComponents: {s.components}\n\nDuration: {s.duration}\n\n\n\n");
+            if (player.myClasses[classnumber].name == charClass.ClassName.Warlock)
+            {
+                sb.Append($"{s.getDescription(player.myClasses[classnumber])}");
+            }
+            else
+                sb.Append($"{s.getDescription()}");
+
+
+            return sb.ToString();
+		}
+		static internal (string, string) SPage_SaveSpellSlots(Character player, int classnumber)
+		{
+            StringBuilder spells = new StringBuilder();
+            spells.Append("spellSlots: [");
+            for (int i = 0; i < 8; i++)
+            {
+                spells.Append($"{player.myClasses[classnumber].spellSlots[i]}, ");
+            }
+            spells.Append($"{player.myClasses[classnumber].spellSlots[8]}]");
+            string s1 = spells.ToString();
+            spells.Clear();
+            spells.Append("PreparedSpells: [");
+            if (player.myClasses[classnumber].prepMethod != charClass.SpellPrepMethod.KnowSomePrepNone)
+            {
+                for (int i = 0; i < player.myClasses[classnumber].PreparedSpells.Count - 1; i++)
+                {
+                    spells.Append($"\"{player.myClasses[classnumber].PreparedSpells[i]}\", ");
+                }
+                spells.Append($"\"{player.myClasses[classnumber].PreparedSpells[player.myClasses[classnumber].PreparedSpells.Count - 1]}\"]");
+            }
+            else
+            {
+                spells.Append("]");
+            }
+            return (s1, spells.ToString());
+        }
 	}
 }

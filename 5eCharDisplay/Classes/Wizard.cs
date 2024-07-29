@@ -234,7 +234,9 @@ namespace _5eCharDisplay.Classes
 			if (level >= 4)
 			{
 				infoBoxes.Add(ASIBox(featList[0]));
-			}
+				infoBoxes.Add(AddSpellMastery());
+                infoBoxes.Add(AddAbility($@".\Data\Classes\Wizard\Spell Mastery.yaml"));
+            }
 			if (level >= 6)
 			{
 				// Subclass Feature

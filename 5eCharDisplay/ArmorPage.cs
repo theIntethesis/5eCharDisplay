@@ -8,10 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.Versioning;
 
 namespace _5eCharDisplay
 {
-	public partial class ArmorPage : Form
+    [SupportedOSPlatform("windows")]
+    public partial class ArmorPage : Form
 	{
 		Character player;
 		List<CheckBox> checkBoxes = new List<CheckBox>();

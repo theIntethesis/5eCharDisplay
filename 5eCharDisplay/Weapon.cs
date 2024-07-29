@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using YamlDotNet.Serialization;
 using System.IO;
+using System.Reflection.Metadata.Ecma335;
 
 namespace _5eCharDisplay
 {
@@ -61,12 +62,12 @@ namespace _5eCharDisplay
         {
 			Unarmed, Simple, Martial, Exotic, Improvised
         }
-		public static Weapon fromYaml(string aName = "", string fName = "")
+		public static Weapon fromYaml(string name = "", string fName = "")
 		{
 			Weapon returned = null;
 			string file;
-			if (!string.IsNullOrEmpty(aName))
-				file = $@"./Data/Weapons/{aName}.yaml";
+			if (!string.IsNullOrEmpty(name))
+				file = $@"./Data/Weapons/{name}.yaml";
 			else if (!string.IsNullOrEmpty(fName))
 				file = fName;
 			else
@@ -78,6 +79,11 @@ namespace _5eCharDisplay
 				var deserializer = new Deserializer();
 				returned = deserializer.Deserialize<Weapon>(reader);
 			}
+
+			for(int i = 0; i < returned.Effects.Count; i++)
+			{
+				returned.Effects[i] = returned.Effects[i].Replace("~", returned.Name);
+            }
 			 
 			return returned;
 		}
