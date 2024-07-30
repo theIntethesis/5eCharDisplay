@@ -1,4 +1,5 @@
 Name: Greatsword
+BaseType: Greatsword
 DamageDie:
   - num: 2
     sides: 6

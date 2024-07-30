@@ -1,4 +1,5 @@
 Name: Sling
+BaseType: Sling
 DamageDie:
   - num: 1
     sides: 4

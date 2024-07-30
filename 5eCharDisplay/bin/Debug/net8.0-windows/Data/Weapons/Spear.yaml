@@ -1,4 +1,5 @@
 Name: Spear
+BaseType: Spear
 DamageDie:
   - num: 1
     sides: 6

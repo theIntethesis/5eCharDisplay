@@ -1,4 +1,5 @@
 Name: War Pick
+BaseType: War_Pick
 DamageDie:
   - num: 1
     sides: 8

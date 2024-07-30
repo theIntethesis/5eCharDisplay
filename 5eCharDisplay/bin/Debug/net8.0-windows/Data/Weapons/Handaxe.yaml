@@ -1,4 +1,5 @@
 Name: Handaxe
+BaseType: Handaxe
 DamageDie:
   - num: 1
     sides: 6

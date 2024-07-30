@@ -1,4 +1,5 @@
 Name: Light Hammer
+BaseType: Light_Hammer
 DamageDie:
   - num: 1
     sides: 4

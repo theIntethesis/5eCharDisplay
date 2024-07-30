@@ -1,4 +1,5 @@
 Name: Pike
+BaseType: Pike
 DamageDie:
   - num: 1
     sides: 10

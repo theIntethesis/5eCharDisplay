@@ -1,4 +1,5 @@
 Name: Warhammer
+BaseType: Warhammer
 DamageDie:
   - num: 1
     sides: 8

@@ -100,33 +100,39 @@ namespace _5eCharDisplay
 			int WeaponYValues = 6;
 			foreach (Weapon w in player.equippedWeapons)
 			{
+				GroupBox box = new();
 				Label wName = new Label();
 				Button aBonus = new Button();
 				Button dRoll = new Button();
-				WeaponsTab.Controls.Add(wName);
-				WeaponsTab.Controls.Add(aBonus);
-				WeaponsTab.Controls.Add(dRoll);
+				WeaponsTab.Controls.Add(box);
+
+				box.Size = new Size(284, 60);
+				box.Location = new Point(0, WeaponYValues);
+
+				box.Controls.Add(wName);
+				box.Controls.Add(aBonus);
+				box.Controls.Add(dRoll);
 
 				var strings = Controller.CPage_GetWeaponButtonText(w, player);
 
 				wName.Text = strings.Item1;
 				wName.AutoSize = true;
-				wName.Location = new Point(9, WeaponYValues + 3);
+				wName.Location = new Point(9, 12);
 
 				wName.Click += ShowWeaponDetails;
 
 				if (strings.Item2 >= 0) aBonus.Text = $"+{strings.Item2}";
 				else aBonus.Text = $"{strings.Item2}";
-				aBonus.Size = new Size(32, 23);
-				aBonus.Location = new Point(WeaponsTab.Width - aBonus.Size.Width, WeaponYValues);
+				aBonus.Size = new Size(40, 23);
+				aBonus.Location = new Point(box.Width - aBonus.Size.Width - 3, 9);
 				aBonus.Click += AttackRoll;
 
 				dRoll.Text = strings.Item3;
 				dRoll.AutoSize = true;
-				dRoll.Location = new Point(WeaponsTab.Width - dRoll.Size.Width, WeaponYValues + 24);
+				dRoll.Location = new Point(box.Width - dRoll.Size.Width - 3, 33);
 				dRoll.MouseDown += DamageRoll;
 
-				WeaponYValues += 36 + dRoll.Size.Height;
+				WeaponYValues += 56;
 			}
 			weaponEquipButton.Click += equipWeapons;
 
@@ -150,7 +156,6 @@ namespace _5eCharDisplay
 			Inventory.Lines = player.inventory.ToArray();
 			Inventory.KeyDown += UpdateInventory;
 
-			FormClosing += new FormClosingEventHandler(OnFormClose);
 
 			if (!player.Spellcasting)
 				SpellcastingToggle.Hide();
@@ -187,9 +192,11 @@ namespace _5eCharDisplay
 
 
 			Width -= 180;
+            FormClosing += new FormClosingEventHandler(OnFormClose);
 
-			DiceInput.KeyUp += DiceInputPressEnter;
+            DiceInput.KeyUp += DiceInputPressEnter;
 			XPTicker.KeyUp += EXPInputPressEnter;
+			XPTicker.Maximum = 355000;
 
 			PTraitLabel.Text = player.myBackground.getPTrait();
 			IdealsLabel.Text = player.myBackground.getIdeal();
@@ -471,6 +478,7 @@ namespace _5eCharDisplay
 			from.Location = new Point(400, 50);
 			from.AutoSize = true;
 			from.LostFocus += closeOnLostFocus;
+			from.FormClosing += updateWeaponsOnClose;
 			from.Show();
 		}
 		private void ShowWeaponDetails(object sender, EventArgs e)
@@ -484,10 +492,10 @@ namespace _5eCharDisplay
 				from.Location = new Point(400, 50);
 				Label WeaponProperties = new();
 				from.Controls.Add(WeaponProperties);
-                WeaponProperties.Location = new Point(6, 12);
-                WeaponProperties.MaximumSize = new Size(276, 0);
-                WeaponProperties.AutoSize = true;
-                WeaponProperties.Text = Controller.CPage_GetWeaponDisplay(weapon);
+				WeaponProperties.Location = new Point(6, 12);
+				WeaponProperties.MaximumSize = new Size(276, 0);
+				WeaponProperties.AutoSize = true;
+				WeaponProperties.Text = Controller.CPage_GetWeaponDisplay(weapon);
 
 
 				from.Show();
@@ -504,7 +512,54 @@ namespace _5eCharDisplay
 		}
 		protected void updateWeaponsOnClose(object sender, EventArgs e)
 		{
+			while(WeaponsTab.Controls.Count > 0)
+            {
+                foreach (Control c in WeaponsTab.Controls)
+                {
+                    c.Dispose();
+                }
+            }
+            int WeaponYValues = 6;
+            foreach (Weapon w in player.equippedWeapons)
+            {
+                GroupBox box = new();
+                Label wName = new Label();
+                Button aBonus = new Button();
+                Button dRoll = new Button();
+                WeaponsTab.Controls.Add(box);
 
+                box.Size = new Size(284, 60);
+                box.Location = new Point(0, WeaponYValues);
+
+                box.Controls.Add(wName);
+                box.Controls.Add(aBonus);
+                box.Controls.Add(dRoll);
+
+                var strings = Controller.CPage_GetWeaponButtonText(w, player);
+
+                wName.Text = strings.Item1;
+                wName.AutoSize = true;
+                wName.Location = new Point(9, 12);
+
+                wName.Click += ShowWeaponDetails;
+
+                if (strings.Item2 >= 0) aBonus.Text = $"+{strings.Item2}";
+                else aBonus.Text = $"{strings.Item2}";
+                aBonus.Size = new Size(40, 23);
+                aBonus.Location = new Point(box.Width - aBonus.Size.Width - 3, 9);
+                aBonus.Click += AttackRoll;
+
+                dRoll.Text = strings.Item3;
+                dRoll.AutoSize = true;
+                dRoll.Location = new Point(box.Width - dRoll.Size.Width - 3, 33);
+                dRoll.MouseDown += DamageRoll;
+
+                WeaponYValues += 56;
+            }
+
+            var serializer = new YamlDotNet.Serialization.SerializerBuilder().Build();
+			var yaml = serializer.Serialize(player.equippedWeapons);
+			File.WriteAllText($@"./Data/Characters/{player.name}/{player.name}Weapons.yaml", yaml);
 		}
 		protected void closeOnLostFocus(object sender, EventArgs e)
 		{

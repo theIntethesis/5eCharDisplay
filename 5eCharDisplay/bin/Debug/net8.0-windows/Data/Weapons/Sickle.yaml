@@ -1,4 +1,5 @@
 Name: Sickle
+BaseType: Sickle
 DamageDie:
   - num: 1
     sides: 4

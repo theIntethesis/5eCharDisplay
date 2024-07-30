@@ -1,4 +1,5 @@
 Name: Light Crossbow
+BaseType: Light_Crossbow
 DamageDie:
   - num: 1
     sides: 8

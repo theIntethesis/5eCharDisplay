@@ -1,4 +1,5 @@
 Name: Javelin
+BaseType: Javelin
 DamageDie:
   - num: 1
     sides: 6

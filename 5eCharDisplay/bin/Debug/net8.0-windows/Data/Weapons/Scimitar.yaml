@@ -1,4 +1,5 @@
 Name: Scimitar
+BaseType: Scimitar
 DamageDie:
   - num: 1
     sides: 6

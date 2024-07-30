@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using YamlDotNet.Serialization;
 using System.IO;
-using System.Reflection.Metadata.Ecma335;
 
 namespace _5eCharDisplay
 {
@@ -19,6 +18,7 @@ namespace _5eCharDisplay
 		public List<string> Effects { set; get; }
 		public WeaponType BaseType { set; get; }
 		public ProficiencyType PType { set; get; }
+		public Character.Stat stat { set; get; }
 		public enum WeaponType
 		{
 			Battleaxe,
@@ -56,7 +56,8 @@ namespace _5eCharDisplay
 			Trident,
 			War_Pick,
 			Warhammer,
-			Whip
+			Whip,
+			Other = -1
 		}
 		public enum ProficiencyType
         {
@@ -80,7 +81,10 @@ namespace _5eCharDisplay
 				returned = deserializer.Deserialize<Weapon>(reader);
 			}
 
-			for(int i = 0; i < returned.Effects.Count; i++)
+			int num = 0;
+			if(returned.Effects != null)
+				num = returned.Effects.Count;
+			for(int i = 0; i < num; i++)
 			{
 				returned.Effects[i] = returned.Effects[i].Replace("~", returned.Name);
             }
@@ -98,7 +102,20 @@ namespace _5eCharDisplay
 				var deserializer = new Deserializer();
 				returned = deserializer.Deserialize<List<Weapon>>(reader);
 			}
-			return returned;
+			if(returned != null)
+				foreach(Weapon w in returned)
+				{
+				    int num = 0;
+				    if (w.Effects != null)
+				        num = w.Effects.Count;
+				    for (int i = 0; i < num; i++)
+				    {
+				        w.Effects[i] = w.Effects[i].Replace("~", w.Name);
+					}
+				}
+            
+
+            return returned;
 		}
 
 		public Weapon()

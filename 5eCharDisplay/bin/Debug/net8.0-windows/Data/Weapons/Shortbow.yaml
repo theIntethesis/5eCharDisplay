@@ -1,4 +1,5 @@
 Name: Shortbow
+BaseType: Shortbow
 DamageDie:
   - num: 1
     sides: 6

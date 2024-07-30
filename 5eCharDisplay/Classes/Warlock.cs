@@ -11,8 +11,8 @@ using System.Runtime.Versioning;
 
 namespace _5eCharDisplay.Classes
 {
-    [SupportedOSPlatform("windows")]
-    internal class Warlock : charClass
+	[SupportedOSPlatform("windows")]
+	internal class Warlock : charClass
 	{
 		public string Skill1 { get; set; }
 		public string Skill2 { get; set; }
@@ -219,9 +219,9 @@ namespace _5eCharDisplay.Classes
 					if (level >= 14)
 					{
 						label.Text += $"  - Create Thrall\n   - You gain the ability to infect a humanoid’s mind with the alien magic of your patron. You can use your action to touch an incapacitated humanoid. That creature is then charmed by you until a remove curse spell is cast on it, the charmed condition is removed from it, or you use this feature again.\nYou can communicate telepathically with the charmed creature as long as the two of you are on the same plane of existence.\n\n";
-                    }
-                    low += label.Bottom - 115;
-                    if (level >= 6)
+					}
+					low += label.Bottom - 115;
+					if (level >= 6)
 					{
 						CheckBox EntropicWardBox = new CheckBox();
 						EntropicWardBox.Checked = EntropicWard;
@@ -293,9 +293,9 @@ namespace _5eCharDisplay.Classes
 					{
 						// SR
 						label.Text += $"  - Dark Delirium\n   - You can plunge a creature into an illusory realm. As an action, choose a creature that you can see within 60 feet of you. It must make a DC {8 + proficiency + abilityModifiers[5]} Wisdom saving throw. On a failed save, it is charmed or frightened by you (your choice) for 1 minute or until your concentration is broken (as if you are concentrating on a spell). This effect ends early if the creature takes any damage.\n   - Until this illusion ends, the creature thinks it is lost in a misty realm, the appearance of which you choose. The creature can see and hear only itself, you, and the illusion.\n   - You must finish a short or long rest before you can use this feature again.\n\n";
-                    }
-                    low += label.Bottom - 115;
-                    CheckBox FeyPresenceBox = new CheckBox();
+					}
+					low += label.Bottom - 115;
+					CheckBox FeyPresenceBox = new CheckBox();
 					FeyPresenceBox.Checked = FeyPresence;
 					FeyPresenceBox.AutoSize = true;
 					FeyPresenceBox.Text = "Fey Presence / SR";
@@ -350,10 +350,9 @@ namespace _5eCharDisplay.Classes
 					if (level >= 14)
 					{
 						label.Text += $"  - Master of Hexes\n   - When the creature cursed by your Hexblade’s Curse dies, you can apply the curse to a different creature you can see within 30 feet of you, provided you aren’t incapacitated. When you apply the curse in this way, you don’t regain hit points from the death of the previously cursed creature.\n\n";
-                    }
-                    low += label.Bottom - 115;
-
-                    CheckBox HexbladesCurseBox = new CheckBox();
+					}
+					low += label.Bottom - 115;
+					CheckBox HexbladesCurseBox = new CheckBox();
 					HexbladesCurseBox.Checked = HexbladesCurse;
 					HexbladesCurseBox.AutoSize = true;
 					HexbladesCurseBox.Text = "Hexblade's Curse / SR";
@@ -382,8 +381,8 @@ namespace _5eCharDisplay.Classes
 					break;
 			}
 
-            box.MaximumSize = new Size(180, int.MaxValue);
-            box.AutoSize = true;
+			box.MaximumSize = new Size(180, int.MaxValue);
+			box.AutoSize = true;
 			label.MouseDown += DisplayOnRightClick;
 			return box;
 		}
@@ -431,8 +430,8 @@ namespace _5eCharDisplay.Classes
 			label.AutoSize = true;
 			box.Controls.Add(label);
 			label.Location = new Point(6, 12);
-            box.MaximumSize = new Size(180, int.MaxValue);
-            box.AutoSize = true;
+			box.MaximumSize = new Size(180, int.MaxValue);
+			box.AutoSize = true;
 			label.MouseDown += DisplayOnRightClick;
 			return box;
 		}
@@ -446,8 +445,8 @@ namespace _5eCharDisplay.Classes
 			else if (level >= 7) number = 4;
 			else if (level >= 5) number = 3;
 			GroupBox box = new GroupBox();
-            box.MaximumSize = new Size(180, int.MaxValue);
-            box.Text = "Eldritch Invocations";
+			box.MaximumSize = new Size(180, int.MaxValue);
+			box.Text = "Eldritch Invocations";
 			Label label = new Label();
 			label.Text += $" - In your study of occult lore, you have unearthed eldritch invocations, fragments of forbidden knowledge that imbue you with an abiding magical ability.\nYou know {number} eldritch invocations of your choice. Your invocation options are detailed at the end of the class description.\n - Additionally, when you gain a level in this class, you can choose one of the invocations you know and replace it with another invocation that you could learn at that level.\n - If an eldritch invocation has prerequisites, you must meet them to learn it. You can learn the invocation at the same time that you meet its prerequisites. A level prerequisite refers to your level in this class.\n\n";
 			foreach (string s in EldritchInvocations)
@@ -660,8 +659,8 @@ namespace _5eCharDisplay.Classes
 		private GroupBox AddPactBox()
 		{
 			GroupBox box = new GroupBox();
-            box.MaximumSize = new Size(180, int.MaxValue);
-            box.Text = "Pact Boon";
+			box.MaximumSize = new Size(180, int.MaxValue);
+			box.Text = "Pact Boon";
 			Label label = new Label();
 			label.Text = "Pact Weapon\n - Your otherworldly patron bestows a gift upon you for your loyal service.\n\n" +
 				$"  - {PactBoon}\n";
@@ -692,8 +691,8 @@ namespace _5eCharDisplay.Classes
 		private GroupBox AddMysticArcanumBox()
 		{
 			GroupBox box = new GroupBox();
-            box.MaximumSize = new Size(180, int.MaxValue);
-            box.Text = "Mystic Arcanum";
+			box.MaximumSize = new Size(180, int.MaxValue);
+			box.Text = "Mystic Arcanum";
 			Label label = new Label();
 			label.Text = "  - Your patron bestows upon you a magical secret called an arcanum.\n" +
 				"  - You can cast your arcanum spells once without expending a spell slot. You regain all uses of your Mystic Arcanum when you finish a long rest.\n";
@@ -799,7 +798,6 @@ namespace _5eCharDisplay.Classes
 			var box = sender as CheckBox;
 			AccursedSpecter = box.Checked;
 		}
-
 		public override void shortRest(string name, int classnum)
 		{
 			// Get classInfo

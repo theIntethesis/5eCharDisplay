@@ -1,4 +1,5 @@
 Name: Heavy Crossbow
+BaseType: Heavy_Crossbow
 DamageDie:
   - num: 1
     sides: 10

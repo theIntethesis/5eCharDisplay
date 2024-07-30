@@ -1,4 +1,5 @@
 Name: Flail
+BaseType: Flail
 DamageDie:
   - num: 1
     sides: 8

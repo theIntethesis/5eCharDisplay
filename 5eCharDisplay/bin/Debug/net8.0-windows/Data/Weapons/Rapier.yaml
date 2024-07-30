@@ -1,4 +1,5 @@
 Name: Rapier
+BaseType: Rapier
 DamageDie:
   - num: 1
     sides: 8

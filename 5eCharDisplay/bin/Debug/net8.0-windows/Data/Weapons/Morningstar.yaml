@@ -1,4 +1,5 @@
 Name: Morningstar
+BaseType: Morningstar
 DamageDie:
   - num: 1
     sides: 8

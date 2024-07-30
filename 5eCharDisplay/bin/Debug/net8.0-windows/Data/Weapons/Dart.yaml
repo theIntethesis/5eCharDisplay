@@ -1,4 +1,5 @@
 Name: Dart
+BaseType: Dart
 DamageDie:
   - num: 1
     sides: 4

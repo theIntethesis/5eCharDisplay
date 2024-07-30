@@ -1,4 +1,5 @@
 Name: Hand Crossbow
+BaseType: Hand_Crossbow
 DamageDie:
   - num: 1
     sides: 6

@@ -1,4 +1,5 @@
 Name: Quarterstaff
+BaseType: Quarterstaff
 DamageDie:
   - num: 1
     sides: 6

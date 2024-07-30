@@ -1,4 +1,5 @@
 Name: Battleaxe
+BaseType: Battleaxe
 DamageDie:
   - num: 1
     sides: 8

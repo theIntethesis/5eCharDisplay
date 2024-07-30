@@ -1,4 +1,5 @@
 Name: Club
+BaseType: Club
 DamageDie:
   - num: 1
     sides: 4

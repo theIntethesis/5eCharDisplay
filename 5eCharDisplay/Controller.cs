@@ -70,23 +70,48 @@ namespace _5eCharDisplay
 		{
 			StringBuilder dRoll = new StringBuilder();
 			string wName;
+			int statBonus = 0;
 			int aBonus = 0;
 			if (w.MagicBonus > 0)
 				wName = $"{w.Name} | +{w.MagicBonus} {w.BaseType}";
 			else
 				wName = $"{w.Name} | {w.BaseType}";
 
-			if (w.Properties.Contains("Versatile"))
-				aBonus += Math.Max(player.strength.getMod(), player.dexterity.getMod());
+			if(w.stat != 0)
+			{
+				switch (w.stat)
+				{
+					case Character.Stat.Dexterity:
+						statBonus += player.dexterity.getMod();
+						break;
+					case Character.Stat.Constitution:
+						statBonus += player.constitution.getMod();
+						break;
+					case Character.Stat.Intelligence:
+						statBonus += player.intelligence.getMod();
+						break;
+                    case Character.Stat.Wisdom:
+						statBonus += player.wisdom.getMod();
+                        break;
+                    case Character.Stat.Charisma:
+						statBonus += player.charisma.getMod();
+						break;
+					default:
+						break;
+				}
+			}
+			else if (w.Properties.Contains("Versatile"))
+				statBonus += Math.Max(player.strength.getMod(), player.dexterity.getMod());
 			else
-				aBonus += player.strength.getMod();
+				statBonus += player.strength.getMod();
+
 			if (player.weaponProfs.Contains(w.BaseType.ToString()))
 				aBonus += player.proficiency;
 			else if (player.weaponProfs.Contains("Simple Weapons") && w.PType == Weapon.ProficiencyType.Simple)
 				aBonus += player.proficiency;
 			else if (player.weaponProfs.Contains("Martial Weapons") && w.PType == Weapon.ProficiencyType.Martial)
 				aBonus += player.proficiency;
-			aBonus += w.MagicBonus;
+			aBonus += w.MagicBonus + statBonus;
 
 			for (int i = 0; i < w.DamageDie.Count; i++)
 			{
@@ -94,17 +119,12 @@ namespace _5eCharDisplay
 				dRoll.Append($"{w.DamageDie[i]}");
 				int damageMod = 0;
 				if (i == 0)
-				{
-					if (w.Properties.Contains("Versatile"))
-						damageMod += Math.Max(player.strength.getMod(), player.dexterity.getMod());
-					else
-						damageMod += player.strength.getMod();
-					damageMod += w.MagicBonus;
-				}
-				if (damageMod > 0)
+                    damageMod += w.MagicBonus + statBonus;
+
+                if (damageMod > 0)
 					dRoll.Append($" + {damageMod}");
 				else if (damageMod < 0)
-					dRoll.Append($" - {damageMod}");
+					dRoll.Append($" - {Math.Abs(damageMod)}");
 				dRoll.Append($" {w.DamageType[i]}");
 			}
 

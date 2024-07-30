@@ -1,4 +1,5 @@
 Name: Glaive
+BaseType: Glaive
 DamageDie:
   - num: 1
     sides: 10

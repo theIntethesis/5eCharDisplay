@@ -23,6 +23,8 @@ namespace _5eCharDisplay
 		{
 			player = PC;
 			InitializeComponent();
+			
+			Size = new Size((int)(Width * .66), Height);
 			var weaponList = Directory.GetFiles($@"./Data/Weapons/");
 			for (int i = 0; i < weaponList.Count(); i++)
 			{
@@ -121,7 +123,7 @@ namespace _5eCharDisplay
 			}
 			else
 			{
-				player.wornArmor.RemoveAll(a => a.Name == relevantWeapon.Name);
+				player.equippedWeapons.RemoveAll(a => a.Name == relevantWeapon.Name);
 			}
 		}
 	}
