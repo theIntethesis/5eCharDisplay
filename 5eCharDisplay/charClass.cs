@@ -52,7 +52,11 @@ namespace _5eCharDisplay
 
 		}
 		public SpellPrepMethod prepMethod;
-		public ClassName name;
+		public ClassName classname;
+		public void setCharName (string n)
+		{
+			charname = n;
+		}
 		public List<string> Cantrips { set; get; }
 		public List<string> AlwaysPrepared = new List<string>();
 		public List<string> PreparedSpells { set; get; }
@@ -215,12 +219,7 @@ namespace _5eCharDisplay
 		public int affectHD(int mod) { HDrem += mod; return HDrem; }
 		public int getLevel() { return level; }
 		public int getAbilityModifiers(int i) { return abilityModifiers[i]; }
-        public virtual void longRest(string name)
-		{
-			HDrem += (int)Math.Floor(level/2.0);
-			if(HDrem > level) HDrem = level;
-		}
-        public virtual void shortRest(string name, int classnum)
+        internal virtual void shortRest(object sender, EventArgs e)
 		{
 			
 		}
@@ -230,7 +229,7 @@ namespace _5eCharDisplay
 		}
 		protected string getClassFile(string charname)
 		{
-			return $@".\Data\Characters\{charname}\{charname}{name}.yaml";
+			return $@".\Data\Characters\{charname}\{charname}{classname}.yaml";
 		}
 
 		public virtual GroupBox ASIBox(Feat feature)
@@ -279,6 +278,11 @@ namespace _5eCharDisplay
 		}
 
 		public charClass() { }
+		internal virtual void longRest(object sender, EventArgs e)
+        {
+            HDrem += (int)Math.Floor(level / 2.0);
+            if (HDrem > level) HDrem = level;
+        }
 
 		protected void DisplayOnRightClick(object sender, EventArgs e)
 		{

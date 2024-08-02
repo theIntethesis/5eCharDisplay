@@ -67,7 +67,7 @@ namespace _5eCharDisplay
 			string retme = "";
 			foreach(charClass c in myClasses)
 			{
-				retme += $"{c.name} {c.getLevel()}\n";
+				retme += $"{c.classname} {c.getLevel()}\n";
 			}
 			retme += $"Exp: {experience}";
 			return retme;
@@ -162,6 +162,10 @@ namespace _5eCharDisplay
 				}
 			}
 
+			foreach(charClass c in returned.myClasses)
+			{
+				c.setCharName(returned.name);
+			}
 
 			switch (returned.race)
 			{

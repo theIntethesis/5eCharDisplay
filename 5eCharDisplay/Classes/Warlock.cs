@@ -42,7 +42,7 @@ namespace _5eCharDisplay.Classes
 			weaponProfs = new List<string> { "Simple Weapons" };
 			SavingProfs = new string[2] { "WisSave", "ChaSave" };
 			prepMethod = SpellPrepMethod.KnowSomePrepNone;
-			name = ClassName.Warlock;
+			classname = ClassName.Warlock;
 		}
 		public static Warlock fromYAML(string fName, int[] modifiers, int lvl, int prof)
 		{
@@ -798,10 +798,10 @@ namespace _5eCharDisplay.Classes
 			var box = sender as CheckBox;
 			AccursedSpecter = box.Checked;
 		}
-		public override void shortRest(string name, int classnum)
+		internal override void shortRest(object sender, EventArgs e)
 		{
 			// Get classInfo
-			string[] classInfo = File.ReadAllLines($@".\Data\Characters\{name}\{name}Warlock.yaml");
+			string[] classInfo = File.ReadAllLines($@".\Data\Characters\{charname}\{charname}Warlock.yaml");
 
 			// Reset Spell Slots
 			classInfo[0] = "spellSlots: [0, 0, 0, 0, 0, 0, 0, 0, 0]";
@@ -829,16 +829,16 @@ namespace _5eCharDisplay.Classes
 			}
 
 			// Write classInfo
-			File.WriteAllLines($@".\Data\Characters\{name}\{name}Warlock.yaml", classInfo);
+			File.WriteAllLines($@".\Data\Characters\{charname}\{charname}Warlock.yaml", classInfo);
 		}
-		public override void longRest(string name)
+		internal override void longRest(object sender, EventArgs e)
 		{
 			// Refresh Hit Dice
 			HDrem += (int)Math.Floor(level / 2.0);
 			if (HDrem > level) HDrem = level;
 
 			// Get classInfo
-			string[] classInfo = File.ReadAllLines($@".\Data\Characters\{name}\{name}Warlock.yaml");
+			string[] classInfo = File.ReadAllLines($@".\Data\Characters\{charname}\{charname}Warlock.yaml");
 
 			// Reset Spell Slots
 			classInfo[0] = "spellSlots: [0, 0, 0, 0, 0, 0, 0, 0, 0]";
@@ -880,11 +880,11 @@ namespace _5eCharDisplay.Classes
 
 
 			// Write classInfo
-			File.WriteAllLines($@".\Data\Characters\{name}\{name}Warlock.yaml", classInfo);
+			File.WriteAllLines($@".\Data\Characters\{charname}\{charname}Warlock.yaml", classInfo);
 		}
 		public override string[] getClassDetails(string name, string classname = "Warlock")
 		{
-			string[] classInfo = File.ReadAllLines($@".\Data\Characters\{name}\{name}Warlock.yaml");
+			string[] classInfo = File.ReadAllLines($@".\Data\Characters\{charname}\{charname}Warlock.yaml");
 			
 			// Store spells
 			string spells = "spellSlots: [";

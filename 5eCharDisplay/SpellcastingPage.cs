@@ -85,7 +85,7 @@ namespace _5eCharDisplay
 						box.Location = new Point(xVals[i], firstY += 20);
 						box.Text = null;
 						box.Size = new Size(17, 17);
-                        if (player.myClasses[classnumber].name == charClass.ClassName.Warlock)
+                        if (player.myClasses[classnumber].classname == charClass.ClassName.Warlock)
 							player.myClasses[classnumber].warlockSlotBoxes.Add(box);
 						else
 							player.myClasses[classnumber].spellSlotBoxes.Add(box);
@@ -644,7 +644,7 @@ namespace _5eCharDisplay
 
 
 			NameLabel.Text = player.name;
-			Text = $"{player.name}'s Spellcasting Sheet - {player.myClasses[Classnum].name}";
+			Text = $"{player.name}'s Spellcasting Sheet - {player.myClasses[Classnum].classname}";
 			SpellcastingAbilityLabel.Text = $"{player.myClasses[Classnum].SpellcastingAbilityModifier} (+{spellmod})";
 
 			SpellAttackLabel.Text = $"+{spellmod + (int)Math.Ceiling(player.level.Sum() / 4.0) + 1}";
@@ -752,7 +752,8 @@ namespace _5eCharDisplay
 		{
 			CheckBox thisthing = sender as CheckBox;
 			string SpellName = thisthing.Text;
-
+			if (SpellName.Contains("[R]"))
+				SpellName = SpellName.Substring(0, SpellName.Length - 4);
 			if (thisthing.Checked)
 			{
 				player.myClasses[classnumber].PreparedSpells.Add(SpellName);

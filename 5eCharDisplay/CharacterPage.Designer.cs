@@ -1698,7 +1698,6 @@ namespace _5eCharDisplay
             SRButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             SRButton.TabIndex = 27;
             SRButton.TabStop = false;
-            SRButton.Click += SRButton_Click;
             // 
             // Inventory
             // 

@@ -34,7 +34,7 @@ namespace _5eCharDisplay.Classes
 			weaponProfs = new List<string> { "Dagger", "Dart", "Sling", "Quarterstaff", "Light Crossbow" };
 			SavingProfs = new string[2] { "IntSave", "WisSave" };
 			prepMethod = SpellPrepMethod.KnowSomePrepSome;
-			name = ClassName.Wizard;
+			classname = ClassName.Wizard;
 		}
 		public static Wizard fromYAML(string fName, int[] modifiers, int lvl, int prof, string cname)
 		{
@@ -157,10 +157,10 @@ namespace _5eCharDisplay.Classes
 
 			return classInfo;
 		}
-		public override void shortRest(string name, int classnum)
+		internal override void shortRest(object sender, EventArgs e)
 		{
 			// Get classInfo
-			string[] classInfo = File.ReadAllLines($@".\Data\Characters\{name}\{name}Wizard.yaml");
+			string[] classInfo = File.ReadAllLines($@".\Data\Characters\{charname}\{charname}Wizard.yaml");
 
 			// Reset Arcane Recovery
 			classInfo[17] = "ArcaneRecovery: false";
@@ -177,9 +177,9 @@ namespace _5eCharDisplay.Classes
 			}
 
 			// Write classInfo
-			File.WriteAllLines($@".\Data\Characters\{name}\{name}Wizard.yaml", classInfo);
+			File.WriteAllLines($@".\Data\Characters\{charname}\{charname}Wizard.yaml", classInfo);
 		}
-		public override void longRest(string name)
+		internal override void longRest(object sender, EventArgs e)
 		{
 			// Refresh Hit Dice
 			HDrem += (int)Math.Floor(level / 2.0);
@@ -187,7 +187,7 @@ namespace _5eCharDisplay.Classes
 			if (HDrem > level) HDrem = level;
 
 			// Get classInfo
-			string[] classInfo = File.ReadAllLines($@".\Data\Characters\{name}\{name}Wizard.yaml");
+			string[] classInfo = File.ReadAllLines($@".\Data\Characters\{charname}\{charname}Wizard.yaml");
 
 			// Reset Spell Slots
 			classInfo[0] = "spellSlots: [0, 0, 0, 0, 0, 0, 0, 0, 0]";
@@ -213,7 +213,7 @@ namespace _5eCharDisplay.Classes
 			}
 
 			// Write classInfo
-			File.WriteAllLines($@".\Data\Characters\{name}\{name}Wizard.yaml", classInfo);
+			File.WriteAllLines($@".\Data\Characters\{charname}\{charname}Wizard.yaml", classInfo);
 		}
 		public override List<GroupBox> getInfoBoxes()
 		{

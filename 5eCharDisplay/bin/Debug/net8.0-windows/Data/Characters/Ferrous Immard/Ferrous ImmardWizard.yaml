@@ -1,5 +1,5 @@
 spellSlots: [0, 0, 0, 0, 0, 0, 0, 0, 0]
-PreparedSpells: ["Shield", "Silvery Barbs", "Shatter", "Counterspell", "Sanguis Burst", "Galder's Tower", "Absorb Elements", "Comprehend Languages", "Magic Missile"]
+PreparedSpells: []
 Skill1: 
 Skill2: 
 ArcaneTradition: Hematurgy

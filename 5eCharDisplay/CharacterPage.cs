@@ -65,7 +65,7 @@ namespace _5eCharDisplay
 				TabPage tab = new TabPage();
 				ClassTabControl.Controls.Add(tab);
 				tab.Font = new Font("Microsoft Sans Serif", 7.8F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
-				tab.Text = cla.name.ToString();
+				tab.Text = cla.classname.ToString();
 				tab.Size = new Size(279, 598);
 				tab.Padding = new Padding(3);
 				tab.AutoScroll = true;
@@ -156,8 +156,16 @@ namespace _5eCharDisplay
 			Inventory.Lines = player.inventory.ToArray();
 			Inventory.KeyDown += UpdateInventory;
 
+			foreach(EventHandler e in Controller.getLongRest(player))
+			{
+				LRButton.Click += e;
+            }
+            foreach (EventHandler e in Controller.getShortRest(player))
+            {
+                SRButton.Click += e;
+            }
 
-			if (!player.Spellcasting)
+            if (!player.Spellcasting)
 				SpellcastingToggle.Hide();
 
 			(StrSaveProf.Checked, StrSaveNum.Text) = Controller.CPage_GetSkillProfs(player, "StrSave", Character.Stat.Strength);
@@ -338,21 +346,11 @@ namespace _5eCharDisplay
 		{
 			player.hitPoints = player.maxHitPoints;
 			HPCurrent.Text = player.hitPoints.ToString();
-			foreach (var c in player.myClasses)
-				c.longRest(player.name);
 			int i = 0;
 			foreach (Label l in HDPanel.Controls)
 			{
 				l.Text = $"{player.myClasses[i].getRemHD()}d{player.myClasses[i].getHitDie().getSides()}";
 				i++;
-			}
-		}
-		private void SRButton_Click(object sender, EventArgs e)
-		{
-			int i = 0;
-			foreach (var c in player.myClasses)
-			{
-				c.shortRest(player.name, ++i);
 			}
 		}
 		private void SetTHP_Click(object sender, EventArgs e)
