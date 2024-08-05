@@ -38,6 +38,11 @@ namespace _5eCharDisplay
 					dexMax = 10;
 				}
 				AC = int.Parse(chestArmor.AC);
+				if (chestArmor.aType == Armor.ArmorType.Medium && player.hasFeat("Medium Armor Master"))
+				{
+					if (chestArmor.DexMax == 2)
+						chestArmor.DexMax = 3;
+				}
 				if (chestArmor.aType != Armor.ArmorType.Heavy)
 					AC += Math.Min(player.dexterity.getMod(), dexMax);
 			}
@@ -248,6 +253,10 @@ namespace _5eCharDisplay
 				default:
 					break;
 			}
+
+			if ((prof == "Investigation" || prof == "Perception") && player.hasFeat("Observant"))
+				modifier += 5;
+
 			return $"{modifier + 10}";
 		}
 		static internal string CPage_DamageRoll(string input, bool critical)

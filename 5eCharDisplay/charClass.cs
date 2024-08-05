@@ -221,9 +221,14 @@ namespace _5eCharDisplay
 		public int getAbilityModifiers(int i) { return abilityModifiers[i]; }
         internal virtual void shortRest(object sender, EventArgs e)
 		{
-			
-		}
-        public virtual string[] getClassDetails(string name, string className = "")
+
+        }
+        internal virtual void longRest(object sender, EventArgs e)
+        {
+            HDrem += (int)Math.Floor(level / 2.0);
+            if (HDrem > level) HDrem = level;
+        }
+        public virtual string[] getClassDetails(string name)
 		{
 			throw new NotImplementedException();
 		}
@@ -278,11 +283,6 @@ namespace _5eCharDisplay
 		}
 
 		public charClass() { }
-		internal virtual void longRest(object sender, EventArgs e)
-        {
-            HDrem += (int)Math.Floor(level / 2.0);
-            if (HDrem > level) HDrem = level;
-        }
 
 		protected void DisplayOnRightClick(object sender, EventArgs e)
 		{
@@ -345,11 +345,6 @@ namespace _5eCharDisplay
 		{
 			Form form = sender as Form;
 			form.Close();
-		}
-		public bool isClass(Type t)
-		{
-			if (GetType() == t) return true;
-			else return false;
 		}
 	}
 

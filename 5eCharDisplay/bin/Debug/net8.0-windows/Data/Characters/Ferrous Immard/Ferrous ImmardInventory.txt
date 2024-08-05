@@ -5,6 +5,7 @@ Equipment
  > Bone Ring
  > Cursebreaker
  > Spellbook
+ > Glaive
 Poisons
  > Carrion Crawler Mucus
  > 2x Drow Poison

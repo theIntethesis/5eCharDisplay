@@ -14,8 +14,8 @@ using System.Runtime.CompilerServices;
 
 namespace _5eCharDisplay.Classes
 {
-    [SupportedOSPlatform("windows")]
-    internal class Wizard : charClass
+	[SupportedOSPlatform("windows")]
+	internal class Wizard : charClass
 	{
 		public string Skill1 { set; get; }
 		public string Skill2 { set; get; }
@@ -32,7 +32,7 @@ namespace _5eCharDisplay.Classes
 			hitDie = new Die(6);
 			armorProfs = new List<string> {  };
 			weaponProfs = new List<string> { "Dagger", "Dart", "Sling", "Quarterstaff", "Light Crossbow" };
-			SavingProfs = new string[2] { "IntSave", "WisSave" };
+			SavingProfs = [ "IntSave", "WisSave" ];
 			prepMethod = SpellPrepMethod.KnowSomePrepSome;
 			classname = ClassName.Wizard;
 		}
@@ -143,7 +143,7 @@ namespace _5eCharDisplay.Classes
 
 			return returned;
 		}
-		public override string[] getClassDetails(string name, string classname = "Wizard")
+		public override string[] getClassDetails(string name)
 		{
 			string[] classInfo = File.ReadAllLines($@".\Data\Characters\{name}\{name}Wizard.yaml");
 
@@ -171,7 +171,7 @@ namespace _5eCharDisplay.Classes
 				g.Checked = false;
 			}
 			if(ArcaneTradition == "Hematurgy")
-            {
+			{
 				HDrem += 1;
 				if (HDrem > level) HDrem = level;
 			}
@@ -224,19 +224,19 @@ namespace _5eCharDisplay.Classes
 				infoBoxes.Add(AddAbility($@".\Data\Classes\Wizard\Spellcasting.yaml"));
 				// Arcane Recovery
 				if(ArcaneTradition != "Hematurgy")
-                    infoBoxes.Add(AddAbility($@".\Data\Classes\Wizard\Arcane Recovery.yaml"));
-            }
+					//infoBoxes.Add(AddAbility($@".\Data\Classes\Wizard\Arcane Recovery.yaml"));
+				infoBoxes.Add(AddArcaneRecovery());
+			}
 			if (level >= 2)
 			{
 				// Arcane Tradition (Subclass)
-				AddAbilityFromList($@".\Data\Classes\Wizard\{ArcaneTradition}.yaml").ForEach(box => infoBoxes.Add(box));
+				infoBoxes.Add(AddSubclass());
+				//AddAbilityFromList($@".\Data\Classes\Wizard\{ArcaneTradition}.yaml").ForEach(box => infoBoxes.Add(box));
 			}
 			if (level >= 4)
 			{
 				infoBoxes.Add(ASIBox(featList[0]));
-				infoBoxes.Add(AddSpellMastery());
-                infoBoxes.Add(AddAbility($@".\Data\Classes\Wizard\Spell Mastery.yaml"));
-            }
+			}
 			if (level >= 6)
 			{
 				// Subclass Feature
@@ -264,8 +264,8 @@ namespace _5eCharDisplay.Classes
 			if (level >= 18)
 			{
 				// Spell Mastery
-                infoBoxes.Add(AddAbility($@".\Data\Classes\Wizard\Spell Mastery.yaml"));
-            }
+				infoBoxes.Add(AddAbility($@".\Data\Classes\Wizard\Spell Mastery.yaml"));
+			}
 			if (level >= 19)
 			{
 				infoBoxes.Add(ASIBox(featList[4]));
@@ -273,67 +273,68 @@ namespace _5eCharDisplay.Classes
 			if (level >= 20)
 			{
 				// Signature Spells
-                infoBoxes.Add(AddAbility($@".\Data\Classes\Wizard\Signature Spells.yaml"));
-            }
+				infoBoxes.Add(AddAbility($@".\Data\Classes\Wizard\Signature Spells.yaml"));
+			}
 			return infoBoxes;
 		}
-        private GroupBox AddArcaneRecovery()
-        {
-            GroupBox box = new GroupBox();
-            box.Text = "Arcane Recovery";
-            Label label = new Label();
-            label.Text = $"You have learned to regain some of your magical energy by studying your spellbook. Once per day when you finish a short rest, you can choose expended spell slots to recover. The spell slots can have a combined level that is equal to or less than {Math.Ceiling(level / 2.0)}, and none of the slots can be 6th level or higher.\n\n";
-            label.MaximumSize = new Size(168, int.MaxValue);
-            label.AutoSize = true;
-            box.Controls.Add(label);
-            label.Location = new Point(6, 12);
+		private GroupBox AddArcaneRecovery()
+		{
+			GroupBox box = new GroupBox();
+			box.Text = "Arcane Recovery";
+			Label label = new Label();
+			label.Text = $"You have learned to regain some of your magical energy by studying your spellbook. Once per day when you finish a short rest, you can choose expended spell slots to recover. The spell slots can have a combined level that is equal to or less than {Math.Ceiling(level / 2.0)}, and none of the slots can be 6th level or higher.\n\n";
+			label.MaximumSize = new Size(168, int.MaxValue);
+			label.AutoSize = true;
+			box.Controls.Add(label);
+			label.Location = new Point(6, 12);
 
-            CheckBox ArcaneRecoveryBox = new CheckBox();
-            ArcaneRecoveryBox.Checked = ArcaneRecovery;
-            ArcaneRecoveryBox.AutoSize = true;
-            ArcaneRecoveryBox.Text = "Arcane Recovery / LR";
-            resetOnLR.Add(ArcaneRecoveryBox);
-            box.Controls.Add(ArcaneRecoveryBox);
+			CheckBox ArcaneRecoveryBox = new CheckBox();
+			ArcaneRecoveryBox.Checked = ArcaneRecovery;
+			ArcaneRecoveryBox.AutoSize = true;
+			ArcaneRecoveryBox.Text = "Arcane Recovery / LR";
+			resetOnLR.Add(ArcaneRecoveryBox);
+			box.Controls.Add(ArcaneRecoveryBox);
 
-            ArcaneRecoveryBox.Location = new Point(6, label.Bottom - 115);
-            ArcaneRecoveryBox.CheckedChanged += ToggleArcaneRecovery;
+			ArcaneRecoveryBox.Location = new Point(6, label.Bottom - 115);
+			ArcaneRecoveryBox.CheckedChanged += ToggleArcaneRecovery;
 
-            box.MaximumSize = new Size(180, int.MaxValue);
-            box.AutoSize = true;
-            label.MouseDown += DisplayOnRightClick;
-            return box;
-        }
-        internal override string GetValue(string variable)
-        {
+			box.MaximumSize = new Size(180, int.MaxValue);
+			box.AutoSize = true;
+			label.MouseDown += DisplayOnRightClick;
+			return box;
+		}
+		internal override string GetValue(string variable)
+		{
 			string retMe = "";
 			switch (variable)
 			{
 				case "{numCantrips}":
-                    retMe = "3";
-                    if (level >= 4)
-                        retMe = "4";
-                    if (level >= 10)
-                        retMe = "5";
-                    break;
-                case "{numSpells}":
+					retMe = "3";
+					if (level >= 4)
+						retMe = "4";
+					if (level >= 10)
+						retMe = "5";
+					break;
+				case "{numSpells}":
 					retMe = $"{4 + 2 * level}";
-                    break;
-                case "{numPreparedSpells}":
+					break;
+				case "{numPreparedSpells}":
 					retMe = $"{abilityModifiers[3] + level}";
-                    break;
+					break;
 				case "{RecoverySlots}":
 					retMe = $"{Math.Ceiling(level / 2.0)}";
 						break;
-                default:
+				default:
+					retMe = variable;
 					break;
 			}
 			return retMe;
-        }
+		}
 		private GroupBox AddSubclass()
 		{
 			GroupBox box = new GroupBox();
 			box.MaximumSize = new Size(180, int.MaxValue);
-			box.Text = "Arcane Tradition";
+			box.Text = $"Arcane Tradition";
 			Label label = new Label();
 			box.Controls.Add(label);
 			label.MaximumSize = new Size(168, 0);
@@ -383,15 +384,16 @@ namespace _5eCharDisplay.Classes
 					low += BloodChannelerLabel.Size.Height + 6;
 					int y = 12;
 					for(int i = 0; i < proficiency; i++)
-                    {
+					{
 						CheckBox cBox = new CheckBox();
 						cBox.AutoSize = true;
 						cBox.Location = new Point(y, BloodChannelerLabel.Bottom);
 						if (BloodChannelerUsed > i) cBox.Checked = true;
 						cBox.CheckedChanged += BloodChannelerCheck;
+						resetOnLR.Add(cBox);
 						box.Controls.Add(cBox);
 						y += cBox.Size.Width + 6;
-                    }
+					}
 					low += 32;
 					break;
 				case "":
@@ -445,9 +447,9 @@ namespace _5eCharDisplay.Classes
 				SpellMasterLabels.Add(spell);
 				low += spell.Size.Height + 6;
 				spell.MouseDown += DisplaySpellOnRightClick;
-            }
-            box.MaximumSize = new Size(180, int.MaxValue);
-            box.AutoSize = true;
+			}
+			box.MaximumSize = new Size(180, int.MaxValue);
+			box.AutoSize = true;
 			label.MouseDown += ChangeSpellMastery;
 			return box;
 		}
@@ -480,8 +482,8 @@ namespace _5eCharDisplay.Classes
 				AlwaysPrepared.Add(s);
 			}
 			label.MaximumSize = new Size(168, int.MaxValue);
-            box.MaximumSize = new Size(180, int.MaxValue);
-            box.AutoSize = true;
+			box.MaximumSize = new Size(180, int.MaxValue);
+			box.AutoSize = true;
 			label.MouseDown += DisplayOnRightClick;
 			return box;
 		}
@@ -633,11 +635,11 @@ namespace _5eCharDisplay.Classes
 			ArcaneRecovery = c.Checked;
 		}
 		private void BloodChannelerCheck(object sender, EventArgs e)
-        {
+		{
 			var c = sender as CheckBox;
 			if (c.Checked) BloodChannelerUsed++;
 			else BloodChannelerUsed--;
-        }
+		}
 		private void SaveSpellMastery(object sender, CancelEventArgs e)
 		{
 			string[] classInfo = File.ReadAllLines($@".\Data\Characters\{charname}\{charname}Wizard.yaml");

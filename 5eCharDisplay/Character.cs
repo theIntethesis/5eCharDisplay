@@ -7,12 +7,14 @@ using System.IO;
 using _5eCharDisplay.Races;
 using _5eCharDisplay.Classes;
 using YamlDotNet.Serialization;
+using System.Runtime.Versioning;
 using System.Windows.Forms;
 
 namespace _5eCharDisplay
 {
+    [SupportedOSPlatform("windows")]
 	public class Character
-	{
+    {
 		#region Set / Get Constructors
 		public string name { get; set; }
 		public List<string> inventory = new List<string>();
@@ -104,9 +106,15 @@ namespace _5eCharDisplay
 			if (hitPoints > maxHitPoints) hitPoints = maxHitPoints;
 			else if (hitPoints < 0) hitPoints = 0;
 			return hitPoints;
-		}
+        }
+        public bool hasFeat(string feat)
+        {
+			if (myClasses.Any(c => c.getFeats().Any(f => f.name == feat)))
+				return true;
+			return false;
+        }
 
-		public static Character fromYAML(string charName)
+        public static Character fromYAML(string charName)
 		{
 			Character returned = null;
 			using (FileStream fin = File.OpenRead($@".\Data\Characters\{charName}\{charName}.yaml"))
@@ -411,6 +419,8 @@ namespace _5eCharDisplay
 				hp += c.getHitDie().getSides() + returned.constitution.getMod();
 				hp += (returned.level[classHPNum++] - 1) * (c.getHitDie().getAverage() + returned.myRace.getHPBoost() + returned.constitution.getMod());
 			}
+			if (returned.hasFeat("Tough"))
+				hp += returned.level.Sum() * 2;
 			
 			returned.maxHitPoints = hp;
 

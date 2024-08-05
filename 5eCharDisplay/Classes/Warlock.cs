@@ -44,6 +44,52 @@ namespace _5eCharDisplay.Classes
 			prepMethod = SpellPrepMethod.KnowSomePrepNone;
 			classname = ClassName.Warlock;
 		}
+		internal override string GetValue(string variable)
+		{
+			string retMe = "";
+			switch (variable)
+			{
+				case "{numCantrips}":
+					retMe = "2";
+					if (level >= 4)
+						retMe = "3";
+					if (level >= 10)
+						retMe = "4";
+					break;
+				case "{numSpellSlots}":
+					int numSpellSlots = 1;
+					if (level > 1 && level <= 10)
+						numSpellSlots = 2;
+					else if (level > 10 && level < 17)
+						numSpellSlots = 3;
+					else
+						numSpellSlots = 4;
+					retMe = $"{numSpellSlots}";
+					break;
+				case "{slotLevel}":
+					int slotLevel = 1;
+					if (level > 2)
+						slotLevel = 2;
+					if (level > 10)
+						slotLevel = 3;
+					if (level > 16)
+						slotLevel = 4;
+					retMe = $"{slotLevel}";
+					break;
+				case "{numSpells}":
+					int numSpells;
+					if (level < 10)
+						numSpells = level + 1;
+					else
+						numSpells = 10 + ((level - 10) / 2);
+					retMe = $"{numSpells}";
+					break;
+				default:
+					retMe = variable;
+					break;
+			}
+			return retMe;
+		}
 		public static Warlock fromYAML(string fName, int[] modifiers, int lvl, int prof)
 		{
 			Warlock returned = null;
@@ -153,7 +199,8 @@ namespace _5eCharDisplay.Classes
 			if (level >= 1)
 			{
 				infoBoxes.Add(AddSubclassBox());
-				infoBoxes.Add(AddPactMagicBox());
+				//infoBoxes.Add(AddPactMagicBox());
+				infoBoxes.Add(AddAbility(@".\Data\Classes\Warlock\Pact Magic.yaml"));
 			}
 			if (level >= 2)
 			{
@@ -196,7 +243,7 @@ namespace _5eCharDisplay.Classes
 		private GroupBox AddSubclassBox()
 		{
 			GroupBox box = new GroupBox();
-			box.Text = "Otherworldly Patron";
+			box.Text = $"Otherworldly Patron";
 			Label label = new Label();
 			box.Controls.Add(label);
 			label.MaximumSize = new Size(168, int.MaxValue);
@@ -882,7 +929,7 @@ namespace _5eCharDisplay.Classes
 			// Write classInfo
 			File.WriteAllLines($@".\Data\Characters\{charname}\{charname}Warlock.yaml", classInfo);
 		}
-		public override string[] getClassDetails(string name, string classname = "Warlock")
+		public override string[] getClassDetails(string name)
 		{
 			string[] classInfo = File.ReadAllLines($@".\Data\Characters\{charname}\{charname}Warlock.yaml");
 			

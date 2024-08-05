@@ -335,6 +335,9 @@ namespace _5eCharDisplay
 				{
 					int rem = c.affectHD(-1);
 					int healing = die.roll();
+					if (player.hasFeat("Durable"))
+						if (healing == 1)
+							healing = 2;
 					player.affectHitPoints(healing + player.constitution.getMod());
 					HPCurrent.Text = player.hitPoints.ToString();
 					labelText.Text = $"{rem}d{die.getSides()}";
@@ -563,6 +566,5 @@ namespace _5eCharDisplay
 		{
 			(sender as Form).Close();
 		}
-
 	}
 }

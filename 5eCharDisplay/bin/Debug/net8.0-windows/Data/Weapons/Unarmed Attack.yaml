@@ -1,0 +1,10 @@
+Name: Unarmed Attack
+BaseType: Other
+DamageDie:
+  - num: 1
+    sides: 1
+DamageType: ["Bludgeoning"]
+Properties: []
+MagicBonus: 0
+Effects: []
+PType: Unarmed

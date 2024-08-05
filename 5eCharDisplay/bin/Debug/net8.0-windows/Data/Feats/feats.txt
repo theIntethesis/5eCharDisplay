@@ -1,0 +1,29 @@
+name:
+description:
+asiboosts: [0, 0, 0, 0, 0, 0]
+ability bonus: (string ability, int bonus)
+addSpeed: int
+SkillProfAdd: string
+WeaponProfAdd: string
+// Dual Wielder AC Bonus
+// Elemental Adept minimum
+// Great Weapon Master / Sharpshooter Attack?
+// Luck Points?
+/*
+   Magic Initiate
+   classType:
+   cantrips:
+   spells:
+*/
+// Fighter Maneuvers
+// Polearm bonus action attack
+/*
+   Ritual Caster
+   classType:
+   spells:
+*/
+/*
+   Spell Sniper
+   classType:
+   cantrips:
+*/
