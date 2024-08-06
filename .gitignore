@@ -7,6 +7,7 @@
 *.exe
 *.pdb
 
+
 # User-specific files
 *.rsuser
 *.suo
@@ -400,3 +401,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Files that I do want
+!Debug/net8.0-windows/Data

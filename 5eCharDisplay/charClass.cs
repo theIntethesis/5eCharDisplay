@@ -121,7 +121,7 @@ namespace _5eCharDisplay
                 label.AutoSize = true;
                 label.Text = ability.Description;
                 int number = 0;
-                switch (ability.uses)
+                /*switch (ability.uses)
                 {
                     case Ability.AbilityUses.NoAbility:
                         break;
@@ -156,7 +156,7 @@ namespace _5eCharDisplay
 						default:
 							break;
 					}
-                }
+                }*/
                 box.AutoSize = true;
                 label.MouseDown += DisplayOnRightClick;
                 boxes.Add(box);
@@ -174,7 +174,7 @@ namespace _5eCharDisplay
             label.MaximumSize = new Size(168, 0);
             label.Location = new Point(6, 12);
             label.AutoSize = true;
-            abil.Description = Regex.Replace(abil.Description, @"{(.*)}", match => GetValue(match.Value));
+            abil.Description = Regex.Replace(abil.Description, @"{(\w*)}", match => GetValue(match.Value));
             label.Text = abil.Description;
             int number = 0;
             switch (abil.uses)

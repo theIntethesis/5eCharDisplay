@@ -1,0 +1,15 @@
+- Name: Hexblade's Curse
+  Description: \t\t- As a bonus action, choose one creature you can see within 30 feet of you. The target is cursed for 1 minute. The curse ends early if the target dies, you die, or you are incapacitated. Until the curse ends, you gain the following benefits:\n\t\t- You gain a +{proficiency} bonus to damage rolls against the cursed target.\n\t\t- Any attack roll you make against the cursed target is a critical hit on a roll of 19 or 20 on the d20.\n\t\t- If the cursed target dies, you regain {CHAlvl} hit points.\n\t\t- You can’t use this feature again until you finish a short or long rest.\n\n
+  levelAt: 1
+- Name: Hex Warrior
+  Description: \t\t- Whenever you finish a long rest, you can touch one weapon that you are proficient with and that lacks the two-handed property. When you attack with that weapon, you can use your Charisma modifier, instead of Strength or Dexterity, for the attack and damage rolls. This benefit lasts until you finish a long rest. If you later gain the Pact of the Blade feature, this benefit extends to every pact weapon you conjure with that feature, no matter the weapon’s type.\n\n
+  levelAt: 1
+- Name: Accursed Specter
+  Description: \t\t- When you slay a humanoid, you can cause its spirit to rise from its corpse as a specter, the statistics for which are in the Monster Manual. When the specter appears, it gains {SpecterTHP} temporary hit points. Roll initiative for the specter, which has its own turns. It obeys your verbal commands, and it gains a {CHA} bonus to its attack rolls.\n\t\t- The specter remains in your service until the end of your next long rest, at which point it vanishes to the afterlife.\n\t\t- Once you bind a specter with this feature, you can’t use the feature again until you finish a long rest.\n\n
+  levelAt: 6
+- Name: Armor of Hexes
+  Description: \t\t- If the target cursed by your Hexblade’s Curse hits you with an attack roll, you can use your reaction to roll a d6. On a 4 or higher, the attack instead misses you, regardless of its roll.\n\n
+  levelAt: 10
+- Name: Master of Hexes
+  Description: \t\t- When the creature cursed by your Hexblade’s Curse dies, you can apply the curse to a different creature you can see within 30 feet of you, provided you aren’t incapacitated. When you apply the curse in this way, you don’t regain hit points from the death of the previously cursed creature.\n\n
+  levelAt: 14

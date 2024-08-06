@@ -1,1 +1,22 @@
-[]
+- Name: Litany of Suffering
+  DamageDie:
+  - num: 1
+    sides: 6
+  - num: 1
+    sides: 6
+  DamageType:
+  - Piercing
+  - Psychic
+  Properties:
+  - Thrown (20/60)
+  - Versatile (1d8)
+  MagicBonus: 2
+  Effects:
+  - Creatures damaged by Litany of Suffering have a -2 penalty to attack rolls, skill checks, and saving throws until your next turn.
+  - Creatures damaged by Litany of Suffering gain 1 stack of Bleed. At the start of each creature's turn, they take 1d4 necrotic damage for each stack of Bleed. Bleed is removed if a creature is healed.
+  - As a bonus action, you may summon Litany of Suffering, as your blood twists and takes its wretched form.
+  - Once per long rest as an action, you can empower Litany of Suffering for the next minute. It deals an additional 2d8 necrotic damage for the duration.
+  - Once per long rest as an action, you can summon a vortex of blood from Litany of Suffering. Each creature within 5 feet of you takes 2d10 necrotic damage an must make a DC 17 Strength saving throw. Each creature that fails is thrown 15 feet away from you and is knocked prone.
+  BaseType: Spear
+  PType: Simple
+  stat: Charisma

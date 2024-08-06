@@ -324,6 +324,9 @@ namespace _5eCharDisplay.Classes
 				case "{RecoverySlots}":
 					retMe = $"{Math.Ceiling(level / 2.0)}";
 						break;
+				case "{ArcaneWardHP}":
+					retMe = $"{2 * level + abilityModifiers[3]}";
+                    break;
 				default:
 					retMe = variable;
 					break;
@@ -340,42 +343,33 @@ namespace _5eCharDisplay.Classes
 			label.MaximumSize = new Size(168, 0);
 			label.Location = new Point(6, 12);
 			int low = 0;
-			switch (ArcaneTradition)
+
+            var abilities = Ability.ListFromYaml(@$".\Data\Classes\Wizard\{ArcaneTradition}.yaml", GetValue);
+
+            switch (ArcaneTradition)
 			{
 				case "School of Abjuration":
-					label.Text += $"  - Abjuration Savant\n   - The gold and time you must spend to copy an abjuration spell into your spellbook is halved.\n\n";
-					label.Text += $"  - Arcane Ward\n   - When you cast an abjuration spell of 1st level or higher, you can simultaneously use a strand of the spell’s magic to create a magical ward on yourself that lasts until you finish a long rest. The ward has {2*level + abilityModifiers[3]} maximum hit points. Whenever you take damage, the ward takes the damage instead. If this damage reduces the ward to 0 hit points, you take any remaining damage.\n   - While the ward has 0 hit points, it can’t absorb damage, but its magic remains. Whenever you cast an abjuration spell of 1st level or higher, the ward regains a number of hit points equal to twice the level of the spell.\n   - Once you create the ward, you can’t create it again until you finish a long rest.\n\n";
-					if (level >= 6)
-					{
-						label.Text += $"  - Protected Ward\n   - When a creature that you can see within 30 feet of you takes damage, you can use your reaction to cause your Arcane Ward to absorb that damage. If this damage reduces the ward to 0 hit points, the warded creature takes any remaining damage.\n\n";
-					}
-					if (level >= 10)
-					{
-						label.Text += $"  - Improved Abjuration\n   - When you cast an abjuration spell that requires you to make an ability check as a part of casting that spell (as in counterspell and dispel magic), you add your proficiency bonus to that ability check.\n\n";
-					}
-					if (level >= 14)
-					{
-						label.Text += $"  - Spell Resistance\n   - You have advantage on saving throws against spells, and resistance to the damage of spells.\n\n";
-					}
-					low += label.Size.Height + 12;
+                    foreach (Ability a in abilities)
+                    {
+                        if (a.levelAt <= level)
+                        {
+                            label.Text += $"   - {a.Name}\n";
+                            label.Text += a.Description;
+                        }
+                    }
+                    low += label.Size.Height + 12;
 					break;
 				case "Hematurgy":
-					label.Text += $"  - Blood Channeler\n   - Once per turn, you can choose to inflict a wound upon yourself to cast a spell without expending a spell slot. To cast a spell this way, you expend a hit die and roll a number of d6 equal to the level of spell slot you're replacing. You lose hit points equal to the total amount rolled. If you are reduced to 0 hit points this way, the spell you cast takes effect before you fall unconcious. You cannot cast a spell at 6th level or higher this way.\nYou can use this feature a number of times equal to your proficiency bonus, and you regain all expended uses of it when you finish a long rest.\n\n";
-					label.Text += $"  - Quickened Recovery\n   - Starting at second level, your wounds recover at expedited speed. At the end of a short rest, you regain an expended Hit Die. At the end of a long rest, you regain an additional amount of Hit Dice equal to your proficiency bonus.\n\n";
-					if (level >= 6)
+					foreach(Ability a in abilities)
 					{
-						label.Text += $"  - Siphon Blood\n   - Starting at sixth level, your control over your blood and the blood of others increases. You can use an action to create simple items as long as you have requisite blood to manifest them. For example, a small pool of blood might become a dagger, a small length of rope, or a stone.\n\n";
-					}
-					if (level >= 10)
-					{
-						label.Text += $"  - Blood Ties\n   - Starting at 10th level, spells you cast are empowered against creatures whose blood you fuse into the magic. Whenever you cast a spell, it has the following effects:\n    - The spell save DC is increased by 4 against creatures whose blood you possess.\n    - You have advantage on the spell attack roll against creatures whose blood you possess.\n    - If the spell restores hit points, it restores the maximum amount.\n\n";
-					}
-					if (level >= 14)
-					{
-						label.Text += $"  - Bloody Marionette\n   - Starting at 14th level, your control over blood extends to amounts of blood within people's bodies. As long as you have a creature's blood, you can cast Dominate Monster targeting that creature without expending a spell slot. A creature that succeeds on the saving throw can't be targeted again in this way for 24 hours.\n\n";
+						if(a.levelAt <= level)
+						{
+							label.Text += $"   - {a.Name}\n";
+							label.Text += a.Description;
+						}
 					}
 					label.AutoSize = true;
-					low += label.Bottom - 115;
+					low += label.Size.Height - 115;
 					Label BloodChannelerLabel = new Label();
 					BloodChannelerLabel.AutoSize = true;
 					BloodChannelerLabel.Location = new Point(6, low);

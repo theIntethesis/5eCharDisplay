@@ -1,0 +1,12 @@
+- Name: Awakened Mind
+  Description: \t\t- You can telepathically speak to any creature you can see within 30 feet of you. You don't need to share a language with the creature for it to understand your telepathic utterances, but the creature must be able to understand at least one language.\n\n
+  levelAt: 1
+- Name: Entropic Ward
+  Description: \t\t- When a creature makes an attack roll against you, you can use your reaction to impose disadvantage on that roll. If the attack misses you, your next attack roll against the creature has advantage if you make it before the end of your next turn.\n\t\t- Once you use this feature, you can't use it again until you finish a short or long rest.\n\n
+  levelAt: 6
+- Name: Thought Shield
+  Description: \t\t- Your thoughts can’t be read by telepathy or other means unless you allow it. You also have resistance to psychic damage, and whenever a creature deals psychic damage to you, that creature takes the same amount of damage that you do.\n\n
+  levelAt: 10
+- Name: Create Thrall
+  Description: \t\t- You gain the ability to infect a humanoid’s mind with the alien magic of your patron. You can use your action to touch an incapacitated humanoid. That creature is then charmed by you until a remove curse spell is cast on it, the charmed condition is removed from it, or you use this feature again.\n\t\t- You can communicate telepathically with the charmed creature as long as the two of you are on the same plane of existence.\n\n
+  levelAt: 14

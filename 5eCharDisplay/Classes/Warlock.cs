@@ -8,6 +8,7 @@ using YamlDotNet.Serialization;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Runtime.Versioning;
+using System.Text.RegularExpressions;
 
 namespace _5eCharDisplay.Classes
 {
@@ -83,6 +84,28 @@ namespace _5eCharDisplay.Classes
 					else
 						numSpells = 10 + ((level - 10) / 2);
 					retMe = $"{numSpells}";
+					break;
+				case "{CHAlvl}":
+					retMe = $"{abilityModifiers[5] + level}";
+					break;
+				case "{proficiency}":
+					retMe = $"{proficiency}";
+					break;
+				case "{SpecterTHP}":
+					retMe = $"{level / 2}";
+					break;
+				case "{CHA}":
+					retMe = $"{abilityModifiers[5]}";
+					break;
+				case "{InvocationsKnown}":
+                    int number = 2;
+                    if (level >= 18) number = 8;
+                    else if (level >= 15) number = 7;
+                    else if (level >= 12) number = 6;
+                    else if (level >= 9) number = 5;
+                    else if (level >= 7) number = 4;
+                    else if (level >= 5) number = 3;
+                    retMe = $"{number}";
 					break;
 				default:
 					retMe = variable;
@@ -250,24 +273,21 @@ namespace _5eCharDisplay.Classes
 			label.AutoSize = true;
 			label.Location = new Point(6, 12);
 			int low = 0;
-			switch (OtherworldlyPatron)
+
+            var abilities = Ability.ListFromYaml(@$".\Data\Classes\Warlock\{OtherworldlyPatron}.yaml", GetValue);
+
+            switch (OtherworldlyPatron)
 			{
 				case "The Great Old One":
-					label.Text += $"  - Awakened Mind\n   - You can telepathically speak to any creature you can see within 30 feet of you. You don't need to share a language with the creature for it to understand your telepathic utterances, but the creature must be able to understand at least one language.\n\n";
-					if (level >= 6)
-					{
-						// SR
-						label.Text += $"  - Entropic Ward\n   - When a creature makes an attack roll against you, you can use your reaction to impose disadvantage on that roll. If the attack misses you, your next attack roll against the creature has advantage if you make it before the end of your next turn.\nOnce you use this feature, you can't use it again until you finish a short or long rest.\n\n";
-					}
-					if (level >= 10)
-					{
-						label.Text += $"  - Thought Shield\n   - Your thoughts can’t be read by telepathy or other means unless you allow it. You also have resistance to psychic damage, and whenever a creature deals psychic damage to you, that creature takes the same amount of damage that you do.\n\n";
-					}
-					if (level >= 14)
-					{
-						label.Text += $"  - Create Thrall\n   - You gain the ability to infect a humanoid’s mind with the alien magic of your patron. You can use your action to touch an incapacitated humanoid. That creature is then charmed by you until a remove curse spell is cast on it, the charmed condition is removed from it, or you use this feature again.\nYou can communicate telepathically with the charmed creature as long as the two of you are on the same plane of existence.\n\n";
-					}
-					low += label.Bottom - 115;
+                    foreach (Ability a in abilities)
+                    {
+                        if (a.levelAt <= level)
+                        {
+                            label.Text += $"   - {a.Name}\n";
+                            label.Text += a.Description;
+                        }
+                    }
+                    low += label.Bottom - 115;
 					if (level >= 6)
 					{
 						CheckBox EntropicWardBox = new CheckBox();
@@ -283,22 +303,15 @@ namespace _5eCharDisplay.Classes
 
 					break;
 				case "The Fiend":
-					label.Text += $"  - Dark One’s Blessing\n   - When you reduce a hostile creature to 0 hit points, you gain {abilityModifiers[5] + level} temporary hit points.\n\n";
-					if (level >= 6)
-					{
-						// SR
-						label.Text += $"  - Dark One’s Own Luck\n   - You can call on your patron to alter fate in your favor. When you make an ability check or a saving throw, you can use this feature to add a d10 to your roll. You can do so after seeing the initial roll but before any of the roll’s effects occur.\n   - Once you use this feature, you can’t use it again until you finish a short or long rest.\n\n";
-					}
-					if (level >= 10)
-					{
-						label.Text += $"  - Fiendish Resilience\n   - You can choose one damage type when you finish a short or long rest. You gain resistance to that damage type until you choose a different one with this feature. Damage from magical weapons or silver weapons ignores this resistance.\n\n";
-					}
-					if (level >= 14)
-					{
-						// LR
-						label.Text += $"  - Hurl Through Hell\n   - When you hit a creature with an attack, you can use this feature to instantly transport the target through the lower planes. The creature disappears and hurtles through a nightmare landscape.\n   - At the end of your next turn, the target returns to the space it previously occupied, or the nearest unoccupied space. If the target is not a fiend, it takes 10d10 psychic damage as it reels from its horrific experience.\n   - Once you use this feature, you can’t use it again until you finish a long rest.\n\n";
-					}
-					low += label.Bottom - 115;
+                    foreach (Ability a in abilities)
+                    {
+                        if (a.levelAt <= level)
+                        {
+                            label.Text += $"   - {a.Name}\n";
+                            label.Text += a.Description;
+                        }
+                    }
+                    low += label.Bottom - 115;
 					if(level >= 6)
 					{
 						CheckBox DarkOnesOwnLuckBox = new CheckBox();
@@ -325,23 +338,15 @@ namespace _5eCharDisplay.Classes
 					}
 					break;
 				case "The Archfey":
-					// SR
-					label.Text += $"  - Fey Presence\n   - Your patron bestows upon you the ability to project the beguiling and fearsome presence of the fey. As an action, you can cause each creature in a 10-foot cube originating from you to make a DC {8 + proficiency + abilityModifiers[5]} Wisdom saving throw. The creatures that fail their saving throws are all charmed or frightened by you (your choice) until the end of your next turn.\n   - Once you use this feature, you can’t use it again until you finish a short or long rest.\n\n";
-					if (level >= 6)
-					{
-						// SR
-						label.Text += "  - Misty Escape\n   - You can vanish in a puff of mist in response to harm. When you take damage, you can use your reaction to turn invisible and teleport up to 60 feet to an unoccupied space you can see. You remain invisible until the start of your next turn or until you attack or cast a spell.\n   - Once you use this feature, you can’t use it again until you finish a short or long rest.\n\n";
-					}
-					if (level >= 10)
-					{
-						label.Text += $"  - Beguiling Defenses\n   - Your patron teaches you how to turn the mind-affecting magic of your enemies against them. You are immune to being charmed, and when another creature attempts to charm you, you can use your reaction to attempt to turn the charm back on that creature. The creature must succeed on a Wisdom saving throw against your warlock spell save DC or be charmed by you for 1 minute or until the creature takes any damage.\n\n";
-					}
-					if (level >= 14)
-					{
-						// SR
-						label.Text += $"  - Dark Delirium\n   - You can plunge a creature into an illusory realm. As an action, choose a creature that you can see within 60 feet of you. It must make a DC {8 + proficiency + abilityModifiers[5]} Wisdom saving throw. On a failed save, it is charmed or frightened by you (your choice) for 1 minute or until your concentration is broken (as if you are concentrating on a spell). This effect ends early if the creature takes any damage.\n   - Until this illusion ends, the creature thinks it is lost in a misty realm, the appearance of which you choose. The creature can see and hear only itself, you, and the illusion.\n   - You must finish a short or long rest before you can use this feature again.\n\n";
-					}
-					low += label.Bottom - 115;
+                    foreach (Ability a in abilities)
+                    {
+                        if (a.levelAt <= level)
+                        {
+                            label.Text += $"   - {a.Name}\n";
+                            label.Text += a.Description;
+                        }
+                    }
+                    low += label.Bottom - 115;
 					CheckBox FeyPresenceBox = new CheckBox();
 					FeyPresenceBox.Checked = FeyPresence;
 					FeyPresenceBox.AutoSize = true;
@@ -379,26 +384,18 @@ namespace _5eCharDisplay.Classes
 					}
 					break;
 				case "The Hexblade":
-					// SR
-					label.Text += $"  - Hexblade's Curse\n   - As a bonus action, choose one creature you can see within 30 feet of you. The target is cursed for 1 minute. The curse ends early if the target dies, you die, or you are incapacitated. Until the curse ends, you gain the following benefits:\n    - You gain a +{proficiency} bonus to damage rolls against the cursed target.\n    - Any attack roll you make against the cursed target is a critical hit on a roll of 19 or 20 on the d20.\n    - If the cursed target dies, you regain {level + abilityModifiers[5]} hit points.\n   - You can’t use this feature again until you finish a short or long rest.\n\n";
-					label.Text += $"  - Hex Warrior\n  - Whenever you finish a long rest, you can touch one weapon that you are proficient with and that lacks the two-handed property. When you attack with that weapon, you can use your Charisma modifier, instead of Strength or Dexterity, for the attack and damage rolls. This benefit lasts until you finish a long rest. If you later gain the Pact of the Blade feature, this benefit extends to every pact weapon you conjure with that feature, no matter the weapon’s type.\n\n";
-					armorProfs.Add("Medium Armor");
-					armorProfs.Add("Shields");
-					weaponProfs.Add("Martial Weapons");
-					if (level >= 6)
-					{
-						// LR
-						label.Text += $"  - Accursed Specter\n   - When you slay a humanoid, you can cause its spirit to rise from its corpse as a specter, the statistics for which are in the Monster Manual. When the specter appears, it gains {level / 2} temporary hit points. Roll initiative for the specter, which has its own turns. It obeys your verbal commands, and it gains a {abilityModifiers[5]} bonus to its attack rolls.\n   - The specter remains in your service until the end of your next long rest, at which point it vanishes to the afterlife.\n   - Once you bind a specter with this feature, you can’t use the feature again until you finish a long rest.\n\n";
-					}
-					if (level >= 10)
-					{
-						label.Text += $"  - Armor of Hexes\n   - If the target cursed by your Hexblade’s Curse hits you with an attack roll, you can use your reaction to roll a d6. On a 4 or higher, the attack instead misses you, regardless of its roll.\n\n";
-					}
-					if (level >= 14)
-					{
-						label.Text += $"  - Master of Hexes\n   - When the creature cursed by your Hexblade’s Curse dies, you can apply the curse to a different creature you can see within 30 feet of you, provided you aren’t incapacitated. When you apply the curse in this way, you don’t regain hit points from the death of the previously cursed creature.\n\n";
-					}
-					low += label.Bottom - 115;
+                    armorProfs.Add("Medium Armor");
+                    armorProfs.Add("Shields");
+                    weaponProfs.Add("Martial Weapons");
+                    foreach (Ability a in abilities)
+                    {
+                        if (a.levelAt <= level)
+                        {
+                            label.Text += $"   - {a.Name}\n";
+                            label.Text += a.Description;
+                        }
+                    }
+                    low += label.Bottom - 115;
 					CheckBox HexbladesCurseBox = new CheckBox();
 					HexbladesCurseBox.Checked = HexbladesCurse;
 					HexbladesCurseBox.AutoSize = true;
@@ -484,19 +481,13 @@ namespace _5eCharDisplay.Classes
 		}
 		private GroupBox AddInvocationsBox()
 		{
-			int number = 2;
-			if (level >= 18) number = 8;
-			else if (level >= 15) number = 7;
-			else if (level >= 12) number = 6;
-			else if (level >= 9) number = 5;
-			else if (level >= 7) number = 4;
-			else if (level >= 5) number = 3;
 			GroupBox box = new GroupBox();
 			box.MaximumSize = new Size(180, int.MaxValue);
 			box.Text = "Eldritch Invocations";
 			Label label = new Label();
-			label.Text += $" - In your study of occult lore, you have unearthed eldritch invocations, fragments of forbidden knowledge that imbue you with an abiding magical ability.\nYou know {number} eldritch invocations of your choice. Your invocation options are detailed at the end of the class description.\n - Additionally, when you gain a level in this class, you can choose one of the invocations you know and replace it with another invocation that you could learn at that level.\n - If an eldritch invocation has prerequisites, you must meet them to learn it. You can learn the invocation at the same time that you meet its prerequisites. A level prerequisite refers to your level in this class.\n\n";
-			foreach (string s in EldritchInvocations)
+			label.Text += Ability.fromYaml(@".\Data\Classes\Warlock\Eldritch Invocations.yaml", GetValue).Description;
+
+            foreach (string s in EldritchInvocations)
 			{
 				label.Text += $"  - {s}\n";
 				switch (s)

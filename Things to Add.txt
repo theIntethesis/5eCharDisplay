@@ -1,0 +1,4 @@
+Resistances and Modifiers
+ - Resistant to X damage.
+ - Advantage on X saving throw.
+ - Advantage on X saving throw against Y effect.
