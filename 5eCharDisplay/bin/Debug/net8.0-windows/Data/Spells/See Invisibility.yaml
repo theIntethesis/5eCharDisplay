@@ -1,0 +1,22 @@
+index: see-invisibility
+name: See Invisibility
+desc:
+- For the duration of the spell, you see invisible creatures and objects as if they were visible, and you can see through Ethereal. The ethereal objects and creatures appear ghostly translucent.
+higher_level: []
+range: Self
+components:
+- V
+- S
+- M
+material: A dash of talc and a small amount of silver powder.
+ritual: false
+duration: 1 hour
+concentration: false
+casting_time: 1 action
+level: 2
+damage: 
+school:
+  index: divination
+  name: Divination
+  url: /api/magic-schools/divination
+url: /api/spells/see-invisibility

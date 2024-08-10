@@ -497,18 +497,18 @@ namespace _5eCharDisplay.Classes
 						break;
 					case "Armor of Shadows":
 						label.Text += $"   - You can cast mage armor on yourself at will, without expending a spell slot or material components.\n\n";
-						FirstLevelSpells.Add("Mage Armor");
+                        spellcasting?.FirstLevelSpells.Add("Mage Armor");
 						break;
 					case "Ascendant Step":
 						label.Text += $"   - You can cast levitate on yourself at will, without expending a spell slot or material components.\n\n";
-						SecondLevelSpells.Add("Levitate");
+                        spellcasting?.SecondLevelSpells.Add("Levitate");
 						break;
 					case "Aspect of the Moon":
 						label.Text += $"   - You no longer need to sleep and can’t be forced to sleep by any means. To gain the benefits of a long rest, you can spend all 8 hours doing light activity, such as reading your Book of Shadows and keeping watch.\n\n";
 						break;
 					case "Beast Speech":
 						label.Text += $"   - You can cast speak with animals at will, without expending a spell slot.\n\n";
-						FirstLevelSpells.Add("Speak With Animals");
+                        spellcasting?.FirstLevelSpells.Add("Speak With Animals");
 						break;
 					case "Beguiling Influence":
 						label.Text += $"   - You gain proficiency in the Deception and Persuasion skills.\n\n";
@@ -546,7 +546,7 @@ namespace _5eCharDisplay.Classes
 						break;
 					case "Eldritch Sight":
 						label.Text += $"   - You can cast detect magic at will, without expending a spell slot.\n\n";
-						FirstLevelSpells.Add("Detect Magic");
+						spellcasting?.FirstLevelSpells.Add("Detect Magic");
 						break;
 					case "Eldritch Smite":
 						label.Text += $"   - Once per turn when you hit a creature with your pact weapon, you can expend a warlock spell slot to deal an extra 1d8 force damage to the target, plus another 1d8 per level of the spell slot, and you can knock the target prone if it is Huge or smaller.\n\n";
@@ -600,11 +600,11 @@ namespace _5eCharDisplay.Classes
 						break;
 					case "Mask of Many Faces":
 						label.Text += $"   - You can cast disguise self at will, without expending a spell slot.\n\n";
-						FirstLevelSpells.Add("Disguise Self");
+						spellcasting?.FirstLevelSpells.Add("Disguise Self");
 						break;
 					case "Master of Myriad Forms":
 						label.Text += $"   - You can cast alter self at will, without expending a spell slot.\n\n";
-						SecondLevelSpells.Add("Alter Self");
+                        spellcasting?.SecondLevelSpells.Add("Alter Self");
 						// ALTER SELF
 						break;
 					case "Minions of Chaos":
@@ -617,7 +617,7 @@ namespace _5eCharDisplay.Classes
 						break;
 					case "Misty Visions":
 						label.Text += $"   - You can cast silent image at will, without expending a spell slot or material components.\n\n";
-						FirstLevelSpells.Add("Silent Image");
+						spellcasting?.FirstLevelSpells.Add("Silent Image");
 						// SILENT IMAGE
 						break;
 					case "One with Shadows":
@@ -625,7 +625,7 @@ namespace _5eCharDisplay.Classes
 						break;
 					case "Otherworldly Leap":
 						label.Text += $"   - You can cast jump on yourself at will, without expending a spell slot or material components.\n\n";
-						FirstLevelSpells.Add("Jump");
+                        spellcasting?.FirstLevelSpells.Add("Jump");
 						break;
 					case "Protection of the Talisman":
 						label.Text += $"  - When the wearer of your talisman fails a saving throw, they can add a d4 to the roll, potentially turning the save into a success. This benefit can be used {proficiency} times, and all expended uses are restored when you finish a long rest.\n\n";
@@ -645,7 +645,7 @@ namespace _5eCharDisplay.Classes
 						break;
 					case "Shroud of Shadow":
 						label.Text += $"   - You can cast invisibility at will, without expending a spell slot.\n\n";
-						SecondLevelSpells.Add("Invisibility");
+                        spellcasting?.SecondLevelSpells.Add("Invisibility");
 						break;
 					case "Sign of Ill Omen":
 						label.Text += $"   - You can cast bestow curse once using a warlock spell slot. You can’t do so again until you finish a long rest.\n\n";
@@ -671,7 +671,7 @@ namespace _5eCharDisplay.Classes
 						break;
 					case "Visions of Distant Realms":
 						label.Text += $"   - You can cast arcane eye at will, without expending a spell slot.\n\n";
-						FourthLevelSpells.Add("Arcane Eye");
+                        spellcasting?.FourthLevelSpells.Add("Arcane Eye");
 						// ARCANE EYE
 						break;
 					case "Voice of the Chain Master":
@@ -679,7 +679,7 @@ namespace _5eCharDisplay.Classes
 						break;
 					case "Whispers of the Grave":
 						label.Text += $"   - You can cast speak with dead at will, without expending a spell slot.\n\n";
-						ThirdLevelSpells.Add("Speak With Dead");
+                        spellcasting?.ThirdLevelSpells.Add("Speak With Dead");
 						break;
 					case "Witch Sight":
 						label.Text += $"   - You can see the true form of any shapechanger or creature concealed by illusion or transmutation magic while the creature is within 30 feet of you and within line of sight.\n\n";

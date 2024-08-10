@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using _5eCharDisplay.Classes;
 using System.Runtime.Versioning;
 
 namespace _5eCharDisplay
@@ -16,14 +15,14 @@ namespace _5eCharDisplay
 	{
 		Character player;
 		int numPrepared = 0, maxNumPrepared = 0;
-		int classnumber;
+		charClass cClass;
 		List<CheckBox> preparedBoxes = new List<CheckBox>();
 		bool atMax = false;
 		internal SpellcastingPage(Character PC, int Classnum)
 		{
 			InitializeComponent();
 			player = PC;
-			classnumber = Classnum;
+			cClass = PC.myClasses[Classnum];
 
 			// Set Spellmod for quick referencing.
 			int spellmod;
@@ -75,20 +74,20 @@ namespace _5eCharDisplay
 			// Set up Spell Slot CheckBoxes
 			for(int i = 0; i < 9; i++)
 			{
-				if (player.myClasses[classnumber].spellSlotsMax[i] > 0)
+				if (cClass.spellcasting.spellSlotsMax[i] > 0)
 				{
 					firstY = 45;
 					int check = player.myClasses[Classnum].spellSlots[i];
-					for (int j = 0; j < player.myClasses[classnumber].spellSlotsMax[i]; j++)
+					for (int j = 0; j < cClass.spellcasting.spellSlotsMax[i]; j++)
 					{
 						CheckBox box = new CheckBox();
 						box.Location = new Point(xVals[i], firstY += 20);
 						box.Text = null;
 						box.Size = new Size(17, 17);
-                        if (player.myClasses[classnumber].classname == charClass.ClassName.Warlock)
-							player.myClasses[classnumber].warlockSlotBoxes.Add(box);
+                        if (cClass.classname == charClass.ClassName.Warlock)
+							cClass.warlockSlotBoxes.Add(box);
 						else
-							player.myClasses[classnumber].spellSlotBoxes.Add(box);
+							cClass.spellSlotBoxes.Add(box);
 						if (check > 0)
 						{
 							box.Checked = true;
@@ -132,9 +131,9 @@ namespace _5eCharDisplay
 			int yDiff = 145;
 			int xDiff = 20;
 
-			charClass.SpellPrepMethod prepMethod = player.myClasses[classnumber].prepMethod;
+			charClass.SpellPrepMethod prepMethod = cClass.spellcasting.prepMethod;
 
-			if(player.myClasses[Classnum].Cantrips.Count > 0)
+			if(cClass.spellcasting.Cantrips.Count > 0)
 			{
 				Label FirstLabel = new Label();
 				FirstLabel.Text = "Cantrips";
@@ -143,7 +142,7 @@ namespace _5eCharDisplay
 				FirstLabel.Font = new Font(FontFamily.GenericSansSerif, 9);
 				Controls.Add(FirstLabel);
 				yDiff += 20;
-				foreach (string spell in player.myClasses[classnumber].Cantrips)
+				foreach (string spell in cClass.spellcasting.Cantrips)
 				{
 					Label SpellName = new Label();
 					SpellName.Text = spell;
@@ -161,7 +160,7 @@ namespace _5eCharDisplay
 				}
 			}
 			
-			if (player.myClasses[Classnum].FirstLevelSpells.Count > 0)
+			if (cClass.spellcasting.FirstLevelSpells.Count > 0)
 			{
 				Label SpellLabel = new Label();
 				SpellLabel.Text = "1st Level Spells";
@@ -170,7 +169,7 @@ namespace _5eCharDisplay
 				SpellLabel.Font = new Font(FontFamily.GenericSansSerif, 9);
 				Controls.Add(SpellLabel);
 				yDiff += 20;
-				foreach (string spell in player.myClasses[classnumber].FirstLevelSpells)
+				foreach (string spell in cClass.spellcasting.FirstLevelSpells)
 				{
 					Spell s = Spell.fromYAML(spell);
 					if (prepMethod == charClass.SpellPrepMethod.KnowSomePrepNone)
@@ -192,12 +191,12 @@ namespace _5eCharDisplay
 						prepared.Size = new Size(250, 20);
 						prepared.AutoSize = true;
 						prepared.Location = new Point(xDiff, yDiff);
-						if (player.myClasses[classnumber].PreparedSpells.Contains(spell) || player.myClasses[classnumber].AlwaysPrepared.Contains(spell))
+						if (cClass.spellcasting.PreparedSpells.Contains(spell) || cClass.spellcasting.AlwaysPrepared.Contains(spell))
 						{
 							prepared.Checked = true;
 							numPrepared++;
 						}
-						else if (player.myClasses[classnumber].AlwaysPrepared.Contains(spell))
+						else if (cClass.spellcasting.AlwaysPrepared.Contains(spell))
 							prepared.Checked = true;
 
 						prepared.MouseDown += DisplayOnRightClick;
@@ -214,7 +213,7 @@ namespace _5eCharDisplay
 				}
 			}
 			
-			if (player.myClasses[Classnum].SecondLevelSpells.Count > 0)
+			if (cClass.spellcasting.SecondLevelSpells.Count > 0)
 			{
 				Label SecondLabel = new Label();
 				SecondLabel.Text = "2nd Level Spells";
@@ -223,7 +222,7 @@ namespace _5eCharDisplay
 				SecondLabel.Font = new Font(FontFamily.GenericSansSerif, 9);
 				Controls.Add(SecondLabel);
 				yDiff += 20;
-				foreach (string spell in player.myClasses[classnumber].SecondLevelSpells)
+				foreach (string spell in cClass.spellcasting.SecondLevelSpells)
 				{
 					Spell s = Spell.fromYAML(spell);
 					if (prepMethod == charClass.SpellPrepMethod.KnowSomePrepNone)
@@ -245,12 +244,12 @@ namespace _5eCharDisplay
 						prepared.Size = new Size(200, 20);
 						prepared.AutoSize = true;
 						prepared.Location = new Point(xDiff, yDiff);
-						if (player.myClasses[classnumber].PreparedSpells.Contains(spell) || player.myClasses[classnumber].AlwaysPrepared.Contains(spell))
+						if (cClass.spellcasting.PreparedSpells.Contains(spell) || cClass.spellcasting.AlwaysPrepared.Contains(spell))
 						{
 							prepared.Checked = true;
 							numPrepared++;
 						}
-						else if (player.myClasses[classnumber].AlwaysPrepared.Contains(spell))
+						else if (cClass.spellcasting.AlwaysPrepared.Contains(spell))
 							prepared.Checked = true;
 
 						prepared.MouseDown += DisplayOnRightClick;
@@ -267,7 +266,7 @@ namespace _5eCharDisplay
 				}
 			}
 			
-			if(player.myClasses[Classnum].ThirdLevelSpells.Count > 0)
+			if (cClass.spellcasting.ThirdLevelSpells.Count > 0)
 			{
 				Label ThirdLabel = new Label();
 				ThirdLabel.Text = "3rd Level Spells";
@@ -276,7 +275,7 @@ namespace _5eCharDisplay
 				ThirdLabel.Font = new Font(FontFamily.GenericSansSerif, 9);
 				Controls.Add(ThirdLabel);
 				yDiff += 20;
-				foreach (string spell in player.myClasses[classnumber].ThirdLevelSpells)
+				foreach (string spell in cClass.spellcasting.ThirdLevelSpells)
 				{
 					Spell s = Spell.fromYAML(spell);
 					if (prepMethod == charClass.SpellPrepMethod.KnowSomePrepNone)
@@ -298,12 +297,12 @@ namespace _5eCharDisplay
 						prepared.Size = new Size(200, 20);
 						prepared.AutoSize = true;
 						prepared.Location = new Point(xDiff, yDiff);
-						if (player.myClasses[classnumber].PreparedSpells.Contains(spell) || player.myClasses[classnumber].AlwaysPrepared.Contains(spell))
+						if (cClass.spellcasting.PreparedSpells.Contains(spell) || cClass.spellcasting.AlwaysPrepared.Contains(spell))
 						{
 							prepared.Checked = true;
 							numPrepared++;
 						}
-						else if (player.myClasses[classnumber].AlwaysPrepared.Contains(spell))
+						else if (cClass.spellcasting.AlwaysPrepared.Contains(spell))
 							prepared.Checked = true;
 
 						prepared.MouseDown += DisplayOnRightClick;
@@ -320,7 +319,7 @@ namespace _5eCharDisplay
 				}
 			}
 
-			if (player.myClasses[Classnum].FourthLevelSpells.Count > 0)
+			if (cClass.spellcasting.FourthLevelSpells.Count > 0)
 			{
 				Label FourthLabel = new Label();
 				FourthLabel.Text = "4th Level Spells";
@@ -329,7 +328,7 @@ namespace _5eCharDisplay
 				FourthLabel.Font = new Font(FontFamily.GenericSansSerif, 9);
 				Controls.Add(FourthLabel);
 				yDiff += 20;
-				foreach (string spell in player.myClasses[classnumber].FourthLevelSpells)
+				foreach (string spell in cClass.spellcasting.FourthLevelSpells)
 				{
 					Spell s = Spell.fromYAML(spell);
 					if (prepMethod == charClass.SpellPrepMethod.KnowSomePrepNone)
@@ -350,12 +349,12 @@ namespace _5eCharDisplay
 						if (s.ritual) prepared.Text += " [R]";
 						prepared.Size = new Size(200, 20);
 						prepared.Location = new Point(xDiff, yDiff);
-						if (player.myClasses[classnumber].PreparedSpells.Contains(spell) || player.myClasses[classnumber].AlwaysPrepared.Contains(spell))
+						if (cClass.spellcasting.PreparedSpells.Contains(spell) || cClass.spellcasting.AlwaysPrepared.Contains(spell))
 						{
 							prepared.Checked = true;
 							numPrepared++;
 						}
-						else if (player.myClasses[classnumber].AlwaysPrepared.Contains(spell))
+						else if (cClass.spellcasting.AlwaysPrepared.Contains(spell))
 							prepared.Checked = true;
 
 						prepared.MouseDown += DisplayOnRightClick;
@@ -372,7 +371,7 @@ namespace _5eCharDisplay
 				}
 			}
 
-			if (player.myClasses[Classnum].FifthLevelSpells.Count > 0)
+			if (cClass.spellcasting.FifthLevelSpells.Count > 0)
 			{
 				Label FourthLabel = new Label();
 				FourthLabel.Text = "5th Level Spells";
@@ -381,7 +380,7 @@ namespace _5eCharDisplay
 				FourthLabel.Font = new Font(FontFamily.GenericSansSerif, 9);
 				Controls.Add(FourthLabel);
 				yDiff += 20;
-				foreach (string spell in player.myClasses[classnumber].FifthLevelSpells)
+				foreach (string spell in cClass.spellcasting.FifthLevelSpells)
 				{
 					Spell s = Spell.fromYAML(spell);
 					if (prepMethod == charClass.SpellPrepMethod.KnowSomePrepNone)
@@ -402,12 +401,12 @@ namespace _5eCharDisplay
 						if (s.ritual) prepared.Text += " [R]";
 						prepared.Size = new Size(200, 20);
 						prepared.Location = new Point(xDiff, yDiff);
-						if (player.myClasses[classnumber].PreparedSpells.Contains(spell) || player.myClasses[classnumber].AlwaysPrepared.Contains(spell))
+						if (cClass.spellcasting.PreparedSpells.Contains(spell) || cClass.spellcasting.AlwaysPrepared.Contains(spell))
 						{
 							prepared.Checked = true;
 							numPrepared++;
 						}
-						else if (player.myClasses[classnumber].AlwaysPrepared.Contains(spell))
+						else if (cClass.spellcasting.AlwaysPrepared.Contains(spell))
 							prepared.Checked = true;
 
 						prepared.MouseDown += DisplayOnRightClick;
@@ -424,7 +423,7 @@ namespace _5eCharDisplay
 				}
 			}
 
-			if (player.myClasses[Classnum].SixthLevelSpells.Count > 0)
+			if (cClass.spellcasting.SixthLevelSpells.Count > 0)
 			{
 				Label FourthLabel = new Label();
 				FourthLabel.Text = "6th Level Spells";
@@ -433,7 +432,7 @@ namespace _5eCharDisplay
 				FourthLabel.Font = new Font(FontFamily.GenericSansSerif, 9);
 				Controls.Add(FourthLabel);
 				yDiff += 20;
-				foreach (string spell in player.myClasses[classnumber].SixthLevelSpells)
+				foreach (string spell in cClass.spellcasting.SixthLevelSpells)
 				{
 					Spell s = Spell.fromYAML(spell);
 					if (prepMethod == charClass.SpellPrepMethod.KnowSomePrepNone)
@@ -454,12 +453,12 @@ namespace _5eCharDisplay
 						if (s.ritual) prepared.Text += " [R]";
 						prepared.Size = new Size(200, 20);
 						prepared.Location = new Point(xDiff, yDiff);
-						if (player.myClasses[classnumber].PreparedSpells.Contains(spell) || player.myClasses[classnumber].AlwaysPrepared.Contains(spell))
+						if (cClass.spellcasting.PreparedSpells.Contains(spell) || cClass.spellcasting.AlwaysPrepared.Contains(spell))
 						{
 							prepared.Checked = true;
 							numPrepared++;
 						}
-						else if (player.myClasses[classnumber].AlwaysPrepared.Contains(spell))
+						else if (cClass.spellcasting.AlwaysPrepared.Contains(spell))
 							prepared.Checked = true;
 
 						prepared.MouseDown += DisplayOnRightClick;
@@ -476,7 +475,7 @@ namespace _5eCharDisplay
 				}
 			}
 
-			if (player.myClasses[Classnum].SeventhLevelSpells.Count > 0)
+			if (cClass.spellcasting.SeventhLevelSpells.Count > 0)
 			{
 				Label FourthLabel = new Label();
 				FourthLabel.Text = "7th Level Spells";
@@ -485,7 +484,7 @@ namespace _5eCharDisplay
 				FourthLabel.Font = new Font(FontFamily.GenericSansSerif, 9);
 				Controls.Add(FourthLabel);
 				yDiff += 20;
-				foreach (string spell in player.myClasses[classnumber].SeventhLevelSpells)
+				foreach (string spell in cClass.spellcasting.SeventhLevelSpells)
 				{
 					Spell s = Spell.fromYAML(spell);
 					if (prepMethod == charClass.SpellPrepMethod.KnowSomePrepNone)
@@ -506,12 +505,12 @@ namespace _5eCharDisplay
 						if (s.ritual) prepared.Text += " [R]";
 						prepared.Size = new Size(200, 20);
 						prepared.Location = new Point(xDiff, yDiff);
-						if (player.myClasses[classnumber].PreparedSpells.Contains(spell) || player.myClasses[classnumber].AlwaysPrepared.Contains(spell))
+						if (cClass.spellcasting.PreparedSpells.Contains(spell) || cClass.spellcasting.AlwaysPrepared.Contains(spell))
 						{
 							prepared.Checked = true;
 							numPrepared++;
 						}
-						else if (player.myClasses[classnumber].AlwaysPrepared.Contains(spell))
+						else if (cClass.spellcasting.AlwaysPrepared.Contains(spell))
 							prepared.Checked = true;
 
 						prepared.MouseDown += DisplayOnRightClick;
@@ -528,7 +527,7 @@ namespace _5eCharDisplay
 				}
 			}
 
-			if (player.myClasses[Classnum].EighthLevelSpells.Count > 0)
+			if (cClass.spellcasting.EighthLevelSpells.Count > 0)
 			{
 				Label FourthLabel = new Label();
 				FourthLabel.Text = "8th Level Spells";
@@ -537,7 +536,7 @@ namespace _5eCharDisplay
 				FourthLabel.Font = new Font(FontFamily.GenericSansSerif, 9);
 				Controls.Add(FourthLabel);
 				yDiff += 20;
-				foreach (string spell in player.myClasses[classnumber].EighthLevelSpells)
+				foreach (string spell in cClass.spellcasting.EighthLevelSpells)
 				{
 					Spell s = Spell.fromYAML(spell);
 					if (prepMethod == charClass.SpellPrepMethod.KnowSomePrepNone)
@@ -558,12 +557,12 @@ namespace _5eCharDisplay
 						if (s.ritual) prepared.Text += " [R]";
 						prepared.Size = new Size(200, 20);
 						prepared.Location = new Point(xDiff, yDiff);
-						if (player.myClasses[classnumber].PreparedSpells.Contains(spell) || player.myClasses[classnumber].AlwaysPrepared.Contains(spell))
+						if (cClass.spellcasting.PreparedSpells.Contains(spell) || cClass.spellcasting.AlwaysPrepared.Contains(spell))
 						{
 							prepared.Checked = true;
 							numPrepared++;
 						}
-						else if (player.myClasses[classnumber].AlwaysPrepared.Contains(spell))
+						else if (cClass.spellcasting.AlwaysPrepared.Contains(spell))
 							prepared.Checked = true;
 
 						prepared.MouseDown += DisplayOnRightClick;
@@ -580,7 +579,7 @@ namespace _5eCharDisplay
 				}
 			}
 
-			if (player.myClasses[Classnum].NinthLevelSpells.Count > 0)
+			if (cClass.spellcasting.NinthLevelSpells.Count > 0)
 			{
 				Label FourthLabel = new Label();
 				FourthLabel.Text = "9th Level Spells";
@@ -589,7 +588,7 @@ namespace _5eCharDisplay
 				FourthLabel.Font = new Font(FontFamily.GenericSansSerif, 9);
 				Controls.Add(FourthLabel);
 				yDiff += 20;
-				foreach (string spell in player.myClasses[classnumber].NinthLevelSpells)
+				foreach (string spell in cClass.spellcasting.NinthLevelSpells)
 				{
 					Spell s = Spell.fromYAML(spell);
 					if (prepMethod == charClass.SpellPrepMethod.KnowSomePrepNone)
@@ -610,12 +609,12 @@ namespace _5eCharDisplay
 						if (s.ritual) prepared.Text += " [R]";
 						prepared.Size = new Size(200, 20);
 						prepared.Location = new Point(xDiff, yDiff);
-						if (player.myClasses[classnumber].PreparedSpells.Contains(spell) || player.myClasses[classnumber].AlwaysPrepared.Contains(spell))
+						if (cClass.spellcasting.PreparedSpells.Contains(spell) || cClass.spellcasting.AlwaysPrepared.Contains(spell))
 						{
 							prepared.Checked = true;
 							numPrepared++;
 						}
-						else if (player.myClasses[classnumber].AlwaysPrepared.Contains(spell))
+						else if (cClass.spellcasting.AlwaysPrepared.Contains(spell))
 							prepared.Checked = true;
 
 						prepared.MouseDown += DisplayOnRightClick;
@@ -632,7 +631,7 @@ namespace _5eCharDisplay
 				}
 			}
 
-			if (numPrepared >= maxNumPrepared && (player.myClasses[classnumber].prepMethod == charClass.SpellPrepMethod.KnowSomePrepSome || player.myClasses[classnumber].prepMethod == charClass.SpellPrepMethod.KnowAllPrepSome))
+			if (numPrepared >= maxNumPrepared && (cClass.spellcasting.prepMethod == charClass.SpellPrepMethod.KnowSomePrepSome || cClass.spellcasting.prepMethod == charClass.SpellPrepMethod.KnowAllPrepSome))
 			{
 				foreach (CheckBox c in preparedBoxes)
 				{
@@ -661,9 +660,9 @@ namespace _5eCharDisplay
 			int level = 0;
 			CheckBox thisthing = sender as CheckBox;
 			if (!thisthing.Checked)
-				player.myClasses[classnumber].spellSlots[level]--;
+				cClass.spellcasting.spellSlots[level]--;
 			else
-				player.myClasses[classnumber].spellSlots[level]++;
+				cClass.spellcasting.spellSlots[level]++;
 			return;
 		}
 		private void ChangeSecondSlot(object sender, EventArgs e)
@@ -671,9 +670,9 @@ namespace _5eCharDisplay
 			int level = 1;
 			CheckBox thisthing = sender as CheckBox;
 			if (!thisthing.Checked)
-				player.myClasses[classnumber].spellSlots[level]--;
+				cClass.spellcasting.spellSlots[level]--;
 			else
-				player.myClasses[classnumber].spellSlots[level]++;
+				cClass.spellcasting.spellSlots[level]++;
 			return;
 		}
 		private void ChangeThirdSlot(object sender, EventArgs e)
@@ -681,9 +680,9 @@ namespace _5eCharDisplay
 			int level = 2;
 			CheckBox thisthing = sender as CheckBox;
 			if (!thisthing.Checked)
-				player.myClasses[classnumber].spellSlots[level]--;
+				cClass.spellcasting.spellSlots[level]--;
 			else
-				player.myClasses[classnumber].spellSlots[level]++;
+				cClass.spellcasting.spellSlots[level]++;
 			return;
 		}
 		private void ChangeFourthSlot(object sender, EventArgs e)
@@ -691,9 +690,9 @@ namespace _5eCharDisplay
 			int level = 3;
 			CheckBox thisthing = sender as CheckBox;
 			if (!thisthing.Checked)
-				player.myClasses[classnumber].spellSlots[level]--;
+				cClass.spellcasting.spellSlots[level]--;
 			else
-				player.myClasses[classnumber].spellSlots[level]++;
+				cClass.spellcasting.spellSlots[level]++;
 			return;
 		}
 		private void ChangeFifthSlot(object sender, EventArgs e)
@@ -701,9 +700,9 @@ namespace _5eCharDisplay
 			int level = 4;
 			CheckBox thisthing = sender as CheckBox;
 			if (!thisthing.Checked)
-				player.myClasses[classnumber].spellSlots[level]--;
+				cClass.spellcasting.spellSlots[level]--;
 			else
-				player.myClasses[classnumber].spellSlots[level]++;
+				cClass.spellcasting.spellSlots[level]++;
 			return;
 		}
 		private void ChangeSixthSlot(object sender, EventArgs e)
@@ -711,9 +710,9 @@ namespace _5eCharDisplay
 			int level = 5;
 			CheckBox thisthing = sender as CheckBox;
 			if (!thisthing.Checked)
-				player.myClasses[classnumber].spellSlots[level]--;
+				cClass.spellcasting.spellSlots[level]--;
 			else
-				player.myClasses[classnumber].spellSlots[level]++;
+				cClass.spellcasting.spellSlots[level]++;
 			return;
 		}
 		private void ChangeSeventhSlot(object sender, EventArgs e)
@@ -721,9 +720,9 @@ namespace _5eCharDisplay
 			int level = 6;
 			CheckBox thisthing = sender as CheckBox;
 			if (!thisthing.Checked)
-				player.myClasses[classnumber].spellSlots[level]--;
+				cClass.spellcasting.spellSlots[level]--;
 			else
-				player.myClasses[classnumber].spellSlots[level]++;
+				cClass.spellcasting.spellSlots[level]++;
 			return;
 		}
 		private void ChangeEighthSlot(object sender, EventArgs e)
@@ -731,9 +730,9 @@ namespace _5eCharDisplay
 			int level = 7;
 			CheckBox thisthing = sender as CheckBox;
 			if (!thisthing.Checked)
-				player.myClasses[classnumber].spellSlots[level]--;
+				cClass.spellcasting.spellSlots[level]--;
 			else
-				player.myClasses[classnumber].spellSlots[level]++;
+				cClass.spellcasting.spellSlots[level]++;
 			return;
 		}
 		private void ChangeNinthSlot(object sender, EventArgs e)
@@ -741,9 +740,9 @@ namespace _5eCharDisplay
 			int level = 8;
 			CheckBox thisthing = sender as CheckBox;
 			if (!thisthing.Checked)
-				player.myClasses[classnumber].spellSlots[level]--;
+				cClass.spellcasting.spellSlots[level]--;
 			else
-				player.myClasses[classnumber].spellSlots[level]++;
+				cClass.spellcasting.spellSlots[level]++;
 			return;
 		}
 		#endregion ChangeNthSlot
@@ -756,9 +755,9 @@ namespace _5eCharDisplay
 				SpellName = SpellName.Substring(0, SpellName.Length - 4);
 			if (thisthing.Checked)
 			{
-				player.myClasses[classnumber].PreparedSpells.Add(SpellName);
+				cClass.spellcasting.PreparedSpells.Add(SpellName);
 				numPrepared++;
-				if(numPrepared >= (maxNumPrepared + player.myClasses[classnumber].AlwaysPrepared.Count)&& (player.myClasses[classnumber].prepMethod == charClass.SpellPrepMethod.KnowSomePrepSome || player.myClasses[classnumber].prepMethod == charClass.SpellPrepMethod.KnowAllPrepSome))
+				if(numPrepared >= (maxNumPrepared + cClass.spellcasting.AlwaysPrepared.Count)&& (cClass.spellcasting.prepMethod == charClass.SpellPrepMethod.KnowSomePrepSome || cClass.spellcasting.prepMethod == charClass.SpellPrepMethod.KnowAllPrepSome))
 				{
 					foreach(CheckBox c in preparedBoxes)
 					{
@@ -770,7 +769,7 @@ namespace _5eCharDisplay
 			}
 			else
 			{
-				player.myClasses[classnumber].PreparedSpells.Remove(SpellName);
+				cClass.spellcasting.PreparedSpells.Remove(SpellName);
 				numPrepared--;
 				if (atMax)
 				{
@@ -799,16 +798,21 @@ namespace _5eCharDisplay
 				}
 				else
 					SpellName = the.Text;
+				if (SpellName.Contains("[R]"))
+					SpellName = SpellName.Substring(0, SpellName.Length - 4);
+
 				theSpell = Spell.fromYAML(SpellName);
 				Form from = new Form();
-				from.Size = new Size(200, 600);
+				from.MinimumSize = new Size(200, 0);
+				from.AutoSize = true;
 				//from.Icon = new Icon(@"C:\Users\Hayden\Downloads\881288450786082876.ico");
 				from.Location = new Point(400, 50);
 				Label SpellArgs = new Label();
-				SpellArgs.Text = Controller.SPage_GetSpellDisplay(theSpell, player, classnumber);
+				SpellArgs.Text = Controller.SPage_GetSpellDisplay(theSpell, cClass);
 				SpellArgs.Location = new Point(6, 12);
-				SpellArgs.Size = new Size(175, 575);
-				from.Controls.Add(SpellArgs);
+                SpellArgs.MaximumSize = new Size(175, 0);
+                SpellArgs.AutoSize = true;
+                from.Controls.Add(SpellArgs);
 				from.LostFocus += closeOnLostFocus;
 				from.Show();
 			}
@@ -827,9 +831,12 @@ namespace _5eCharDisplay
 
 		private void SaveSpellSlots()
 		{
-			string[] classInfo = File.ReadAllLines($@".\Data\Characters\{player.name}\{player.name}{player.charClass[classnumber]}.yaml");
-			(classInfo[0], classInfo[1]) = Controller.SPage_SaveSpellSlots(player, classnumber);
-			File.WriteAllLines($@".\Data\Characters\{player.name}\{player.name}{player.charClass[classnumber]}.yaml", classInfo);
+            var serializer = new YamlDotNet.Serialization.SerializerBuilder().Build();
+            var yaml = serializer.Serialize(cClass);
+            File.WriteAllText($@"./Data/Characters/{player.name}/{player.name}{cClass.classname}.yaml", yaml);/*
+            string[] classInfo = File.ReadAllLines($@".\Data\Characters\{player.name}\{player.name}{cClass.classname}.yaml");
+			(classInfo[0], classInfo[1]) = Controller.SPage_SaveSpellSlots(player, cClass);
+			File.WriteAllLines($@".\Data\Characters\{player.name}\{player.name}{cClass.classname}.yaml", classInfo);*/
 		}
 	}
 }

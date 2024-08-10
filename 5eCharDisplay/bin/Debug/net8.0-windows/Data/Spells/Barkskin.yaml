@@ -1,0 +1,22 @@
+index: barkskin
+name: Barkskin
+desc:
+- You touch a willing creature. Until the spell ends, the target's skin has a rough, bark-like appearance, and the target's AC can't be less than 16, regardless of what kind of armor it is wearing.
+higher_level: []
+range: Touch
+components:
+- V
+- S
+- M
+material: A handful of oak bark.
+ritual: false
+duration: Up to 1 hour
+concentration: true
+casting_time: 1 action
+level: 2
+damage: 
+school:
+  index: transmutation
+  name: Transmutation
+  url: /api/magic-schools/transmutation
+url: /api/spells/barkskin

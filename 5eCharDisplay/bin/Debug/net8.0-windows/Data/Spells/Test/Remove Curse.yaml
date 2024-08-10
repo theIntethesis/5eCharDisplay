@@ -1,0 +1,21 @@
+index: remove-curse
+name: Remove Curse
+desc:
+- At your touch, all curses affecting one creature or object end. If the object is a cursed magic item, its curse remains, but the spell breaks its owner's attunement to the object so it can be removed or discarded.
+higher_level: []
+range: Touch
+components:
+- V
+- S
+material: 
+ritual: false
+duration: Instantaneous
+concentration: false
+casting_time: 1 action
+level: 3
+damage: 
+school:
+  index: abjuration
+  name: Abjuration
+  url: /api/magic-schools/abjuration
+url: /api/spells/remove-curse

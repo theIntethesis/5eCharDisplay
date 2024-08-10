@@ -1,0 +1,21 @@
+index: heroism
+name: Heroism
+desc:
+- A willing creature you touch is imbued with bravery. Until the spell ends, the creature is immune to being frightened and gains temporary hit points equal to your spellcasting ability modifier at the start of each of its turns. When the spell ends, the target loses any remaining temporary hit points from this spell.
+higher_level: []
+range: Touch
+components:
+- V
+- S
+material: 
+ritual: false
+duration: Up to 1 minute
+concentration: true
+casting_time: 1 action
+level: 1
+damage: 
+school:
+  index: enchantment
+  name: Enchantment
+  url: /api/magic-schools/enchantment
+url: /api/spells/heroism

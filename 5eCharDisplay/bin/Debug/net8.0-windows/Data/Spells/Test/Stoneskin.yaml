@@ -1,0 +1,22 @@
+index: stoneskin
+name: Stoneskin
+desc:
+- This spell turns the flesh of a willing creature you touch as hard as stone. Until the spell ends, the target has resistance to nonmagical bludgeoning, piercing, and slashing damage.
+higher_level: []
+range: Touch
+components:
+- V
+- S
+- M
+material: Diamond dust worth 100 gp, which the spell consumes.
+ritual: false
+duration: Up to 1 hour
+concentration: true
+casting_time: 1 action
+level: 4
+damage: 
+school:
+  index: abjuration
+  name: Abjuration
+  url: /api/magic-schools/abjuration
+url: /api/spells/stoneskin

@@ -1,0 +1,24 @@
+index: sleet-storm
+name: Sleet Storm
+desc:
+- Until the spell ends, freezing rain and sleet fall in a 20-foot-tall cylinder with a 40-foot radius centered on a point you choose within range. The area is heavily obscured, and exposed flames in the area are doused.
+- The ground in the area is covered with slick ice, making it difficult terrain. When a creature enters the spell's area for the first time on a turn or starts its turn there, it must make a dexterity saving throw. On a failed save, it falls prone.
+- If a creature is concentrating in the spell's area, the creature must make a successful constitution saving throw against your spell save DC or lose concentration.
+higher_level: []
+range: 150 feet
+components:
+- V
+- S
+- M
+material: A pinch of dust and a few drops of water.
+ritual: false
+duration: Up to 1 minute
+concentration: true
+casting_time: 1 action
+level: 3
+damage: 
+school:
+  index: conjuration
+  name: Conjuration
+  url: /api/magic-schools/conjuration
+url: /api/spells/sleet-storm

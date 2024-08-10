@@ -194,6 +194,7 @@ namespace _5eCharDisplay
             InventoryTab = new System.Windows.Forms.TabPage();
             WeaponsTab = new System.Windows.Forms.TabPage();
             weaponEquipButton = new System.Windows.Forms.Button();
+            RacePanel = new System.Windows.Forms.Panel();
             StrengthBox.SuspendLayout();
             DexBox.SuspendLayout();
             ConBox.SuspendLayout();
@@ -228,6 +229,7 @@ namespace _5eCharDisplay
             ((System.ComponentModel.ISupportInitialize)XPTicker).BeginInit();
             InventoryManagement.SuspendLayout();
             InventoryTab.SuspendLayout();
+            RacePanel.SuspendLayout();
             SuspendLayout();
             // 
             // NameID
@@ -453,7 +455,7 @@ namespace _5eCharDisplay
             ClassLevelBox.Controls.Add(ClassPanel);
             ClassLevelBox.Location = new System.Drawing.Point(457, 11);
             ClassLevelBox.Name = "ClassLevelBox";
-            ClassLevelBox.Size = new System.Drawing.Size(127, 57);
+            ClassLevelBox.Size = new System.Drawing.Size(127, 52);
             ClassLevelBox.TabIndex = 8;
             ClassLevelBox.TabStop = false;
             ClassLevelBox.Text = "Class and Level";
@@ -462,9 +464,9 @@ namespace _5eCharDisplay
             // 
             ClassPanel.AutoScroll = true;
             ClassPanel.Controls.Add(ClassBox);
-            ClassPanel.Location = new System.Drawing.Point(5, 15);
+            ClassPanel.Location = new System.Drawing.Point(0, 15);
             ClassPanel.Name = "ClassPanel";
-            ClassPanel.Size = new System.Drawing.Size(116, 37);
+            ClassPanel.Size = new System.Drawing.Size(127, 37);
             ClassPanel.TabIndex = 1;
             // 
             // ClassBox
@@ -499,10 +501,10 @@ namespace _5eCharDisplay
             // 
             // RaceBox
             // 
-            RaceBox.Controls.Add(RaceLabel);
-            RaceBox.Location = new System.Drawing.Point(457, 69);
+            RaceBox.Controls.Add(RacePanel);
+            RaceBox.Location = new System.Drawing.Point(457, 64);
             RaceBox.Name = "RaceBox";
-            RaceBox.Size = new System.Drawing.Size(127, 44);
+            RaceBox.Size = new System.Drawing.Size(127, 52);
             RaceBox.TabIndex = 10;
             RaceBox.TabStop = false;
             RaceBox.Text = "Race / Species";
@@ -510,11 +512,11 @@ namespace _5eCharDisplay
             // RaceLabel
             // 
             RaceLabel.AutoSize = true;
-            RaceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            RaceLabel.Location = new System.Drawing.Point(6, 19);
+            RaceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            RaceLabel.Location = new System.Drawing.Point(3, 4);
             RaceLabel.MaximumSize = new System.Drawing.Size(122, 0);
             RaceLabel.Name = "RaceLabel";
-            RaceLabel.Size = new System.Drawing.Size(41, 17);
+            RaceLabel.Size = new System.Drawing.Size(36, 15);
             RaceLabel.TabIndex = 0;
             RaceLabel.Text = "Race";
             // 
@@ -1364,7 +1366,7 @@ namespace _5eCharDisplay
             DiceRollsBox.Controls.Add(RollLabel1);
             DiceRollsBox.Location = new System.Drawing.Point(346, 15);
             DiceRollsBox.Name = "DiceRollsBox";
-            DiceRollsBox.Size = new System.Drawing.Size(105, 92);
+            DiceRollsBox.Size = new System.Drawing.Size(105, 104);
             DiceRollsBox.TabIndex = 16;
             DiceRollsBox.TabStop = false;
             DiceRollsBox.Text = "Dice Rolls";
@@ -1936,6 +1938,15 @@ namespace _5eCharDisplay
             weaponEquipButton.Text = "Equip";
             weaponEquipButton.UseVisualStyleBackColor = true;
             // 
+            // RacePanel
+            // 
+            RacePanel.AutoScroll = true;
+            RacePanel.Controls.Add(RaceLabel);
+            RacePanel.Location = new System.Drawing.Point(0, 15);
+            RacePanel.Name = "RacePanel";
+            RacePanel.Size = new System.Drawing.Size(127, 37);
+            RacePanel.TabIndex = 2;
+            // 
             // CharacterPage
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2005,7 +2016,6 @@ namespace _5eCharDisplay
             BackgroundBox.ResumeLayout(false);
             BackgroundBox.PerformLayout();
             RaceBox.ResumeLayout(false);
-            RaceBox.PerformLayout();
             AlignBox.ResumeLayout(false);
             AlignBox.PerformLayout();
             SavingThrows.ResumeLayout(false);
@@ -2047,6 +2057,8 @@ namespace _5eCharDisplay
             InventoryManagement.ResumeLayout(false);
             InventoryTab.ResumeLayout(false);
             InventoryTab.PerformLayout();
+            RacePanel.ResumeLayout(false);
+            RacePanel.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2218,6 +2230,7 @@ namespace _5eCharDisplay
         private System.Windows.Forms.TabPage WeaponsTab;
         private System.Windows.Forms.TabControl ClassTabControl;
         private System.Windows.Forms.Button weaponEquipButton;
+        private System.Windows.Forms.Panel RacePanel;
     }
 }
 

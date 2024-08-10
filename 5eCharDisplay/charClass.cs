@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.Runtime.Versioning;
+using System.Numerics;
 
 namespace _5eCharDisplay
 {
@@ -71,8 +72,9 @@ namespace _5eCharDisplay
 		public List<string> NinthLevelSpells { set; get; }
 		public List<string> FeatNames { set; get; }
 		public List<string> ASIChoices { set; get; }
+        public Spellcasting spellcasting { get; set; }
 
-		public bool Spellcasting = false;
+        public bool Spellcasting = false;
 		public enum SpellMod
 		{
 			STR,
@@ -103,8 +105,6 @@ namespace _5eCharDisplay
 		}
         internal virtual List<GroupBox> AddAbilityFromList(string fPath)
 		{
-            var path = $@".\Data\Classes\Wizard\Hematurgy.yaml";
-
             List<GroupBox> boxes = new List<GroupBox>();
             List<Ability> abilities = Ability.ListFromYaml(fPath);
             foreach (var ability in abilities)
@@ -177,7 +177,7 @@ namespace _5eCharDisplay
             abil.Description = Regex.Replace(abil.Description, @"{(\w*)}", match => GetValue(match.Value));
             label.Text = abil.Description;
             int number = 0;
-            switch (abil.uses)
+            /*switch (abil.uses)
             {
                 case Ability.AbilityUses.NoAbility:
                     break;
@@ -196,7 +196,7 @@ namespace _5eCharDisplay
                 cBox.Location = new Point(y, label.Bottom - 60);
                 box.Controls.Add(cBox);
                 y += cBox.Size.Width + 6;
-            }
+            }*/
             box.AutoSize = true;
             label.MouseDown += DisplayOnRightClick;
             return box;
@@ -308,38 +308,35 @@ namespace _5eCharDisplay
 		}
 		protected void DisplaySpellOnRightClick(object sender, EventArgs e)
 		{
-			MouseEventArgs mouse = e as MouseEventArgs;
-			if (mouse.Button == MouseButtons.Right)
-			{
-				CheckBox the = sender as CheckBox;
-				Spell theSpell;
-				string SpellName;
-				if (the == null)
-				{
-					Label cantrip = sender as Label;
-					SpellName = cantrip.Text;
-				}
-				else
-					SpellName = the.Text;
-				theSpell = Spell.fromYAML(SpellName);
-				Form from = new Form();
-				from.Size = new Size(200, 600);
-				//from.Icon = new Icon(@"C:\Users\Hayden\Downloads\881288450786082876.ico");
-				from.Location = new Point(400, 50);
-				Label SpellArgs = new Label();
-				SpellArgs.Text = $"{theSpell.name}:\n\n";
-				if (theSpell.level == 0)
-					SpellArgs.Text += $"{theSpell.school} Cantrip\n\n";
-				else
-					SpellArgs.Text += $"Level {theSpell.level} {theSpell.school}\n\n";
-				SpellArgs.Text += $"Casting Time: {theSpell.castingTime}\n\nRange: {theSpell.range}\n\nComponents: {theSpell.components}\n\nDuration: {theSpell.duration}\n\n\n\n{theSpell.getDescription()}";
-				SpellArgs.Location = new Point(6, 12);
-				SpellArgs.Size = new Size(175, 575);
-				from.Controls.Add(SpellArgs);
-				from.LostFocus += closeOnLostFocus;
-				from.Show();
-			}
-		}
+            MouseEventArgs mouse = e as MouseEventArgs;
+            if (mouse.Button == MouseButtons.Right)
+            {
+                CheckBox the = sender as CheckBox;
+                Spell theSpell;
+                string SpellName;
+                if (the == null)
+                {
+                    Label cantrip = sender as Label;
+                    SpellName = cantrip.Text;
+                }
+                else
+                    SpellName = the.Text;
+                theSpell = Spell.fromYAML(SpellName);
+                Form from = new Form();
+                from.MaximumSize = new Size(200, 0);
+                from.AutoSize = true;
+                //from.Icon = new Icon(@"C:\Users\Hayden\Downloads\881288450786082876.ico");
+                from.Location = new Point(400, 50);
+                Label SpellArgs = new Label();
+                SpellArgs.Text = Controller.SPage_GetSpellDisplay(theSpell, this);
+                SpellArgs.Location = new Point(6, 12);
+                SpellArgs.MaximumSize = new Size(175, 0);
+				SpellArgs.AutoSize = true;
+                from.Controls.Add(SpellArgs);
+                from.LostFocus += closeOnLostFocus;
+                from.Show();
+            }
+        }
 
 		protected void closeOnLostFocus(object sender, EventArgs e)
 		{

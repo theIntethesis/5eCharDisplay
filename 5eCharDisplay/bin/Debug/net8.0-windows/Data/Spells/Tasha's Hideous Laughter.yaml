@@ -1,9 +1,23 @@
-name: Tasha’s Hideous Laughter
-level: 1
-duration: 1 Minute [C]
-castingTime: 1 Action
-range: 30 ft
-school: Enchantment
-components: V, S, M (tiny tarts and a feather that is waved in the air)
+index: hideous-laughter
+name: Tasha's Hideous Laughter
+desc:
+- A creature of your choice that you can see within range perceives everything as hilariously funny and falls into fits of laughter if this spell affects it. The target must succeed on a wisdom saving throw or fall prone, becoming incapacitated and unable to stand up for the duration. A creature with an Intelligence score of 4 or less isn't affected.
+- At the end of each of its turns, and each time it takes damage, the target can make another wisdom saving throw. The target had advantage on the saving throw if it's triggered by damage. On a success, the spell ends.
+higher_level: []
+range: 30 feet
+components:
+- V
+- S
+- M
+material: Tiny tarts and a feather that is waved in the air.
 ritual: false
-description: A creature of your choice that you can see within range perceives everything as hilariously funny and falls into fits of laughter if this spell affects it. The target must succeed on a Wisdom saving throw or fall prone, becoming incapacitated and unable to stand up for the duration. A creature with an Intelligence score of 4 or less isn’t affected. At the end of each of its turns, and each time it takes damage, the target can make another Wisdom saving throw. The target has advantage on the saving throw if it’s triggered by damage. On a success, the spell ends.
+duration: Up to 1 minute
+concentration: true
+casting_time: 1 action
+level: 1
+damage: 
+school:
+  index: enchantment
+  name: Enchantment
+  url: /api/magic-schools/enchantment
+url: /api/spells/hideous-laughter

@@ -1,30 +1,104 @@
-spellSlots: [0, 0, 0, 0, 0, 0, 0, 0, 0]
-PreparedSpells: []
 Skill1: Religion
 Skill2: Arcana
 OtherworldlyPatron: The Fiend
-EldritchInvocations: ["Agonizing Blast", "Beguiling Influence", "Thirsting Blade", "Lifedrinker", "Improved Pact Weapon", "Eldritch Sight", "Repelling Blast", "Minions of Chaos"]
 PactBoon: Pact of the Blade
-MysticArcanum: ["Circle of Death", "Power Word Pain", "Maddening Darkness", "Blade of Disaster"]
-ArcanumUsed: [False, False, False, False]
-EldritchMasterUsed: False
-Cantrips: ["Eldritch Blast", "Light", "Mending", "Shocking Grasp"]
-FirstLevelSpells: ["Shield", "Absorb Elements", "Burning Hands", "Catapult", "Command", "Detect Magic", "Feather Fall", "Identify"]
-SecondLevelSpells: [ "Hold Person", "Heat Metal", "Invisibility", "Mirror Image", "Melf's Acid Arrow"]
-ThirdLevelSpells: ["Fireball", "Vampiric Touch", "Haste"]
-FourthLevelSpells:
-FifthLevelSpells:
-SixthLevelSpells:
-SeventhLevelSpells:
-EighthLevelSpells:
-NinthLevelSpells:
-FeatNames: ["Ability Score Increase", "Ability Score Increase", "Ability Score Increase", "Ability Score Increase", "Ability Score Increase"]
-ASIChoices: ["CHA2", "CON2", "STR1CON1", "DEX1CON1", "CHA2" ]
-EntropicWard: False
-DarkOnesOwnLuck: False
-HurlThroughHell: False
-FeyPresence: False
-MistyEscape: False
-DarkDelirium: False
-HexbladesCurse: False
-AccursedSpecter: False
+MysticArcanum:
+- Circle of Death
+- Power Word Pain
+- Maddening Darkness
+- Blade of Disaster
+ArcanumUsed:
+- false
+- false
+- false
+- false
+EldritchInvocations:
+- Agonizing Blast
+- Beguiling Influence
+- Thirsting Blade
+- Lifedrinker
+- Improved Pact Weapon
+- Eldritch Sight
+- Repelling Blast
+- Minions of Chaos
+Cantrips: &o0
+- Eldritch Blast
+- Light
+- Mending
+- Shocking Grasp
+PreparedSpells: &o1 []
+FirstLevelSpells: &o2
+- Absorb Elements
+- Burning Hands
+- Catapult
+- Command
+- Detect Magic
+- Feather Fall
+- Identify
+- Shield
+SecondLevelSpells: &o3
+- Heat Metal
+- Hold Person
+- Invisibility
+- Melf's Acid Arrow
+- Mirror Image
+ThirdLevelSpells: &o4
+- Fireball
+- Haste
+- Vampiric Touch
+FourthLevelSpells: &o5 []
+FifthLevelSpells: &o6 []
+SixthLevelSpells: &o7 []
+SeventhLevelSpells: &o8 []
+EighthLevelSpells: &o9 []
+NinthLevelSpells: &o10 []
+FeatNames:
+- Ability Score Increase
+- Ability Score Increase
+- Ability Score Increase
+- Ability Score Increase
+- Ability Score Increase
+ASIChoices:
+- CHA2
+- CON2
+- STR1CON1
+- DEX1CON1
+- CHA2
+spellcasting:
+  prepMethod: KnowSomePrepNone
+  Cantrips: *o0
+  PreparedSpells: *o1
+  FirstLevelSpells: *o2
+  SecondLevelSpells: *o3
+  ThirdLevelSpells: *o4
+  FourthLevelSpells: *o5
+  FifthLevelSpells: *o6
+  SixthLevelSpells: *o7
+  SeventhLevelSpells: *o8
+  EighthLevelSpells: *o9
+  NinthLevelSpells: *o10
+  spellcastingAbilityModifier:
+    value: 19
+    name: Charisma
+  spellSlots: &o11
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  spellSlotsMax: &o12
+  - 0
+  - 0
+  - 0
+  - 0
+  - 4
+  - 0
+  - 0
+  - 0
+  - 0
+spellSlots: *o11
+spellSlotsMax: *o12

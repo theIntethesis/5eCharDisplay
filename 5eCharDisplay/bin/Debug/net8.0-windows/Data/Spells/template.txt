@@ -1,8 +1,25 @@
+index: 
 name: 
-level: 
-duration: 
-castingTime: 
+desc:
+- 
+- 
+higher_level: 
+- 
+- 
 range: 
-school: 
-components: 
-description: 
+components:
+- 
+- 
+- 
+material: 
+ritual: 
+duration: 
+concentration: 
+casting_time: 
+level: 
+damage: 
+school:
+  index: 
+  name: 
+  url: /api/magic-schools/[INDEX]1
+url: /api/spells/[INDEX]

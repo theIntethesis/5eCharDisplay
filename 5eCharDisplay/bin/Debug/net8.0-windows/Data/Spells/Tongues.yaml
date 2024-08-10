@@ -1,0 +1,21 @@
+index: tongues
+name: Tongues
+desc:
+- This spell grants the creature you touch the ability to understand any spoken language it hears. Moreover, when the target speaks, any creature that knows at least one language and can hear the target understands what it says.
+higher_level: []
+range: Touch
+components:
+- V
+- M
+material: A small clay model of a ziggurat.
+ritual: false
+duration: 1 hour
+concentration: false
+casting_time: 1 action
+level: 3
+damage: 
+school:
+  index: divination
+  name: Divination
+  url: /api/magic-schools/divination
+url: /api/spells/tongues

@@ -46,7 +46,7 @@ namespace _5eCharDisplay
 					}
                 }
 			}
-			if(player.myClasses.Any(cClass => cClass.FirstLevelSpells.Contains("Mage Armor")))
+			if(player.myClasses.Any(cClass => cClass.spellcasting.FirstLevelSpells.Contains("Mage Armor")))
             {
 				armors.Add(Armor.fromYaml(aName: "Mage Armor"));
             }

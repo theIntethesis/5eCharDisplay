@@ -121,7 +121,7 @@ namespace _5eCharDisplay.Classes
                 infoBoxes.Add(AddFightingStyleBox());
                 infoBoxes.Add(AddSpellcastingBox());
                 infoBoxes.Add(AddDivineSmiteBox());
-                FirstLevelSpells = new List<string> { "Bless", "Ceremony", "Command", "Compelled Duel", "Cure Wounds", "Detect Evil and Good", "Detect Magic", "Detect Poison and Disease", "Divine Favor", "Heroism", "Protection from Evil and Good", "Purify Food and Drink", "Searing Smite", "Shield of Faith", "Thunderous Smite", "Wrathful Smite" };
+                spellcasting.FirstLevelSpells = new List<string> { "Bless", "Ceremony", "Command", "Compelled Duel", "Cure Wounds", "Detect Evil and Good", "Detect Magic", "Detect Poison and Disease", "Divine Favor", "Heroism", "Protection from Evil and Good", "Purify Food and Drink", "Searing Smite", "Shield of Faith", "Thunderous Smite", "Wrathful Smite" };
             }
             if (level >= 3)
             {
@@ -280,9 +280,9 @@ namespace _5eCharDisplay.Classes
             {
                 case "Oath of Devotion":
                     label.Text += $" - Channel Divinity\n  - You gain the following two Channel Divinity Options:\n   - Sacred Weapon. As an action, you can imbue one weapon that you are holding with positive energy, using your Channel Divinity. For 1 minute, you add +{Math.Max(abilityModifiers[5], 1)} to attack rolls made with that weapon. The weapon also emits bright light in a 20-foot radius and dim light 20 feet beyond that. If the weapon is not already magical, it becomes magical for the duration.\n   - You can end this effect on your turn as part of any other action. If you are no longer holding or carrying this weapon, or if you fall unconscious, this effect ends.\n   - Turn the Unholy. As an action, you present your holy symbol and speak a prayer censuring fiends and undead, using your Channel Divinity. Each fiend or undead that can see or hear you within 30 feet of you must make a DC {proficiency + 8 + abilityModifiers[5]} Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes damage.\n   - A turned creature must spend its turns trying to move as far away from you as it can, and it can’t willingly move to a space within 30 feet of you. It also can’t take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there’s nowhere to move, the creature can use the Dodge action.\n\n";
-                    AlwaysPrepared.Add("Protection from Evil and Good");
-                    FirstLevelSpells.Add("Sanctuary");
-                    AlwaysPrepared.Add("Sanctuary");
+                    spellcasting.AlwaysPrepared.Add("Protection from Evil and Good");
+                    spellcasting.FirstLevelSpells.Add("Sanctuary");
+                    spellcasting.AlwaysPrepared.Add("Sanctuary");
                     if (level >= 7)
                     {
                         int range = 10;
@@ -301,10 +301,10 @@ namespace _5eCharDisplay.Classes
                     break;
                 case "Oath of Vengeance":
                     label.Text += $" - Channel Divinity\n  - You gain the following two Channel Divinity Options:\n   - Abjure Enemy. As an action, you present your holy symbol and speak a prayer of denunciation, using your Channel Divinity. Choose one creature within 60 feet of you that you can see. That creature must make a DC {proficiency + 8 + abilityModifiers[5]} Wisdom saving throw unless it is immune to being frightened. Fiends and undead have disadvantage on this saving throw.\n    On a failed save, the creature is frightened for 1 minute or until it takes any damage. While frightened, the creature's speed is 0, and it can't benefit from any bonus to its speed.\n    On a successful save, the creature's speed is halved for 1 minute or until the creature takes any damage.\n   - Vow of Enmity. As a bonus action you can utter a vow of enmity against a creature you can see within 10 feet of you, using your Channel Divinity. You gain advantate on attack rolls against the creature for 1 minute or until it drops to 0 hit points or falls unconscious.";
-                    FirstLevelSpells.Add("Bane");
-                    AlwaysPrepared.Add("Bane");
-                    FirstLevelSpells.Add("Hunter's Mark");
-                    AlwaysPrepared.Add("Hunter's Mark");
+                    spellcasting.FirstLevelSpells.Add("Bane");
+                    spellcasting.AlwaysPrepared.Add("Bane");
+                    spellcasting.FirstLevelSpells.Add("Hunter's Mark");
+                    spellcasting.AlwaysPrepared.Add("Hunter's Mark");
                     if (level >= 7)
                     {
                         label.Text += $" - Relentless Avenger\n  - When you hit a creature with an opportunity attack, you wan move up to half your speed immediately after the attack and as part of the same reaction. This movement doesn't provoke opportunity attacks.\n\n";

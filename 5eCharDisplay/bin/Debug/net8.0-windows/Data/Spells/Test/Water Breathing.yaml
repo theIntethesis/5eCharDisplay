@@ -1,0 +1,22 @@
+index: water-breathing
+name: Water Breathing
+desc:
+- This spell gives a maximum of ten willing creatures within range and you can see, the ability to breathe underwater until the end of its term. Affected creatures also retain their normal breathing pattern.
+higher_level: []
+range: 30 feet
+components:
+- V
+- S
+- M
+material: A short piece of reed or straw.
+ritual: true
+duration: 24 hours
+concentration: false
+casting_time: 1 action
+level: 3
+damage: 
+school:
+  index: transmutation
+  name: Transmutation
+  url: /api/magic-schools/transmutation
+url: /api/spells/water-breathing

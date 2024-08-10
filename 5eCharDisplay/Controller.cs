@@ -324,19 +324,35 @@ namespace _5eCharDisplay
 
 			return sb.ToString();
 		}
-		static internal string SPage_GetSpellDisplay(Spell s, Character player, int classnumber)
+		static internal string SPage_GetSpellDisplay(Spell s, charClass cClass)
 		{
 			StringBuilder sb = new();
 
-			sb.Append($"{s.name}:\n\n");
-			if (s.level == 0)
-				sb.Append($"{s.school} Cantrip\n\n");
-			else
-				sb.Append($"Level {s.level} {s.school}\n\n");
-			sb.Append($"Casting Time: {s.castingTime}\n\nRange: {s.range}\n\nComponents: {s.components}\n\nDuration: {s.duration}\n\n\n\n");
-			if (player.myClasses[classnumber].classname == charClass.ClassName.Warlock)
+            sb.Append($"{s.name}:\n\n");
+            if (s.level == 0)
+                sb.Append($"{s.school.name} Cantrip\n\n");
+            else
+                sb.Append($"Level {s.level} {s.school.name}\n\n");
+            sb.Append($"Casting Time: {s.casting_time}\n\n");
+            sb.Append($"Range: {s.range}\n\n");
+			sb.Append($"Components: ");
+            for (int i = 0; i < s.components.Count; i++)
+            {
+                if (i > 0) sb.Append(", ");
+                sb.Append(s.components[i]);
+            }
+            if (s.material != null)
+            {
+                sb.Append($" ({s.material})");
+            }
+            sb.Append($"\n\n");
+            if (s.concentration)
+                sb.Append($"Duration: {s.duration} [C]\n\n\n\n");
+            else
+                sb.Append($"Duration: {s.duration}\n\n\n\n");
+            if (cClass.classname == charClass.ClassName.Warlock)
 			{
-				sb.Append($"{s.getDescription(player.myClasses[classnumber])}");
+				sb.Append($"{s.getDescription(cClass)}");
 			}
 			else
 				sb.Append($"{s.getDescription()}");
@@ -358,11 +374,11 @@ namespace _5eCharDisplay
 			spells.Append("PreparedSpells: [");
 			if (player.myClasses[classnumber].prepMethod != charClass.SpellPrepMethod.KnowSomePrepNone)
 			{
-				for (int i = 0; i < player.myClasses[classnumber].PreparedSpells.Count; i++)
+				for (int i = 0; i < player.myClasses[classnumber].spellcasting.PreparedSpells.Count; i++)
 				{
 					if (i > 0)
 						spells.Append(", ");
-					spells.Append($"\"{player.myClasses[classnumber].PreparedSpells[i]}\"");
+					spells.Append($"\"{player.myClasses[classnumber].spellcasting.PreparedSpells[i]}\"");
 				}
 			}
 			spells.Append("]");
@@ -381,6 +397,6 @@ namespace _5eCharDisplay
 			foreach (charClass c in player.myClasses)
 				list.Add(c.shortRest);
 			return list;
-		}
-	}
+        }
+    }
 }

@@ -1,9 +1,21 @@
+index: absorb-elements
 name: Absorb Elements
-level: 1
-duration: 1 Round
-castingTime: 1 Reaction, in which you take acid, cold, fire, or lightning damage.
+desc:
+- The spell captures some of the incoming energy, lessening its effect on you and storing it for your next melee attack. You have resistance to the triggering damage type until the start of your next turn. Also, the first time you hit with a melee attack on your next turn, the target takes an extra 1d6 damage of the triggering type, and the spell ends.
+higher_level:
+- When you cast this spell using a spell slot of 2nd level or higher, the extra damage increases by 1d6 for each slot level above 1st.
 range: Self
-school: Abjuration
-components: S
+components:
+- S
+material: Powdered rhubarb leaf and an adder's stomach.
 ritual: false
-description: The spell captures some of the incoming energy, lessening its effect on you and storing it for your next melee attack. You have resistance to the triggering damage type until the start of your next turn. Also, the first time you hit with a melee attack on your next turn, the target takes an extra 1d6 damage of the triggering type, and the spell ends. At Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, the extra damage increases by 1d6 for each slot level above 1st.
+duration: 1 Round
+concentration: false
+casting_time: 1 reaction
+level: a
+damage: {}
+school:
+  index: abjuration
+  name: Abjuration
+  url: /api/magic-schools/abjuration
+url: /api/spells/

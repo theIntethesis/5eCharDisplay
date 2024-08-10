@@ -16,6 +16,13 @@ namespace _5eCharDisplay
         public string name { set; get; }
         public string description { set; get; }
         public int[] asiboosts { get; set; }
+        public int addSpeed { get; set; }
+        public List<string> SkillProfAdd { get; set; }
+        public List<string> WeaponProfAdd { get; set; }
+        public Armor ArmorAdd { get; set; }
+        public Weapon WeaponAdd { get; set; }
+        public (string, int) SkillBonus { get; set; }
+
         public static Feat FromYAML(string fName, string asipick = "")
         {
             Feat returned = null;

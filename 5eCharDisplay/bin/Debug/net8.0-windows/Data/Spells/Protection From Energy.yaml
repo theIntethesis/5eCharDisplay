@@ -1,0 +1,21 @@
+index: protection-from-energy
+name: Protection From Energy
+desc:
+- 'For the duration, the willing creature you touch has resistance to one damage type of your choice: acid, cold, fire, lightning, or thunder.'
+higher_level: []
+range: Touch
+components:
+- V
+- S
+material: 
+ritual: false
+duration: Up to 1 hour
+concentration: true
+casting_time: 1 action
+level: 3
+damage: 
+school:
+  index: abjuration
+  name: Abjuration
+  url: /api/magic-schools/abjuration
+url: /api/spells/protection-from-energy

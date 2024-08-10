@@ -473,7 +473,7 @@ namespace _5eCharDisplay.Classes
 				SpellMasterLabels.Add(spell);
 				low += spell.Size.Height + 6;
 				spell.MouseDown += DisplaySpellOnRightClick;
-				AlwaysPrepared.Add(s);
+				spellcasting.AlwaysPrepared.Add(s);
 			}
 			label.MaximumSize = new Size(168, int.MaxValue);
 			box.MaximumSize = new Size(180, int.MaxValue);
@@ -508,7 +508,7 @@ namespace _5eCharDisplay.Classes
 				int secondColumn = size;
 				bool firstOff = false;
 				bool secondOff = false;
-				foreach (string s in FirstLevelSpells)
+				foreach (string s in spellcasting.FirstLevelSpells)
 				{
 					CheckBox c = new CheckBox();
 					c.Text = s;
@@ -525,7 +525,7 @@ namespace _5eCharDisplay.Classes
 					c.Location = new Point(6, firstColumn);
 					firstColumn += c.Size.Height + 6;
 				}
-				foreach (string s in SecondLevelSpells)
+				foreach (string s in spellcasting.SecondLevelSpells)
 				{
 					CheckBox c = new CheckBox();
 					c.Text = s;
@@ -597,14 +597,14 @@ namespace _5eCharDisplay.Classes
 			if (c.Checked)
 			{
 				SpellMastery.Add(c.Text);
-				if (FirstLevelSpells.Contains(c.Text))
+				if (spellcasting.FirstLevelSpells.Contains(c.Text))
 				{
 					foreach(var box in spellMasteryBoxes1)
 					{
 						if (!box.Checked) box.Enabled = false;
 					}
 				}
-				else if (SecondLevelSpells.Contains(c.Text))
+				else if (spellcasting.SecondLevelSpells.Contains(c.Text))
 				{
 					foreach(var box in spellMasteryBoxes2)
 					{
@@ -616,9 +616,9 @@ namespace _5eCharDisplay.Classes
 			{
 				SpellMastery.Remove(c.Text);
 
-				if (FirstLevelSpells.Contains(c.Text)) foreach (var box in spellMasteryBoxes1) box.Enabled = true;
+				if (spellcasting.FirstLevelSpells.Contains(c.Text)) foreach (var box in spellMasteryBoxes1) box.Enabled = true;
 
-				else if (SecondLevelSpells.Contains(c.Text)) foreach (var box in spellMasteryBoxes2) box.Enabled = true;
+				else if (spellcasting.SecondLevelSpells.Contains(c.Text)) foreach (var box in spellMasteryBoxes2) box.Enabled = true;
 
 			}
 

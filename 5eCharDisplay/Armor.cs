@@ -14,7 +14,7 @@ namespace _5eCharDisplay
 		public string Name { get; set; }
 		public string AC { get; set; }
 		public int DexMax { get; set; }
-		public enum ArmorType { Unarmored, Light, Medium, Heavy, Shield }
+		public enum ArmorType { Unarmored, Light, Medium, Heavy, Shield, Other }
 		public ArmorType aType { get; set; }
 		public bool stealthDis { get; set; }
 		public int StrReq { get; set; }

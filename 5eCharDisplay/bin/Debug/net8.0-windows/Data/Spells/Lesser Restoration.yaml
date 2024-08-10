@@ -1,0 +1,21 @@
+index: lesser-restoration
+name: Lesser Restoration
+desc:
+- You touch a creature and can end either one disease or one condition afflicting it. The condition can be blinded, deafened, paralyzed, or poisoned.
+higher_level: []
+range: Touch
+components:
+- V
+- S
+material: 
+ritual: false
+duration: Instantaneous
+concentration: false
+casting_time: 1 action
+level: 2
+damage: 
+school:
+  index: abjuration
+  name: Abjuration
+  url: /api/magic-schools/abjuration
+url: /api/spells/lesser-restoration

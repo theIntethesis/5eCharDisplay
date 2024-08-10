@@ -1,0 +1,22 @@
+index: inflict-wounds
+name: Inflict Wounds
+desc:
+- Make a melee spell attack against a creature you can reach. On a hit, the target takes 3d10 necrotic damage.
+higher_level:
+- When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d10 for each slot level above 1st.
+range: Touch
+components:
+- V
+- S
+material: 
+ritual: false
+duration: Instantaneous
+concentration: false
+casting_time: 1 action
+level: 1
+damage: {}
+school:
+  index: necromancy
+  name: Necromancy
+  url: /api/magic-schools/necromancy
+url: /api/spells/inflict-wounds
