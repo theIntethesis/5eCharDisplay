@@ -1,0 +1,21 @@
+spellSlots: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+PreparedSpells: []
+Skill1: 
+Skill2: 
+ArcaneTradition: Hematurgy
+Cantrips: ["Encode Thoughts", "Message", "Shocking Grasp", "Light"]
+FirstLevelSpells: ["Absorb Elements", "Blood Transfusion", "Comprehend Languages", "Identify", "Mage Armor", "Magic Missile", "Shield", "Silvery Barbs", "Snare", "Tasha's Hideous Laughter", "Unseen Servant"]
+SecondLevelSpells: ["Bonded by Blood", "Detect Thoughts", "Kinetic Jaunt", "Shatter", "Wither and Bloom"]
+ThirdLevelSpells: ["Counterspell", "Dispel Magic", "Galder's Tower", "Glyph of Warding", "Sanguis Burst", "Sending"]
+FourthLevelSpells: []
+FifthLevelSpells: []
+SixthLevelSpells: []
+SeventhLevelSpells: []
+EighthLevelSpells: []
+NinthLevelSpells: []
+FeatNames: ["Ability Score Increase", "Dual Wielder"]
+ASIChoices: ["INT1CHA1", ""]
+ArcaneRecovery: false
+SpellMastery: ["Magic Missile", "Wither and Bloom"]
+SignatureSpells: ["", ""]
+BloodChannelerUsed: 0
