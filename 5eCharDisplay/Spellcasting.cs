@@ -8,9 +8,15 @@ using YamlDotNet.Serialization;
 
 namespace _5eCharDisplay
 {
-	internal class Spellcasting
-	{
-		public charClass.SpellPrepMethod prepMethod { set; get; }
+	public class Spellcasting
+    {
+        public enum SpellPrepMethod
+        {
+            KnowAllPrepSome,
+            KnowSomePrepSome,
+            KnowSomePrepNone
+        }
+        public SpellPrepMethod prepMethod { set; get; }
 		public List<string> Cantrips { set; get; }
 		public List<string> AlwaysPrepared = new List<string>();
 		public List<string> PreparedSpells { set; get; }
@@ -24,7 +30,9 @@ namespace _5eCharDisplay
 		public List<string> EighthLevelSpells { set; get; }
 		public List<string> NinthLevelSpells { set; get; }
 		public Statistic spellcastingAbilityModifier { set; get; }
-		public int[] spellSlots { get; set; }
+
+        // spellSlots in .yaml file represents how many spell slots have been expended.
+        public int[] spellSlots { get; set; }
 		public int[] spellSlotsMax { set; get; }
 		public int spellPrepLevel { set; get; }
 		public static Spellcasting fromYAML(string fPath)

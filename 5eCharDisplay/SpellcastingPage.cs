@@ -14,52 +14,30 @@ namespace _5eCharDisplay
     public partial class SpellcastingPage : Form
 	{
 		Character player;
-		int numPrepared = 0, maxNumPrepared = 0;
-		charClass cClass;
+        charClass cClass;
+		Spellcasting spellcasting;
+        int numPrepared = 0, maxNumPrepared = 0;
 		List<CheckBox> preparedBoxes = new List<CheckBox>();
 		bool atMax = false;
-		internal SpellcastingPage(Character PC, int Classnum)
+		internal SpellcastingPage(Character PC, charClass cla)
 		{
 			InitializeComponent();
 			player = PC;
-			cClass = PC.myClasses[Classnum];
+			cClass = cla;
+			spellcasting = cla.spellcasting;
 
 			// Set Spellmod for quick referencing.
-			int spellmod;
-			switch (player.myClasses[Classnum].SpellcastingAbilityModifier)
-			{
-				case charClass.SpellMod.STR:
-					spellmod = player.strength.getMod();
-					break;
-				case charClass.SpellMod.DEX:
-					spellmod = player.dexterity.getMod();
-					break;
-				case charClass.SpellMod.CON:
-					spellmod = player.constitution.getMod();
-					break;
-				case charClass.SpellMod.INT:
-					spellmod = player.intelligence.getMod();
-					break;
-				case charClass.SpellMod.WIS:
-					spellmod = player.wisdom.getMod();
-					break;
-				case charClass.SpellMod.CHA:
-					spellmod = player.charisma.getMod();
-					break;
-				default:
-					spellmod = 0;
-					break;
-			}
+			int spellmod = spellcasting.spellcastingAbilityModifier.getMod();
 
 			// Add "Max Preprared Spells" Box 
-			if (player.myClasses[Classnum].prepMethod == charClass.SpellPrepMethod.KnowSomePrepSome || player.myClasses[Classnum].prepMethod == charClass.SpellPrepMethod.KnowAllPrepSome)
+			if (spellcasting.prepMethod == Spellcasting.SpellPrepMethod.KnowSomePrepSome || spellcasting.prepMethod == Spellcasting.SpellPrepMethod.KnowAllPrepSome)
 			{
 				GroupBox PrepNum = new GroupBox();
 				PrepNum.Text = "Max Prepared Spells";
 				PrepNum.Size = new Size(118, 66);
 				PrepNum.Location = new Point(748, 11);
 				Label label = new Label();
-				maxNumPrepared = spellmod + player.myClasses[Classnum].SpellPrepLevel;
+				maxNumPrepared = spellmod + spellcasting.spellPrepLevel;
 				label.Text = $"{maxNumPrepared}";
 				PrepNum.Controls.Add(label);
 				label.Location = new Point(35, 31);
@@ -77,7 +55,7 @@ namespace _5eCharDisplay
 				if (cClass.spellcasting.spellSlotsMax[i] > 0)
 				{
 					firstY = 45;
-					int check = player.myClasses[Classnum].spellSlots[i];
+					int check = spellcasting.spellSlots[i];
 					for (int j = 0; j < cClass.spellcasting.spellSlotsMax[i]; j++)
 					{
 						CheckBox box = new CheckBox();
@@ -131,7 +109,6 @@ namespace _5eCharDisplay
 			int yDiff = 145;
 			int xDiff = 20;
 
-			charClass.SpellPrepMethod prepMethod = cClass.spellcasting.prepMethod;
 
 			if(cClass.spellcasting.Cantrips.Count > 0)
 			{
@@ -172,7 +149,7 @@ namespace _5eCharDisplay
 				foreach (string spell in cClass.spellcasting.FirstLevelSpells)
 				{
 					Spell s = Spell.fromYAML(spell);
-					if (prepMethod == charClass.SpellPrepMethod.KnowSomePrepNone)
+					if (spellcasting.prepMethod == Spellcasting.SpellPrepMethod.KnowSomePrepNone)
 					{
 						Label prepared = new Label();
 						prepared.Text = spell;
@@ -225,7 +202,7 @@ namespace _5eCharDisplay
 				foreach (string spell in cClass.spellcasting.SecondLevelSpells)
 				{
 					Spell s = Spell.fromYAML(spell);
-					if (prepMethod == charClass.SpellPrepMethod.KnowSomePrepNone)
+					if (spellcasting.prepMethod == Spellcasting.SpellPrepMethod.KnowSomePrepNone)
 					{
 						Label prepared = new Label();
 						prepared.Text = spell;
@@ -278,7 +255,7 @@ namespace _5eCharDisplay
 				foreach (string spell in cClass.spellcasting.ThirdLevelSpells)
 				{
 					Spell s = Spell.fromYAML(spell);
-					if (prepMethod == charClass.SpellPrepMethod.KnowSomePrepNone)
+					if (spellcasting.prepMethod == Spellcasting.SpellPrepMethod.KnowSomePrepNone)
 					{
 						Label prepared = new Label();
 						prepared.Text = spell;
@@ -331,7 +308,7 @@ namespace _5eCharDisplay
 				foreach (string spell in cClass.spellcasting.FourthLevelSpells)
 				{
 					Spell s = Spell.fromYAML(spell);
-					if (prepMethod == charClass.SpellPrepMethod.KnowSomePrepNone)
+					if (spellcasting.prepMethod == Spellcasting.SpellPrepMethod.KnowSomePrepNone)
 					{
 						Label prepared = new Label();
 						prepared.Text = spell;
@@ -383,7 +360,7 @@ namespace _5eCharDisplay
 				foreach (string spell in cClass.spellcasting.FifthLevelSpells)
 				{
 					Spell s = Spell.fromYAML(spell);
-					if (prepMethod == charClass.SpellPrepMethod.KnowSomePrepNone)
+					if (spellcasting.prepMethod == Spellcasting.SpellPrepMethod.KnowSomePrepNone)
 					{
 						Label prepared = new Label();
 						prepared.Text = spell;
@@ -435,7 +412,7 @@ namespace _5eCharDisplay
 				foreach (string spell in cClass.spellcasting.SixthLevelSpells)
 				{
 					Spell s = Spell.fromYAML(spell);
-					if (prepMethod == charClass.SpellPrepMethod.KnowSomePrepNone)
+					if (spellcasting.prepMethod == Spellcasting.SpellPrepMethod.KnowSomePrepNone)
 					{
 						Label prepared = new Label();
 						prepared.Text = spell;
@@ -487,7 +464,7 @@ namespace _5eCharDisplay
 				foreach (string spell in cClass.spellcasting.SeventhLevelSpells)
 				{
 					Spell s = Spell.fromYAML(spell);
-					if (prepMethod == charClass.SpellPrepMethod.KnowSomePrepNone)
+					if (spellcasting.prepMethod == Spellcasting.SpellPrepMethod.KnowSomePrepNone)
 					{
 						Label prepared = new Label();
 						prepared.Text = spell;
@@ -539,7 +516,7 @@ namespace _5eCharDisplay
 				foreach (string spell in cClass.spellcasting.EighthLevelSpells)
 				{
 					Spell s = Spell.fromYAML(spell);
-					if (prepMethod == charClass.SpellPrepMethod.KnowSomePrepNone)
+					if (spellcasting.prepMethod == Spellcasting.SpellPrepMethod.KnowSomePrepNone)
 					{
 						Label prepared = new Label();
 						prepared.Text = spell;
@@ -591,7 +568,7 @@ namespace _5eCharDisplay
 				foreach (string spell in cClass.spellcasting.NinthLevelSpells)
 				{
 					Spell s = Spell.fromYAML(spell);
-					if (prepMethod == charClass.SpellPrepMethod.KnowSomePrepNone)
+					if (spellcasting.prepMethod == Spellcasting.SpellPrepMethod.KnowSomePrepNone)
 					{
 						Label prepared = new Label();
 						prepared.Text = spell;
@@ -631,7 +608,7 @@ namespace _5eCharDisplay
 				}
 			}
 
-			if (numPrepared >= maxNumPrepared && (cClass.spellcasting.prepMethod == charClass.SpellPrepMethod.KnowSomePrepSome || cClass.spellcasting.prepMethod == charClass.SpellPrepMethod.KnowAllPrepSome))
+			if (numPrepared >= maxNumPrepared && (spellcasting.prepMethod == Spellcasting.SpellPrepMethod.KnowSomePrepSome || spellcasting.prepMethod == Spellcasting.SpellPrepMethod.KnowAllPrepSome))
 			{
 				foreach (CheckBox c in preparedBoxes)
 				{
@@ -643,8 +620,9 @@ namespace _5eCharDisplay
 
 
 			NameLabel.Text = player.name;
-			Text = $"{player.name}'s Spellcasting Sheet - {player.myClasses[Classnum].classname}";
-			SpellcastingAbilityLabel.Text = $"{player.myClasses[Classnum].SpellcastingAbilityModifier} (+{spellmod})";
+			Text = $"{player.name}'s Spellcasting Sheet - {cClass.classname}";
+			SpellcastingAbilityLabel.Text = $"{spellcasting.spellcastingAbilityModifier.name} ({spellcasting.spellcastingAbilityModifier})";
+			SpellcastingAbilityLabel.Location = new Point(59 - (SpellcastingAbilityLabel.Width / 2), 29); 
 
 			SpellAttackLabel.Text = $"+{spellmod + (int)Math.Ceiling(player.level.Sum() / 4.0) + 1}";
 			SpellSaveLabel.Text = $"{8 + spellmod + (int)Math.Ceiling(player.level.Sum() / 4.0) + 1}";
@@ -660,9 +638,9 @@ namespace _5eCharDisplay
 			int level = 0;
 			CheckBox thisthing = sender as CheckBox;
 			if (!thisthing.Checked)
-				cClass.spellcasting.spellSlots[level]--;
+				spellcasting.spellSlots[level]--;
 			else
-				cClass.spellcasting.spellSlots[level]++;
+				spellcasting.spellSlots[level]++;
 			return;
 		}
 		private void ChangeSecondSlot(object sender, EventArgs e)
@@ -670,9 +648,9 @@ namespace _5eCharDisplay
 			int level = 1;
 			CheckBox thisthing = sender as CheckBox;
 			if (!thisthing.Checked)
-				cClass.spellcasting.spellSlots[level]--;
+				spellcasting.spellSlots[level]--;
 			else
-				cClass.spellcasting.spellSlots[level]++;
+				spellcasting.spellSlots[level]++;
 			return;
 		}
 		private void ChangeThirdSlot(object sender, EventArgs e)
@@ -680,9 +658,9 @@ namespace _5eCharDisplay
 			int level = 2;
 			CheckBox thisthing = sender as CheckBox;
 			if (!thisthing.Checked)
-				cClass.spellcasting.spellSlots[level]--;
+				spellcasting.spellSlots[level]--;
 			else
-				cClass.spellcasting.spellSlots[level]++;
+				spellcasting.spellSlots[level]++;
 			return;
 		}
 		private void ChangeFourthSlot(object sender, EventArgs e)
@@ -690,9 +668,9 @@ namespace _5eCharDisplay
 			int level = 3;
 			CheckBox thisthing = sender as CheckBox;
 			if (!thisthing.Checked)
-				cClass.spellcasting.spellSlots[level]--;
+				spellcasting.spellSlots[level]--;
 			else
-				cClass.spellcasting.spellSlots[level]++;
+				spellcasting.spellSlots[level]++;
 			return;
 		}
 		private void ChangeFifthSlot(object sender, EventArgs e)
@@ -700,9 +678,9 @@ namespace _5eCharDisplay
 			int level = 4;
 			CheckBox thisthing = sender as CheckBox;
 			if (!thisthing.Checked)
-				cClass.spellcasting.spellSlots[level]--;
+				spellcasting.spellSlots[level]--;
 			else
-				cClass.spellcasting.spellSlots[level]++;
+				spellcasting.spellSlots[level]++;
 			return;
 		}
 		private void ChangeSixthSlot(object sender, EventArgs e)
@@ -710,9 +688,9 @@ namespace _5eCharDisplay
 			int level = 5;
 			CheckBox thisthing = sender as CheckBox;
 			if (!thisthing.Checked)
-				cClass.spellcasting.spellSlots[level]--;
+				spellcasting.spellSlots[level]--;
 			else
-				cClass.spellcasting.spellSlots[level]++;
+				spellcasting.spellSlots[level]++;
 			return;
 		}
 		private void ChangeSeventhSlot(object sender, EventArgs e)
@@ -720,9 +698,9 @@ namespace _5eCharDisplay
 			int level = 6;
 			CheckBox thisthing = sender as CheckBox;
 			if (!thisthing.Checked)
-				cClass.spellcasting.spellSlots[level]--;
+				spellcasting.spellSlots[level]--;
 			else
-				cClass.spellcasting.spellSlots[level]++;
+				spellcasting.spellSlots[level]++;
 			return;
 		}
 		private void ChangeEighthSlot(object sender, EventArgs e)
@@ -730,9 +708,9 @@ namespace _5eCharDisplay
 			int level = 7;
 			CheckBox thisthing = sender as CheckBox;
 			if (!thisthing.Checked)
-				cClass.spellcasting.spellSlots[level]--;
+				spellcasting.spellSlots[level]--;
 			else
-				cClass.spellcasting.spellSlots[level]++;
+				spellcasting.spellSlots[level]++;
 			return;
 		}
 		private void ChangeNinthSlot(object sender, EventArgs e)
@@ -740,9 +718,9 @@ namespace _5eCharDisplay
 			int level = 8;
 			CheckBox thisthing = sender as CheckBox;
 			if (!thisthing.Checked)
-				cClass.spellcasting.spellSlots[level]--;
+				spellcasting.spellSlots[level]--;
 			else
-				cClass.spellcasting.spellSlots[level]++;
+				spellcasting.spellSlots[level]++;
 			return;
 		}
 		#endregion ChangeNthSlot
@@ -755,9 +733,9 @@ namespace _5eCharDisplay
 				SpellName = SpellName.Substring(0, SpellName.Length - 4);
 			if (thisthing.Checked)
 			{
-				cClass.spellcasting.PreparedSpells.Add(SpellName);
+				spellcasting.PreparedSpells.Add(SpellName);
 				numPrepared++;
-				if(numPrepared >= (maxNumPrepared + cClass.spellcasting.AlwaysPrepared.Count)&& (cClass.spellcasting.prepMethod == charClass.SpellPrepMethod.KnowSomePrepSome || cClass.spellcasting.prepMethod == charClass.SpellPrepMethod.KnowAllPrepSome))
+				if(numPrepared >= (maxNumPrepared + spellcasting.AlwaysPrepared.Count)&& (spellcasting.prepMethod == Spellcasting.SpellPrepMethod.KnowSomePrepSome || spellcasting.prepMethod == Spellcasting.SpellPrepMethod.KnowAllPrepSome))
 				{
 					foreach(CheckBox c in preparedBoxes)
 					{

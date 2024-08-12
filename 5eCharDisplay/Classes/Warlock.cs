@@ -42,7 +42,6 @@ namespace _5eCharDisplay.Classes
 			armorProfs = new List<string> { "Light Armor" };
 			weaponProfs = new List<string> { "Simple Weapons" };
 			SavingProfs = new string[2] { "WisSave", "ChaSave" };
-			prepMethod = SpellPrepMethod.KnowSomePrepNone;
 			classname = ClassName.Warlock;
 		}
 		internal override string GetValue(string variable)
@@ -124,8 +123,6 @@ namespace _5eCharDisplay.Classes
 				returned = deserializer.Deserialize<Warlock>(reader);
 			}
 			returned.abilityModifiers = modifiers;
-			returned.SpellcastingAbilityModifier = SpellMod.CHA;
-			returned.Spellcasting = true;
 			returned.level = lvl;
 			returned.proficiency = prof;
 			returned.HDrem = returned.level;
@@ -134,64 +131,64 @@ namespace _5eCharDisplay.Classes
 			switch (returned.level)
 			{
 				case 1:
-					returned.spellSlotsMax = new int[] { 1, 0, 0, 0, 0, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 1, 0, 0, 0, 0, 0, 0, 0, 0 };
 					break;
 				case 2:
-					returned.spellSlotsMax = new int[] { 2, 0, 0, 0, 0, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 2, 0, 0, 0, 0, 0, 0, 0, 0 };
 					break;
 				case 3:
-					returned.spellSlotsMax = new int[] { 0, 2, 0, 0, 0, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 0, 2, 0, 0, 0, 0, 0, 0, 0 };
 					break;
 				case 4:
-					returned.spellSlotsMax = new int[] { 0, 2, 0, 0, 0, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 0, 2, 0, 0, 0, 0, 0, 0, 0 };
 					break;
 				case 5:
-					returned.spellSlotsMax = new int[] { 0, 0, 2, 0, 0, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 2, 0, 0, 0, 0, 0, 0 };
 					break;
 				case 6:
-					returned.spellSlotsMax = new int[] { 0, 0, 2, 0, 0, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 2, 0, 0, 0, 0, 0, 0 };
 					break;
 				case 7:
-					returned.spellSlotsMax = new int[] { 0, 0, 0, 2, 0, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 2, 0, 0, 0, 0, 0 };
 					break;
 				case 8:
-					returned.spellSlotsMax = new int[] { 0, 0, 0, 2, 0, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 2, 0, 0, 0, 0, 0 };
 					break;
 				case 9:
-					returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 2, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 2, 0, 0, 0, 0 };
 					break;
 				case 10:
-					returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 2, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 2, 0, 0, 0, 0 };
 					break;
 				case 11:
-					returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 3, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 3, 0, 0, 0, 0 };
 					break;
 				case 12:
-					returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 3, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 3, 0, 0, 0, 0 };
 					break;
 				case 13:
-					returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 3, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 3, 0, 0, 0, 0 };
 					break;
 				case 14:
-					returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 3, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 3, 0, 0, 0, 0 };
 					break;
 				case 15:
-					returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 3, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 3, 0, 0, 0, 0 };
 					break;
 				case 16:
-					returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 3, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 3, 0, 0, 0, 0 };
 					break;
 				case 17:
-					returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 4, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 4, 0, 0, 0, 0 };
 					break;
 				case 18:
-					returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 4, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 4, 0, 0, 0, 0 };
 					break;
 				case 19:
-					returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 4, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 4, 0, 0, 0, 0 };
 					break;
 				case 20:
-					returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 4, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 4, 0, 0, 0, 0 };
 					break;
 			}
 			if (returned.FeatNames != null)
@@ -469,7 +466,6 @@ namespace _5eCharDisplay.Classes
 			label.Text += $" - Spells Known of 1st Level and Higher\n  - You know {numSpells} spells of your choice from the warlock spell list.\n  - When you gain a level in this class, you can choose one of the warlock spells you know and replace it with another spell from the warlock spell list, which also must be of a level for which you have spell slots.\n\n";
 			label.Text += $" - Spellcasting Ability\n  - Charisma is your spellcasting ability for your warlock spells, so you use your Charisma whenever a spell refers to your spellcasting ability.\n\n";
 			label.Text += $" - Spellcasting Focus\n  - You can use an arcane focus as a spellcasting focus for your warlock spells.\n\n";
-			Spellcasting = true;
 			label.MaximumSize = new Size(168, 0);
 			label.AutoSize = true;
 			box.Controls.Add(label);
@@ -497,18 +493,21 @@ namespace _5eCharDisplay.Classes
 						break;
 					case "Armor of Shadows":
 						label.Text += $"   - You can cast mage armor on yourself at will, without expending a spell slot or material components.\n\n";
-                        spellcasting?.FirstLevelSpells.Add("Mage Armor");
+                        if(!spellcasting.FirstLevelSpells.Contains("Mage Armor")) 
+							spellcasting.FirstLevelSpells.Add("Mage Armor");
 						break;
 					case "Ascendant Step":
 						label.Text += $"   - You can cast levitate on yourself at will, without expending a spell slot or material components.\n\n";
-                        spellcasting?.SecondLevelSpells.Add("Levitate");
+						if (!spellcasting.SecondLevelSpells.Contains("Levitate"))
+							spellcasting?.SecondLevelSpells.Add("Levitate");
 						break;
 					case "Aspect of the Moon":
 						label.Text += $"   - You no longer need to sleep and can’t be forced to sleep by any means. To gain the benefits of a long rest, you can spend all 8 hours doing light activity, such as reading your Book of Shadows and keeping watch.\n\n";
 						break;
 					case "Beast Speech":
 						label.Text += $"   - You can cast speak with animals at will, without expending a spell slot.\n\n";
-                        spellcasting?.FirstLevelSpells.Add("Speak With Animals");
+                        if (!spellcasting.FirstLevelSpells.Contains("Speak With Animals"))
+                            spellcasting?.FirstLevelSpells.Add("Speak With Animals");
 						break;
 					case "Beguiling Influence":
 						label.Text += $"   - You gain proficiency in the Deception and Persuasion skills.\n\n";
@@ -517,6 +516,8 @@ namespace _5eCharDisplay.Classes
 						break;
 					case "Bewitching Whispers":
 						label.Text += $"   - You can cast compulsion once using a warlock spell slot. You can’t do so again until you finish a long rest.\n\n";
+						if (!spellcasting.FourthLevelSpells.Contains("Compulsion"))
+							spellcasting.FourthLevelSpells.Add("Compulsion");
 						// 1/LR
 						break;
 					case "Bond of the Talisman":
@@ -546,7 +547,8 @@ namespace _5eCharDisplay.Classes
 						break;
 					case "Eldritch Sight":
 						label.Text += $"   - You can cast detect magic at will, without expending a spell slot.\n\n";
-						spellcasting?.FirstLevelSpells.Add("Detect Magic");
+						if(!spellcasting.FirstLevelSpells.Contains("Detect Magic"))
+							spellcasting.FirstLevelSpells.Add("Detect Magic");
 						break;
 					case "Eldritch Smite":
 						label.Text += $"   - Once per turn when you hit a creature with your pact weapon, you can expend a warlock spell slot to deal an extra 1d8 force damage to the target, plus another 1d8 per level of the spell slot, and you can knock the target prone if it is Huge or smaller.\n\n";
@@ -600,11 +602,13 @@ namespace _5eCharDisplay.Classes
 						break;
 					case "Mask of Many Faces":
 						label.Text += $"   - You can cast disguise self at will, without expending a spell slot.\n\n";
-						spellcasting?.FirstLevelSpells.Add("Disguise Self");
+						if(!spellcasting.FirstLevelSpells.Contains("Disguise Self"))
+							spellcasting.FirstLevelSpells.Add("Disguise Self");
 						break;
 					case "Master of Myriad Forms":
 						label.Text += $"   - You can cast alter self at will, without expending a spell slot.\n\n";
-                        spellcasting?.SecondLevelSpells.Add("Alter Self");
+						if(!spellcasting.SecondLevelSpells.Contains("Alter Self"))
+							spellcasting.SecondLevelSpells.Add("Alter Self");
 						// ALTER SELF
 						break;
 					case "Minions of Chaos":
@@ -617,7 +621,8 @@ namespace _5eCharDisplay.Classes
 						break;
 					case "Misty Visions":
 						label.Text += $"   - You can cast silent image at will, without expending a spell slot or material components.\n\n";
-						spellcasting?.FirstLevelSpells.Add("Silent Image");
+						if(!spellcasting.FirstLevelSpells.Contains("Silent Image"))
+							spellcasting.FirstLevelSpells.Add("Silent Image");
 						// SILENT IMAGE
 						break;
 					case "One with Shadows":
@@ -625,7 +630,8 @@ namespace _5eCharDisplay.Classes
 						break;
 					case "Otherworldly Leap":
 						label.Text += $"   - You can cast jump on yourself at will, without expending a spell slot or material components.\n\n";
-                        spellcasting?.FirstLevelSpells.Add("Jump");
+						if(!spellcasting.FirstLevelSpells.Contains("Jump"))
+	                        spellcasting.FirstLevelSpells.Add("Jump");
 						break;
 					case "Protection of the Talisman":
 						label.Text += $"  - When the wearer of your talisman fails a saving throw, they can add a d4 to the roll, potentially turning the save into a success. This benefit can be used {proficiency} times, and all expended uses are restored when you finish a long rest.\n\n";
@@ -645,7 +651,8 @@ namespace _5eCharDisplay.Classes
 						break;
 					case "Shroud of Shadow":
 						label.Text += $"   - You can cast invisibility at will, without expending a spell slot.\n\n";
-                        spellcasting?.SecondLevelSpells.Add("Invisibility");
+						if(!spellcasting.SecondLevelSpells.Contains("Invisibility"))
+	                        spellcasting.SecondLevelSpells.Add("Invisibility");
 						break;
 					case "Sign of Ill Omen":
 						label.Text += $"   - You can cast bestow curse once using a warlock spell slot. You can’t do so again until you finish a long rest.\n\n";
@@ -671,7 +678,8 @@ namespace _5eCharDisplay.Classes
 						break;
 					case "Visions of Distant Realms":
 						label.Text += $"   - You can cast arcane eye at will, without expending a spell slot.\n\n";
-                        spellcasting?.FourthLevelSpells.Add("Arcane Eye");
+						if(!spellcasting.FourthLevelSpells.Contains("Arcane Eye"))
+	                        spellcasting.FourthLevelSpells.Add("Arcane Eye");
 						// ARCANE EYE
 						break;
 					case "Voice of the Chain Master":
@@ -679,7 +687,8 @@ namespace _5eCharDisplay.Classes
 						break;
 					case "Whispers of the Grave":
 						label.Text += $"   - You can cast speak with dead at will, without expending a spell slot.\n\n";
-                        spellcasting?.ThirdLevelSpells.Add("Speak With Dead");
+						if (spellcasting.ThirdLevelSpells.Contains("Speak with Dead"))
+	                        spellcasting.ThirdLevelSpells.Add("Speak With Dead");
 						break;
 					case "Witch Sight":
 						label.Text += $"   - You can see the true form of any shapechanger or creature concealed by illusion or transmutation magic while the creature is within 30 feet of you and within line of sight.\n\n";
@@ -849,19 +858,19 @@ namespace _5eCharDisplay.Classes
 			}
 			for (int i = 0; i < 9; i++)
 			{
-				spellSlots[i] = 0;
+				spellcasting.spellSlots[i] = 0;
 			}
 
 			// Reset Subclass Bools
-			classInfo[22] = $"EntropicWard: false";
-			classInfo[23] = $"DarkOnesOwnLuck: false";
-			classInfo[25] = $"FeyPresence: false";
-			classInfo[26] = $"MistyEscape: false";
-			classInfo[27] = $"DarkDelirium: false";
-			classInfo[28] = $"HexbladesCurse: false";
+            EntropicWard = false;
+            DarkOnesOwnLuck = false;
+            FeyPresence = false;
+            MistyEscape = false;
+            DarkDelirium = false;
+            HexbladesCurse = false;
 
-			// Reset SR Groupboxes
-			foreach(CheckBox g in resetOnSR)
+            // Reset SR Groupboxes
+            foreach (CheckBox g in resetOnSR)
 			{
 				g.Checked = false;
 			}
@@ -875,36 +884,31 @@ namespace _5eCharDisplay.Classes
 			HDrem += (int)Math.Floor(level / 2.0);
 			if (HDrem > level) HDrem = level;
 
-			// Get classInfo
-			string[] classInfo = File.ReadAllLines($@".\Data\Characters\{charname}\{charname}Warlock.yaml");
 
 			// Reset Spell Slots
-			classInfo[0] = "spellSlots: [0, 0, 0, 0, 0, 0, 0, 0, 0]";
 			for(int i = 0; i < 9; i++)
 			{
-				spellSlots[i] = 0;
+				spellcasting.spellSlots[i] = 0;
 			}
 
 			// Reset Mystic Arcanum
-			classInfo[8] = "ArcanumUsed: [false, false, false, false]";
 			for(int i = 0; i < 4; i++)
 			{
 				ArcanumUsed[i] = false;
 			}
 
 			// Reset Eldritch Master
-			classInfo[9] = "EldritchMasterUsed: false";
 			EldritchMasterUsed = false;
 
 			// Reset Subclass Bools
-			classInfo[22] = $"EntropicWard: false";
-			classInfo[23] = $"DarkOnesOwnLuck: false";
-			classInfo[24] = $"HurlThroughHell: false";
-			classInfo[25] = $"FeyPresence: false";
-			classInfo[26] = $"MistyEscape: false";
-			classInfo[27] = $"DarkDelirium: false";
-			classInfo[28] = $"HexbladesCurse: false";
-			classInfo[29] = $"AccursedSpecter: false";
+			EntropicWard = false;
+			DarkOnesOwnLuck = false;
+			HurlThroughHell = false;
+			FeyPresence = false;
+			MistyEscape = false;
+			DarkDelirium = false;
+			HexbladesCurse = false;
+			AccursedSpecter = false;
 
 			// Reset Groupbox Checks
 			foreach(var g in resetOnSR)
@@ -917,42 +921,11 @@ namespace _5eCharDisplay.Classes
 			}
 
 
-			// Write classInfo
-			File.WriteAllLines($@".\Data\Characters\{charname}\{charname}Warlock.yaml", classInfo);
-		}
-		public override string[] getClassDetails(string name)
-		{
-			string[] classInfo = File.ReadAllLines($@".\Data\Characters\{charname}\{charname}Warlock.yaml");
-			
-			// Store spells
-			string spells = "spellSlots: [";
-			for(int i = 0; i < 8; i++)
-				spells += $"{spellSlots[i]}, ";
-			spells += $"{spellSlots[8]}]";
-			classInfo[0] = spells;
-
-			// Store Arcanum usage
-			string arcanum = "ArcanumUsed: [";
-			for(int i = 0; i < 3; i++)
-				arcanum += $"{ArcanumUsed[i]}, ";
-			arcanum += $"{ArcanumUsed[3]}]";
-			classInfo[8] = arcanum;
-
-			// Store Eldritch Master usage
-			classInfo[9] = $"EldritchMasterUsed: {EldritchMasterUsed}";
-
-			classInfo[22] = $"EntropicWard: {EntropicWard}";
-			classInfo[23] = $"DarkOnesOwnLuck: {DarkOnesOwnLuck}";
-			classInfo[24] = $"HurlThroughHell: {HurlThroughHell}";
-			classInfo[25] = $"FeyPresence: {FeyPresence}";
-			classInfo[26] = $"MistyEscape: {MistyEscape}";
-			classInfo[27] = $"DarkDelirium: {DarkDelirium}";
-			classInfo[28] = $"HexbladesCurse: {HexbladesCurse}";
-			classInfo[29] = $"AccursedSpecter: {AccursedSpecter}";
-
-
-			return classInfo;
-		}
+            // Write classInfo
+            var serializer = new SerializerBuilder().Build();
+            var yaml = serializer.Serialize(this);
+            File.WriteAllText($@"./Data/Characters/{charname}/{charname}Warlock.yaml", yaml);
+        }
 
 	}
 }

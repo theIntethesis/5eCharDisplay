@@ -294,12 +294,16 @@ namespace _5eCharDisplay
 		}
 		private void SaveClassFeatures()
 		{
-			int classnum = 0;
+			//int classnum = 0;
 			foreach (charClass c in player.myClasses)
 			{
-				string[] classInfo = c.getClassDetails(player.name);
+                var serializer = new YamlDotNet.Serialization.SerializerBuilder().Build();
+                var yaml = serializer.Serialize(c);
+                File.WriteAllText($@"./Data/Characters/{player.name}/{player.name}{c.classname.ToString()}.yaml", yaml);
+/*
+                string[] classInfo = c.getClassDetails(player.name);
 				File.WriteAllLines($@".\Data\Characters\{player.name}\{player.name}{player.charClass[classnum]}.yaml", classInfo);
-				classnum++;
+				classnum++;*/
 			}
 		}
 		private void SaveCharFeatures()
@@ -431,14 +435,14 @@ namespace _5eCharDisplay
 		}
 		private void SpellcastingToggle_Click(object sender, EventArgs e)
 		{
-			for (int i = 0; i < player.myClasses.Count; i++)
-			{
-				if (player.myClasses[i].Spellcasting)
-				{
-					SpellcastingPage spellcastingPage = new SpellcastingPage(player, i);
-					spellcastingPage.Show();
-				}
-			}
+			foreach(charClass cClass in player.myClasses)
+            {
+                if (cClass.spellcasting != null)
+                {
+                    SpellcastingPage spellcastingPage = new SpellcastingPage(player, cClass);
+                    spellcastingPage.Show();
+                }
+            }
 		}
 		private void detailsButton_Click(object sender, EventArgs e)
 		{

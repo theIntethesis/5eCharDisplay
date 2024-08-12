@@ -1,4 +1,4 @@
-spellSlots: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+Skill1: Intimidation
 Skill2: Deception
 OtherworldlyPatron: The Hexblade
 PactBoon: Pact of the Blade
@@ -6,50 +6,34 @@ MysticArcanum: []
 ArcanumUsed:
 - false
 - false
-ArcanumUsed: [False, False, False, False]
-EldritchMasterUsed: False
+- false
+- false
 EldritchInvocations:
 - Armor of Shadows
 - Repelling Blast
-Cantrips: &o0
-- Eldritch Blast
-- Prestidigitation
-PreparedSpells: &o1 []
-FirstLevelSpells: &o2
-- Armor of Agathys
-- Expeditious Retreat
-- Mage Armor
-- Mage Armor
-EntropicWard: False
-DarkOnesOwnLuck: False
-HurlThroughHell: False
-FeyPresence: False
-MistyEscape: False
-DarkDelirium: False
-HexbladesCurse: False
-AccursedSpecter: False
-SeventhLevelSpells: &o8 []
-EighthLevelSpells: &o9 []
-NinthLevelSpells: &o10 []
 FeatNames: []
 ASIChoices: []
 spellcasting:
   prepMethod: KnowSomePrepNone
-  Cantrips: *o0
-  PreparedSpells: *o1
-  FirstLevelSpells: *o2
-  SecondLevelSpells: *o3
-  ThirdLevelSpells: *o4
-  FourthLevelSpells: *o5
-  FifthLevelSpells: *o6
-  SixthLevelSpells: *o7
-  SeventhLevelSpells: *o8
-  EighthLevelSpells: *o9
-  NinthLevelSpells: *o10
+  Cantrips:
+  - Eldritch Blast
+  - Prestidigitation
+  FirstLevelSpells:
+  - Armor of Agathys
+  - Expeditious Retreat
+  - Mage Armor
+  SecondLevelSpells: []
+  ThirdLevelSpells: []
+  FourthLevelSpells: []
+  FifthLevelSpells: []
+  SixthLevelSpells: []
+  SeventhLevelSpells: []
+  EighthLevelSpells: []
+  NinthLevelSpells: []
   spellcastingAbilityModifier:
     value: 20
     name: Charisma
-  spellSlots: &o11
+  spellSlots:
   - 0
   - 0
   - 0
@@ -69,14 +53,3 @@ spellcasting:
   - 0
   - 0
   - 0
-spellSlots: *o11
-spellSlotsMax:
-- 0
-- 2
-- 0
-- 0
-- 0
-- 0
-- 0
-- 0
-- 0

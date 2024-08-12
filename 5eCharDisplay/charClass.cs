@@ -9,7 +9,7 @@ using System.Numerics;
 namespace _5eCharDisplay
 {
     [SupportedOSPlatform("windows")]
-    internal class charClass
+    public class charClass
 	{
 		protected Die hitDie;
 		protected List<string> armorProfs;
@@ -29,12 +29,6 @@ namespace _5eCharDisplay
 		protected int HDrem;
 		protected int proficiency;
 		protected string charname;
-		public enum SpellPrepMethod
-		{
-			KnowAllPrepSome,
-			KnowSomePrepSome,
-			KnowSomePrepNone
-		}
 		public enum ClassName
 		{
 			Artificer,
@@ -52,44 +46,16 @@ namespace _5eCharDisplay
 			Wizard
 
 		}
-		public SpellPrepMethod prepMethod;
 		public ClassName classname;
 		public void setCharName (string n)
 		{
 			charname = n;
 		}
-		public List<string> Cantrips { set; get; }
-		public List<string> AlwaysPrepared = new List<string>();
-		public List<string> PreparedSpells { set; get; }
-		public List<string> FirstLevelSpells { set; get; }
-		public List<string> SecondLevelSpells { set; get; }
-		public List<string> ThirdLevelSpells { set; get; }
-		public List<string> FourthLevelSpells { set; get; }
-		public List<string> FifthLevelSpells { set; get; }
-		public List<string> SixthLevelSpells { set; get; }
-		public List<string> SeventhLevelSpells { set; get; }
-		public List<string> EighthLevelSpells { set; get; }
-		public List<string> NinthLevelSpells { set; get; }
+		
 		public List<string> FeatNames { set; get; }
 		public List<string> ASIChoices { set; get; }
         public Spellcasting spellcasting { get; set; }
 
-        public bool Spellcasting = false;
-		public enum SpellMod
-		{
-			STR,
-			DEX,
-			CON, 
-			INT, 
-			WIS, 
-			CHA
-		};
-		public SpellMod SpellcastingAbilityModifier;
-		public int SpellPrepLevel;
-		
-		// spellSlots in .yaml file represents how many spell slots have been expended.
-		public int[] spellSlots { get; set; }
-		public int[] spellSlotsMax { protected set; get; }
 		public void updateAbilities(int[] modifiers)
 		{
 			abilityModifiers = modifiers;

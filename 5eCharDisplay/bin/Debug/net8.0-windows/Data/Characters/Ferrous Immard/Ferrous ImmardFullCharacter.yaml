@@ -1,0 +1,151 @@
+name: Ferrous Immard
+race: Dragonborn
+subrace: Bronze Dragonborn
+charClass:
+- Warlock
+- Wizard
+background: Faction Agent
+alignment: Lawful Evil
+level:
+- 3
+- 6
+hitPoints: 62
+baseStr: 11
+baseDex: 14
+baseCon: 14
+baseInt: 15
+baseWis: 10
+baseCha: 18
+maxHitPoints: 62
+experience: 64000
+myClasses:
+- Skill1: Intimidation
+  Skill2: Deception
+  OtherworldlyPatron: The Hexblade
+  PactBoon: Pact of the Blade
+  MysticArcanum: []
+  ArcanumUsed:
+  - false
+  - false
+  - false
+  - false
+  EldritchInvocations:
+  - Armor of Shadows
+  - Repelling Blast
+  FeatNames: []
+  ASIChoices: []
+  spellcasting:
+    prepMethod: KnowSomePrepNone
+    Cantrips:
+    - Eldritch Blast
+    - Prestidigitation
+    FirstLevelSpells:
+    - Armor of Agathys
+    - Expeditious Retreat
+    - Mage Armor
+    SecondLevelSpells: []
+    ThirdLevelSpells: []
+    FourthLevelSpells: []
+    FifthLevelSpells: []
+    SixthLevelSpells: []
+    SeventhLevelSpells: []
+    EighthLevelSpells: []
+    NinthLevelSpells: []
+    spellcastingAbilityModifier:
+      value: 20
+      name: Charisma
+    spellSlots:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    spellSlotsMax:
+    - 0
+    - 2
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+- ArcaneTradition: Hematurgy
+  SpellMastery:
+  - Magic Missile
+  - Wither and Bloom
+  SignatureSpells:
+  - ''
+  - ''
+  FeatNames:
+  - Ability Score Increase
+  - Dual Wielder
+  ASIChoices:
+  - INT1CHA1
+  - ''
+  spellcasting:
+    prepMethod: KnowSomePrepSome
+    Cantrips:
+    - Encode Thoughts
+    - Light
+    - Message
+    - Shocking Grasp
+    PreparedSpells: []
+    FirstLevelSpells:
+    - Absorb Elements
+    - Blood Transfusion
+    - Comprehend Languages
+    - Identify
+    - Mage Armor
+    - Magic Missile
+    - Shield
+    - Silvery Barbs
+    - Snare
+    - Tasha's Hideous Laughter
+    - Unseen Servant
+    SecondLevelSpells:
+    - Bonded by Blood
+    - Detect Thoughts
+    - Kinetic Jaunt
+    - Shatter
+    - Wither and Bloom
+    ThirdLevelSpells:
+    - Counterspell
+    - Dispel Magic
+    - Galder's Tower
+    - Glyph of Warding
+    - Sanguis Burst
+    - Sending
+    FourthLevelSpells: []
+    FifthLevelSpells: []
+    SixthLevelSpells: []
+    SeventhLevelSpells: []
+    EighthLevelSpells: []
+    NinthLevelSpells: []
+    spellcastingAbilityModifier:
+      value: 16
+      name: Intelligence
+    spellSlots:
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    spellSlotsMax:
+    - 4
+    - 3
+    - 3
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0

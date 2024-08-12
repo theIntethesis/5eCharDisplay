@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace _5eCharDisplay
 {
-    internal class Feat
+    public class Feat
     {
         public string name { set; get; }
         public string description { set; get; }

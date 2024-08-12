@@ -7,9 +7,11 @@ using System.IO;
 using YamlDotNet.Serialization;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Runtime.Versioning;
 
 namespace _5eCharDisplay.Classes
 {
+    [SupportedOSPlatform("windows")]
     internal class Magus : charClass
     {
         public string Skill1 { set; get; }
@@ -21,8 +23,6 @@ namespace _5eCharDisplay.Classes
             armorProfs = new List<string> { "Light Armor", "Medium Armor" };
             weaponProfs = new List<string> { "Simple Weapons", "Martial Weapons" };
             SavingProfs = new string[2] { "ConSave", "IntSave" };
-            prepMethod = SpellPrepMethod.KnowSomePrepSome;
-            Spellcasting = true;
         }
         private GroupBox AddWarcasting(int lvl)
         {
@@ -340,77 +340,75 @@ namespace _5eCharDisplay.Classes
                 returned = deserializer.Deserialize<Magus>(reader);
             }
             returned.abilityModifiers = modifiers;
-            returned.SpellcastingAbilityModifier = SpellMod.INT;
             returned.level = lvl;
             returned.proficiency = prof;
-            returned.SpellPrepLevel = returned.level / 2;
             returned.HDrem = returned.level;
             returned.skillProfs.Add(returned.Skill1);
             returned.skillProfs.Add(returned.Skill2); 
             switch (returned.level)
             {
                 case 1:
-                    returned.spellSlotsMax = new int[] { 1, 0, 0, 0, 0, 0, 0, 0, 0 };
+                    returned.spellcasting.spellSlotsMax = new int[] { 1, 0, 0, 0, 0, 0, 0, 0, 0 };
                     break;
                 case 2:
-                    returned.spellSlotsMax = new int[] { 2, 0, 0, 0, 0, 0, 0, 0, 0 };
+                    returned.spellcasting.spellSlotsMax = new int[] { 2, 0, 0, 0, 0, 0, 0, 0, 0 };
                     break;
                 case 3:
-                    returned.spellSlotsMax = new int[] { 2, 1, 0, 0, 0, 0, 0, 0, 0 };
+                    returned.spellcasting.spellSlotsMax = new int[] { 2, 1, 0, 0, 0, 0, 0, 0, 0 };
                     break;
                 case 4:
-                    returned.spellSlotsMax = new int[] { 2, 2, 0, 0, 0, 0, 0, 0, 0 };
+                    returned.spellcasting.spellSlotsMax = new int[] { 2, 2, 0, 0, 0, 0, 0, 0, 0 };
                     break;
                 case 5:
-                    returned.spellSlotsMax = new int[] { 0, 2, 2, 0, 0, 0, 0, 0, 0 };
+                    returned.spellcasting.spellSlotsMax = new int[] { 0, 2, 2, 0, 0, 0, 0, 0, 0 };
                     break;
                 case 6:
-                    returned.spellSlotsMax = new int[] { 0, 2, 2, 0, 0, 0, 0, 0, 0 };
+                    returned.spellcasting.spellSlotsMax = new int[] { 0, 2, 2, 0, 0, 0, 0, 0, 0 };
                     break;
                 case 7:
-                    returned.spellSlotsMax = new int[] { 0, 0, 2, 2, 0, 0, 0, 0, 0 };
+                    returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 2, 2, 0, 0, 0, 0, 0 };
                     break;
                 case 8:
-                    returned.spellSlotsMax = new int[] { 0, 0, 2, 2, 0, 0, 0, 0, 0 };
+                    returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 2, 2, 0, 0, 0, 0, 0 };
                     break;
                 case 9:
-                    returned.spellSlotsMax = new int[] { 0, 0, 0, 2, 2, 0, 0, 0, 0 };
+                    returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 2, 2, 0, 0, 0, 0 };
                     break;
                 case 10:
-                    returned.spellSlotsMax = new int[] { 0, 0, 0, 2, 2, 0, 0, 0, 0 };
+                    returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 2, 2, 0, 0, 0, 0 };
                     break;
                 case 11:
-                    returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 2, 2, 0, 0, 0 };
+                    returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 2, 2, 0, 0, 0 };
                     break;
                 case 12:
-                    returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 2, 2, 0, 0, 0 };
+                    returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 2, 2, 0, 0, 0 };
                     break;
                 case 13:
-                    returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 0, 2, 2, 0, 0 };
+                    returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 0, 2, 2, 0, 0 };
                     break;
                 case 14:
-                    returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 0, 2, 2, 0, 0 };
+                    returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 0, 2, 2, 0, 0 };
                     break;
                 case 15:
-                    returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 0, 0, 2, 2, 0 };
+                    returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 0, 0, 2, 2, 0 };
                     break;
                 case 16:
-                    returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 0, 0, 2, 2, 0 };
+                    returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 0, 0, 2, 2, 0 };
                     break;
                 case 17:
-                    returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 0, 0, 0, 2, 2 };
+                    returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 0, 0, 0, 2, 2 };
                     break;
                 case 18:
-                    returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 0, 0, 0, 2, 2 };
+                    returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 0, 0, 0, 2, 2 };
                     break;
                 case 19:
-                    returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 0, 0, 0, 2, 2 };
+                    returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 0, 0, 0, 2, 2 };
                     break;
                 case 20:
-                    returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 0, 0, 0, 2, 2 };
+                    returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 0, 0, 0, 2, 2 };
                     break;
                 default:
-                    returned.spellSlotsMax = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                    returned.spellcasting.spellSlotsMax = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
                     break;
             }
             returned.getInfo();

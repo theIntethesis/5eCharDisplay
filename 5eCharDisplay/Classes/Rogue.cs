@@ -7,9 +7,11 @@ using System.IO;
 using YamlDotNet.Serialization;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Runtime.Versioning;
 
 namespace _5eCharDisplay.Classes
 {
+    [SupportedOSPlatform("windows")]
     internal class Rogue : charClass
     {
         public string Skill1 { set; get; }
@@ -130,63 +132,63 @@ namespace _5eCharDisplay.Classes
                     }
                     break;
                 case "Arcane Trickster":
-                    Spellcasting = true;
-                    SpellcastingAbilityModifier = SpellMod.INT;
+                    if (spellcasting == null)
+                        spellcasting = new Spellcasting();
                     switch (level)
                     {
                         case 3:
-                            spellSlotsMax = new int[] { 2, 0, 0, 0, 0, 0, 0, 0, 0 };
+                            spellcasting.spellSlotsMax = new int[] { 2, 0, 0, 0, 0, 0, 0, 0, 0 };
                             break;
                         case 4:
-                            spellSlotsMax = new int[] { 3, 0, 0, 0, 0, 0, 0, 0, 0 };
+                            spellcasting.spellSlotsMax = new int[] { 3, 0, 0, 0, 0, 0, 0, 0, 0 };
                             break;
                         case 5:
-                            spellSlotsMax = new int[] { 3, 0, 0, 0, 0, 0, 0, 0, 0 };
+                            spellcasting.spellSlotsMax = new int[] { 3, 0, 0, 0, 0, 0, 0, 0, 0 };
                             break;
                         case 6:
-                            spellSlotsMax = new int[] { 3, 0, 0, 0, 0, 0, 0, 0, 0 };
+                            spellcasting.spellSlotsMax = new int[] { 3, 0, 0, 0, 0, 0, 0, 0, 0 };
                             break;
                         case 7:
-                            spellSlotsMax = new int[] { 4, 2, 0, 0, 0, 0, 0, 0, 0 };
+                            spellcasting.spellSlotsMax = new int[] { 4, 2, 0, 0, 0, 0, 0, 0, 0 };
                             break;
                         case 8:
-                            spellSlotsMax = new int[] { 4, 2, 0, 0, 0, 0, 0, 0, 0 };
+                            spellcasting.spellSlotsMax = new int[] { 4, 2, 0, 0, 0, 0, 0, 0, 0 };
                             break;
                         case 9:
-                            spellSlotsMax = new int[] { 4, 2, 0, 0, 0, 0, 0, 0, 0 };
+                            spellcasting.spellSlotsMax = new int[] { 4, 2, 0, 0, 0, 0, 0, 0, 0 };
                             break;
                         case 10:
-                            spellSlotsMax = new int[] { 4, 3, 0, 0, 0, 0, 0, 0, 0 };
+                            spellcasting.spellSlotsMax = new int[] { 4, 3, 0, 0, 0, 0, 0, 0, 0 };
                             break;
                         case 11:
-                            spellSlotsMax = new int[] { 4, 3, 0, 0, 0, 0, 0, 0, 0 };
+                            spellcasting.spellSlotsMax = new int[] { 4, 3, 0, 0, 0, 0, 0, 0, 0 };
                             break;
                         case 12:
-                            spellSlotsMax = new int[] { 4, 3, 0, 0, 0, 0, 0, 0, 0 };
+                            spellcasting.spellSlotsMax = new int[] { 4, 3, 0, 0, 0, 0, 0, 0, 0 };
                             break;
                         case 13:
-                            spellSlotsMax = new int[] { 4, 3, 2, 0, 0, 0, 0, 0, 0 };
+                            spellcasting.spellSlotsMax = new int[] { 4, 3, 2, 0, 0, 0, 0, 0, 0 };
                             break;
                         case 14:
-                            spellSlotsMax = new int[] { 4, 3, 2, 0, 0, 0, 0, 0, 0 };
+                            spellcasting.spellSlotsMax = new int[] { 4, 3, 2, 0, 0, 0, 0, 0, 0 };
                             break;
                         case 15:
-                            spellSlotsMax = new int[] { 4, 3, 2, 0, 0, 0, 0, 0, 0 };
+                            spellcasting.spellSlotsMax = new int[] { 4, 3, 2, 0, 0, 0, 0, 0, 0 };
                             break;
                         case 16:
-                            spellSlotsMax = new int[] { 4, 3, 3, 0, 0, 0, 0, 0, 0 };
+                            spellcasting.spellSlotsMax = new int[] { 4, 3, 3, 0, 0, 0, 0, 0, 0 };
                             break;
                         case 17:
-                            spellSlotsMax = new int[] { 4, 3, 3, 0, 0, 0, 0, 0, 0 };
+                            spellcasting.spellSlotsMax = new int[] { 4, 3, 3, 0, 0, 0, 0, 0, 0 };
                             break;
                         case 18:
-                            spellSlotsMax = new int[] { 4, 3, 3, 0, 0, 0, 0, 0, 0 };
+                            spellcasting.spellSlotsMax = new int[] { 4, 3, 3, 0, 0, 0, 0, 0, 0 };
                             break;
                         case 19:
-                            spellSlotsMax = new int[] { 4, 3, 3, 1, 0, 0, 0, 0, 0 };
+                            spellcasting.spellSlotsMax = new int[] { 4, 3, 3, 1, 0, 0, 0, 0, 0 };
                             break;
                         case 20:
-                            spellSlotsMax = new int[] { 4, 3, 3, 1, 0, 0, 0, 0, 0 };
+                            spellcasting.spellSlotsMax = new int[] { 4, 3, 3, 1, 0, 0, 0, 0, 0 };
                             break;
                     }
                     label.Text += $"  - Spellcasting\n   - You gain the ability to cast spells.\n";
@@ -281,7 +283,6 @@ namespace _5eCharDisplay.Classes
             returned.skillProfs.Add(returned.Skill4);
             returned.expertise.Add(returned.Expertise1);
             returned.expertise.Add(returned.Expertise2);
-            returned.Spellcasting = false;
             returned.getInfo();
             return returned;
         }

@@ -33,7 +33,6 @@ namespace _5eCharDisplay.Classes
 			armorProfs = new List<string> {  };
 			weaponProfs = new List<string> { "Dagger", "Dart", "Sling", "Quarterstaff", "Light Crossbow" };
 			SavingProfs = [ "IntSave", "WisSave" ];
-			prepMethod = SpellPrepMethod.KnowSomePrepSome;
 			classname = ClassName.Wizard;
 		}
 		public static Wizard fromYAML(string fName, int[] modifiers, int lvl, int prof, string cname)
@@ -48,9 +47,6 @@ namespace _5eCharDisplay.Classes
 			}
 			returned.abilityModifiers = modifiers;
 			returned.charname = cname;
-			returned.SpellcastingAbilityModifier = SpellMod.INT;
-			returned.Spellcasting = true;
-			returned.SpellPrepLevel = lvl;
 			returned.level = lvl;
 			returned.proficiency = prof;
 			returned.HDrem = returned.level;
@@ -61,64 +57,64 @@ namespace _5eCharDisplay.Classes
 			switch (returned.level)
 			{
 				case 1:
-					returned.spellSlotsMax = new int[] { 2, 0, 0, 0, 0, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 2, 0, 0, 0, 0, 0, 0, 0, 0 };
 					break;
 				case 2:
-					returned.spellSlotsMax = new int[] { 3, 0, 0, 0, 0, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 3, 0, 0, 0, 0, 0, 0, 0, 0 };
 					break;
 				case 3:
-					returned.spellSlotsMax = new int[] { 4, 2, 0, 0, 0, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 4, 2, 0, 0, 0, 0, 0, 0, 0 };
 					break;
 				case 4:
-					returned.spellSlotsMax = new int[] { 4, 3, 0, 0, 0, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 4, 3, 0, 0, 0, 0, 0, 0, 0 };
 					break;
 				case 5:
-					returned.spellSlotsMax = new int[] { 4, 3, 2, 0, 0, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 4, 3, 2, 0, 0, 0, 0, 0, 0 };
 					break;
 				case 6:
-					returned.spellSlotsMax = new int[] { 4, 3, 3, 0, 0, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 4, 3, 3, 0, 0, 0, 0, 0, 0 };
 					break;
 				case 7:
-					returned.spellSlotsMax = new int[] { 4, 3, 2, 1, 0, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 4, 3, 2, 1, 0, 0, 0, 0, 0 };
 					break;
 				case 8:
-					returned.spellSlotsMax = new int[] { 4, 3, 3, 2, 0, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 4, 3, 3, 2, 0, 0, 0, 0, 0 };
 					break;
 				case 9:
-					returned.spellSlotsMax = new int[] { 4, 3, 3, 3, 1, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 4, 3, 3, 3, 1, 0, 0, 0, 0 };
 					break;
 				case 10:
-					returned.spellSlotsMax = new int[] { 4, 3, 3, 3, 2, 0, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 4, 3, 3, 3, 2, 0, 0, 0, 0 };
 					break;
 				case 11:
-					returned.spellSlotsMax = new int[] { 4, 3, 3, 3, 2, 1, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 4, 3, 3, 3, 2, 1, 0, 0, 0 };
 					break;
 				case 12:
-					returned.spellSlotsMax = new int[] { 4, 3, 3, 3, 2, 1, 0, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 4, 3, 3, 3, 2, 1, 0, 0, 0 };
 					break;
 				case 13:
-					returned.spellSlotsMax = new int[] { 4, 3, 3, 3, 2, 1, 1, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 4, 3, 3, 3, 2, 1, 1, 0, 0 };
 					break;
 				case 14:
-					returned.spellSlotsMax = new int[] { 4, 3, 3, 3, 2, 1, 1, 0, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 4, 3, 3, 3, 2, 1, 1, 0, 0 };
 					break;
 				case 15:
-					returned.spellSlotsMax = new int[] { 4, 3, 3, 3, 2, 1, 1, 1, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 4, 3, 3, 3, 2, 1, 1, 1, 0 };
 					break;
 				case 16:
-					returned.spellSlotsMax = new int[] { 4, 3, 3, 3, 2, 1, 1, 1, 0 };
+					returned.spellcasting.spellSlotsMax = new int[] { 4, 3, 3, 3, 2, 1, 1, 1, 0 };
 					break;
 				case 17:
-					returned.spellSlotsMax = new int[] { 4, 3, 3, 3, 2, 1, 1, 1, 1 };
+					returned.spellcasting.spellSlotsMax = new int[] { 4, 3, 3, 3, 2, 1, 1, 1, 1 };
 					break;
 				case 18:
-					returned.spellSlotsMax = new int[] { 4, 3, 3, 3, 2, 1, 1, 1, 1 };
+					returned.spellcasting.spellSlotsMax = new int[] { 4, 3, 3, 3, 2, 1, 1, 1, 1 };
 					break;
 				case 19:
-					returned.spellSlotsMax = new int[] { 4, 3, 3, 3, 2, 2, 1, 1, 1 };
+					returned.spellcasting.spellSlotsMax = new int[] { 4, 3, 3, 3, 2, 2, 1, 1, 1 };
 					break;
 				case 20:
-					returned.spellSlotsMax = new int[] { 4, 3, 3, 3, 2, 2, 2, 1, 1 };
+					returned.spellcasting.spellSlotsMax = new int[] { 4, 3, 3, 3, 2, 2, 2, 1, 1 };
 					break;
 			}
 			if (returned.FeatNames != null)
@@ -143,27 +139,9 @@ namespace _5eCharDisplay.Classes
 
 			return returned;
 		}
-		public override string[] getClassDetails(string name)
-		{
-			string[] classInfo = File.ReadAllLines($@".\Data\Characters\{name}\{name}Wizard.yaml");
-
-			// Store spells
-			string spells = "spellSlots: [";
-			for (int i = 0; i < 8; i++)
-				spells += $"{spellSlots[i]}, ";
-			spells += $"{spellSlots[8]}]";
-			classInfo[0] = spells;
-			classInfo[20] = $"BloodChannelerUsed: {BloodChannelerUsed}";
-
-			return classInfo;
-		}
 		internal override void shortRest(object sender, EventArgs e)
 		{
-			// Get classInfo
-			string[] classInfo = File.ReadAllLines($@".\Data\Characters\{charname}\{charname}Wizard.yaml");
-
 			// Reset Arcane Recovery
-			classInfo[17] = "ArcaneRecovery: false";
 			ArcaneRecovery = false;
 
 			foreach(var g in resetOnSR)
@@ -176,9 +154,11 @@ namespace _5eCharDisplay.Classes
 				if (HDrem > level) HDrem = level;
 			}
 
-			// Write classInfo
-			File.WriteAllLines($@".\Data\Characters\{charname}\{charname}Wizard.yaml", classInfo);
-		}
+            // Write classInfo
+            var serializer = new SerializerBuilder().Build();
+            var yaml = serializer.Serialize(this);
+            File.WriteAllText($@"./Data/Characters/{charname}/{charname}Wizard.yaml", yaml);
+        }
 		internal override void longRest(object sender, EventArgs e)
 		{
 			// Refresh Hit Dice
@@ -186,23 +166,20 @@ namespace _5eCharDisplay.Classes
 			if (ArcaneTradition == "Hematurgy") HDrem += proficiency;
 			if (HDrem > level) HDrem = level;
 
-			// Get classInfo
-			string[] classInfo = File.ReadAllLines($@".\Data\Characters\{charname}\{charname}Wizard.yaml");
-
 			// Reset Spell Slots
-			classInfo[0] = "spellSlots: [0, 0, 0, 0, 0, 0, 0, 0, 0]";
 			foreach (var box in spellSlotBoxes)
 			{
 				box.Checked = false;
 			}
 			for (int i = 0; i < 9; i++)
 			{
-				spellSlots[i] = 0;
+				spellcasting.spellSlots[i] = 0;
 			}
 
 			// Reset Arcane Recovery
-			classInfo[17] = "ArcaneRecovery: false";
+			ArcaneRecovery = false;
 
+			// Reset CheckBoxes
 			foreach (var g in resetOnSR)
 			{
 				g.Checked = false;
@@ -213,8 +190,10 @@ namespace _5eCharDisplay.Classes
 			}
 
 			// Write classInfo
-			File.WriteAllLines($@".\Data\Characters\{charname}\{charname}Wizard.yaml", classInfo);
-		}
+            var serializer = new SerializerBuilder().Build();
+            var yaml = serializer.Serialize(this);
+            File.WriteAllText($@"./Data/Characters/{charname}/{charname}Wizard.yaml", yaml);
+        }
 		public override List<GroupBox> getInfoBoxes()
 		{
 			var infoBoxes = new List<GroupBox>();

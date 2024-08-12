@@ -50,7 +50,7 @@ namespace _5eCharDisplay
 		internal Statistic charisma = new Statistic("Charisma");
 		public int proficiency;
 		public int tempHP = 0;
-		internal List<charClass> myClasses = new List<charClass>();
+		public List<charClass> myClasses { get; set; }
 		internal charRace myRace;
 		internal charBackground myBackground;
 		public List<Armor> wornArmor;
@@ -113,6 +113,9 @@ namespace _5eCharDisplay
 				return true;
 			return false;
         }
+		private static void addClass(string classString) {
+            
+        }
 
         public static Character fromYAML(string charName)
 		{
@@ -132,43 +135,53 @@ namespace _5eCharDisplay
 			int[] stats = { returned.strength.getMod(), returned.dexterity.getMod(), returned.constitution.getMod(), returned.intelligence.getMod(), returned.wisdom.getMod(), returned.charisma.getMod() };
 
 			returned.proficiency = (int)Math.Ceiling(returned.level.Sum() / 4.0) + 1;
+
+			if (returned.myClasses == null)
+            {
+                returned.myClasses = new();
+            }
 			for (int i = 0; i < returned.charClass.Count; i++)
 			{
-				switch (returned.charClass[i])
+				if(!returned.myClasses.Any(c => c.classname.ToString() == returned.charClass[i]))
 				{
-					case "Artificer":
-						break;
-					case "Bard":
-						break;
-					case "Barbarian":
-						break;
-					case "Cleric":
-						break;
-					case "Druid":
-						break;
-					case "Fighter":
-						break;
-					case "Magus":
-						returned.myClasses.Add(Magus.fromYAML($@".\Data\Characters\{returned.name}\{returned.name}Magus.yaml", stats, returned.level[i], returned.proficiency));
-						break;
-					case "Monk":
-						break;
-					case "Paladin":
-						returned.myClasses.Add(Paladin.fromYAML($@".\Data\Characters\{returned.name}\{returned.name}Paladin.yaml", stats, returned.level[i], returned.proficiency));
-						break;
-					case "Rogue":
-						returned.myClasses.Add(Rogue.fromYAML($@".\Data\Characters\{returned.name}\{returned.name}Rogue.yaml", stats, returned.level[i], returned.proficiency));
-						break;
-					case "Sorcerer":
-						break;
-					case "Warlock":
-						returned.myClasses.Add(Warlock.fromYAML($@"./Data\Characters\{returned.name}\{returned.name}Warlock.yaml", stats, returned.level[i], returned.proficiency));
-						break;
-					case "Wizard":
-						returned.myClasses.Add(Wizard.fromYAML($@"./Data\Characters\{returned.name}\{returned.name}Wizard.yaml", stats, returned.level[i], returned.proficiency, returned.name));
-						break;
-				}
+                    switch (returned.charClass[i])
+                    {
+                        case "Artificer":
+                            break;
+                        case "Bard":
+                            break;
+                        case "Barbarian":
+                            break;
+                        case "Cleric":
+                            break;
+                        case "Druid":
+                            break;
+                        case "Fighter":
+                            break;
+                        case "Magus":
+                            returned.myClasses.Add(Magus.fromYAML($@".\Data\Characters\{returned.name}\{returned.name}Magus.yaml", stats, returned.level[i], returned.proficiency));
+                            break;
+                        case "Monk":
+                            break;
+                        case "Paladin":
+                            returned.myClasses.Add(Paladin.fromYAML($@".\Data\Characters\{returned.name}\{returned.name}Paladin.yaml", stats, returned.level[i], returned.proficiency));
+                            break;
+                        case "Rogue":
+                            returned.myClasses.Add(Rogue.fromYAML($@".\Data\Characters\{returned.name}\{returned.name}Rogue.yaml", stats, returned.level[i], returned.proficiency));
+                            break;
+                        case "Sorcerer":
+                            break;
+                        case "Warlock":
+                            returned.myClasses.Add(Warlock.fromYAML($@"./Data\Characters\{returned.name}\{returned.name}Warlock.yaml", stats, returned.level[i], returned.proficiency));
+                            break;
+                        case "Wizard":
+                            returned.myClasses.Add(Wizard.fromYAML($@"./Data\Characters\{returned.name}\{returned.name}Wizard.yaml", stats, returned.level[i], returned.proficiency, returned.name));
+                            break;
+                    }
+                }
+				
 			}
+			
 
 			foreach(charClass c in returned.myClasses)
 			{
@@ -216,12 +229,11 @@ namespace _5eCharDisplay
 					returned.Spellcasting = true;
 					break;
 				}
-				if (c.Spellcasting)
+				if (c.spellcasting != null)
 				{
 					returned.Spellcasting = true;
 					break;
 				}
-
 			}
 
 			foreach (charClass c in returned.myClasses)
@@ -429,55 +441,55 @@ namespace _5eCharDisplay
 			returned.proficiency = (int)Math.Ceiling(returned.level.Sum() / 4.0) + 1;
 			foreach(var c in returned.myClasses)
 			{
-				if (c.Cantrips != null)
-					c.Cantrips.Sort();
+				if (c.spellcasting.Cantrips != null)
+					c.spellcasting.Cantrips.Sort();
 				else
-					c.Cantrips = new List<string>();
+					c.spellcasting.Cantrips = new List<string>();
 
-				if (c.FirstLevelSpells != null)
-					c.FirstLevelSpells.Sort();
+				if (c.spellcasting.FirstLevelSpells != null)
+					c.spellcasting.FirstLevelSpells.Sort();
 				else
-					c.FirstLevelSpells = new List<string>();
+					c.spellcasting.FirstLevelSpells = new List<string>();
 
-				if (c.SecondLevelSpells != null)
-					c.SecondLevelSpells.Sort();
+				if (c.spellcasting.SecondLevelSpells != null)
+					c.spellcasting.SecondLevelSpells.Sort();
 				else
-					c.SecondLevelSpells = new List<string>();
+					c.spellcasting.SecondLevelSpells = new List<string>();
 
-				if (c.ThirdLevelSpells != null)
-					c.ThirdLevelSpells.Sort();
+				if (c.spellcasting.ThirdLevelSpells != null)
+					c.spellcasting.ThirdLevelSpells.Sort();
 				else
-					c.ThirdLevelSpells = new List<string>();
+					c.spellcasting.ThirdLevelSpells = new List<string>();
 
-				if (c.FourthLevelSpells != null)
-					c.FourthLevelSpells.Sort();
+				if (c.spellcasting.FourthLevelSpells != null)
+					c.spellcasting.FourthLevelSpells.Sort();
 				else
-					c.FourthLevelSpells = new List<string>();
+					c.spellcasting.FourthLevelSpells = new List<string>();
 
-				if (c.FifthLevelSpells != null)
-					c.FifthLevelSpells.Sort();
+				if (c.spellcasting.FifthLevelSpells != null)
+					c.spellcasting.FifthLevelSpells.Sort();
 				else
-					c.FifthLevelSpells = new List<string>();
+					c.spellcasting.FifthLevelSpells = new List<string>();
 
-				if (c.SixthLevelSpells != null)
-					c.SixthLevelSpells.Sort();
+				if (c.spellcasting.SixthLevelSpells != null)
+					c.spellcasting.SixthLevelSpells.Sort();
 				else
-					c.SixthLevelSpells = new List<string>();
+					c.spellcasting.SixthLevelSpells = new List<string>();
 
-				if (c.SeventhLevelSpells != null)
-					c.SeventhLevelSpells.Sort();
+				if (c.spellcasting.SeventhLevelSpells != null)
+					c.spellcasting.SeventhLevelSpells.Sort();
 				else
-					c.SeventhLevelSpells = new List<string>();
+					c.spellcasting.SeventhLevelSpells = new List<string>();
 
-				if (c.EighthLevelSpells != null)
-					c.EighthLevelSpells.Sort();
+				if (c.spellcasting.EighthLevelSpells != null)
+					c.spellcasting.EighthLevelSpells.Sort();
 				else
-					c.EighthLevelSpells = new List<string>();
+					c.spellcasting.EighthLevelSpells = new List<string>();
 
-				if (c.NinthLevelSpells != null)
-					c.NinthLevelSpells.Sort();
+				if (c.spellcasting.NinthLevelSpells != null)
+					c.spellcasting.NinthLevelSpells.Sort();
 				else
-					c.NinthLevelSpells = new List<string>();
+					c.spellcasting.NinthLevelSpells = new List<string>();
 
 			}
 

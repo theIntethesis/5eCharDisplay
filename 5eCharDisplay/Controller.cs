@@ -360,25 +360,25 @@ namespace _5eCharDisplay
 
 			return sb.ToString();
 		}
-		static internal (string, string) SPage_SaveSpellSlots(Character player, int classnumber)
+		static internal (string, string) SPage_SaveSpellSlots(Character player, charClass cClass)
 		{
 			StringBuilder spells = new StringBuilder();
 			spells.Append("spellSlots: [");
 			for (int i = 0; i < 8; i++)
 			{
-				spells.Append($"{player.myClasses[classnumber].spellSlots[i]}, ");
+				spells.Append($"{cClass.spellcasting.spellSlots[i]}, ");
 			}
-			spells.Append($"{player.myClasses[classnumber].spellSlots[8]}]");
+			spells.Append($"{cClass.spellcasting.spellSlots[8]}]");
 			string s1 = spells.ToString();
 			spells.Clear();
 			spells.Append("PreparedSpells: [");
-			if (player.myClasses[classnumber].prepMethod != charClass.SpellPrepMethod.KnowSomePrepNone)
+			if (cClass.spellcasting.prepMethod != Spellcasting.SpellPrepMethod.KnowSomePrepNone)
 			{
-				for (int i = 0; i < player.myClasses[classnumber].spellcasting.PreparedSpells.Count; i++)
+				for (int i = 0; i < cClass.spellcasting.PreparedSpells.Count; i++)
 				{
 					if (i > 0)
 						spells.Append(", ");
-					spells.Append($"\"{player.myClasses[classnumber].spellcasting.PreparedSpells[i]}\"");
+					spells.Append($"\"{cClass.spellcasting.PreparedSpells[i]}\"");
 				}
 			}
 			spells.Append("]");

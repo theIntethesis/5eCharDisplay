@@ -8,7 +8,7 @@ using YamlDotNet.Serialization;
 
 namespace _5eCharDisplay
 {
-	internal class Statistic
+	public class Statistic
 	{
 		public double value { set; get; }
 		public string name { set; get; }
