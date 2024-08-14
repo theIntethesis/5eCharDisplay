@@ -13,7 +13,20 @@ using System.Windows.Forms;
 namespace _5eCharDisplay
 {
     [SupportedOSPlatform("windows")]
-	public class Character
+	public class SkillModifierArgs
+	{
+		public SkillModifierArgs(string text, Statistic s = null, int b = 0)
+        {
+            skill = text;
+            Stat = s;
+            bonus = b;
+        }
+        public string skill { get; }
+		public Statistic Stat { get; }
+		public int bonus { get; }
+    }
+    [SupportedOSPlatform("windows")]
+    public class Character
     {
 		#region Set / Get Constructors
 		public string name { get; set; }
@@ -55,6 +68,13 @@ namespace _5eCharDisplay
 		internal charBackground myBackground;
 		public List<Armor> wornArmor;
 		public List<Weapon> equippedWeapons;
+		public delegate int SkillModifierHandler(object sender, SkillModifierArgs e);
+		public event SkillModifierHandler GetSkillMod;
+		internal int GetSkillModifier(string skillName, Statistic stat)
+		{
+			var i = GetSkillMod?.Invoke(this, new SkillModifierArgs(skillName, stat));
+			return i.Value;
+		}
 
 		public bool Spellcasting = false;
 		public string getRace()
@@ -179,9 +199,7 @@ namespace _5eCharDisplay
                             break;
                     }
                 }
-				
 			}
-			
 
 			foreach(charClass c in returned.myClasses)
 			{
@@ -402,10 +420,9 @@ namespace _5eCharDisplay
 					{
 						statBoosts[i] += f.asiboosts[i];
 					}
+					returned.GetSkillMod += f.SkillModifier;
 				}
 			}
-
-
 			returned.strength.setValue(returned.baseStr + returned.myRace.getStrBoost() + statBoosts[0]);
 			returned.dexterity.setValue(returned.baseDex + returned.myRace.getDexBoost() + statBoosts[1]);
 			returned.constitution.setValue(returned.baseCon + returned.myRace.getConBoost() + statBoosts[2]);
@@ -495,6 +512,22 @@ namespace _5eCharDisplay
 
 			returned.wornArmor = Armor.listFromYaml($@"./Data/Characters/{returned.name}/{returned.name}Armor.yaml");
 			returned.equippedWeapons = Weapon.listFromYaml($@"./Data/Characters/{returned.name}/{returned.name}Weapons.yaml");
+
+			returned.GetSkillMod += (s, e) =>
+			{
+				int total = 0;
+				var C = s as Character;
+				if (C.expertise.Contains(e.skill))
+				{
+					total += C.proficiency * 2;
+				}
+				else if(C.skillProf.Contains(e.skill))
+				{
+					total += C.proficiency;
+				}
+				total += e.Stat.getMod();
+				return total;
+			};
 
 			return returned;
 		}

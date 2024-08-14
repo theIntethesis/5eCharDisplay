@@ -168,35 +168,35 @@ namespace _5eCharDisplay
             if (!player.Spellcasting)
 				SpellcastingToggle.Hide();
 
-			(StrSaveProf.Checked, StrSaveNum.Text) = Controller.CPage_GetSkillProfs(player, "StrSave", Character.Stat.Strength);
-			(DexSaveProf.Checked, DexSaveNum.Text) = Controller.CPage_GetSkillProfs(player, "DexSave", Character.Stat.Dexterity);
-			(ConSaveProf.Checked, ConSaveNum.Text) = Controller.CPage_GetSkillProfs(player, "ConSave", Character.Stat.Constitution);
-			(IntSaveProf.Checked, IntSaveNum.Text) = Controller.CPage_GetSkillProfs(player, "IntSave", Character.Stat.Intelligence);
-			(WisSaveProf.Checked, WisSaveNum.Text) = Controller.CPage_GetSkillProfs(player, "WisSave", Character.Stat.Wisdom);
-			(ChaSaveProf.Checked, ChaSaveNum.Text) = Controller.CPage_GetSkillProfs(player, "ChaSave", Character.Stat.Charisma);
+			(StrSaveProf.Checked, StrSaveNum.Text) = Controller.CPage_GetSkillProfs(player, "StrSave", player.strength);
+			(DexSaveProf.Checked, DexSaveNum.Text) = Controller.CPage_GetSkillProfs(player, "DexSave", player.dexterity);
+			(ConSaveProf.Checked, ConSaveNum.Text) = Controller.CPage_GetSkillProfs(player, "ConSave", player.constitution);
+			(IntSaveProf.Checked, IntSaveNum.Text) = Controller.CPage_GetSkillProfs(player, "IntSave", player.intelligence);
+			(WisSaveProf.Checked, WisSaveNum.Text) = Controller.CPage_GetSkillProfs(player, "WisSave", player.wisdom);
+			(ChaSaveProf.Checked, ChaSaveNum.Text) = Controller.CPage_GetSkillProfs(player, "ChaSave", player.charisma);
 
 
-			(AcroProf.Checked, AcroNum.Text) = Controller.CPage_GetSkillProfs(player, "Acrobatics", Character.Stat.Dexterity);
-			(AHandProf.Checked, AHandNum.Text) = Controller.CPage_GetSkillProfs(player, "Animal Handling", Character.Stat.Wisdom);
-			(ArcanaProf.Checked, ArcanaNum.Text) = Controller.CPage_GetSkillProfs(player, "Arcana", Character.Stat.Intelligence);
-			(AthProf.Checked, AthNum.Text) = Controller.CPage_GetSkillProfs(player, "Athletics", Character.Stat.Strength);
-			(DecepProf.Checked, DecepNum.Text) = Controller.CPage_GetSkillProfs(player, "Deception", Character.Stat.Charisma);
-			(HistProf.Checked, HistNum.Text) = Controller.CPage_GetSkillProfs(player, "History", Character.Stat.Intelligence);
-			(InsightProf.Checked, InsightNum.Text) = Controller.CPage_GetSkillProfs(player, "Insight", Character.Stat.Wisdom);
-			PassInsNum.Text = Controller.CPage_GetPassives(player, "Insight", Character.Stat.Wisdom);
-			(IntimProf.Checked, IntimNum.Text) = Controller.CPage_GetSkillProfs(player, "Intimidation", Character.Stat.Charisma);
-			(InvestProf.Checked, InvestNum.Text) = Controller.CPage_GetSkillProfs(player, "Investigation", Character.Stat.Intelligence);
-			(MedProf.Checked, MedNum.Text) = Controller.CPage_GetSkillProfs(player, "Medicine", Character.Stat.Wisdom);
-			(NatProf.Checked, NatNum.Text) = Controller.CPage_GetSkillProfs(player, "Nature", Character.Stat.Intelligence);
-			(PercepProf.Checked, PercepNum.Text) = Controller.CPage_GetSkillProfs(player, "Perception", Character.Stat.Wisdom);
-			PassPerNum.Text = Controller.CPage_GetPassives(player, "Perception", Character.Stat.Wisdom);
-			(PerfProf.Checked, PerfNum.Text) = Controller.CPage_GetSkillProfs(player, "Performance", Character.Stat.Charisma);
-			(PersProf.Checked, PersNum.Text) = Controller.CPage_GetSkillProfs(player, "Persuasion", Character.Stat.Charisma);
-			(RelProf.Checked, RelNum.Text) = Controller.CPage_GetSkillProfs(player, "Religion", Character.Stat.Intelligence);
-			(SleProf.Checked, SleNum.Text) = Controller.CPage_GetSkillProfs(player, "Sleight of Hand", Character.Stat.Dexterity);
-			(SteProf.Checked, SteNum.Text) = Controller.CPage_GetSkillProfs(player, "Stealth", Character.Stat.Dexterity);
-			(SurProf.Checked, SurNum.Text) = Controller.CPage_GetSkillProfs(player, "Survival", Character.Stat.Wisdom);
-			InitNum.Text = Controller.CPage_GetSkillProfs(player, "Initiative", Character.Stat.Dexterity).Item2;
+			(AcroProf.Checked, AcroNum.Text) = Controller.CPage_GetSkillProfs(player, "Acrobatics", player.dexterity);
+			(AHandProf.Checked, AHandNum.Text) = Controller.CPage_GetSkillProfs(player, "Animal Handling", player.wisdom);
+			(ArcanaProf.Checked, ArcanaNum.Text) = Controller.CPage_GetSkillProfs(player, "Arcana", player.intelligence);
+			(AthProf.Checked, AthNum.Text) = Controller.CPage_GetSkillProfs(player, "Athletics", player.strength);
+			(DecepProf.Checked, DecepNum.Text) = Controller.CPage_GetSkillProfs(player, "Deception", player.charisma);
+			(HistProf.Checked, HistNum.Text) = Controller.CPage_GetSkillProfs(player, "History", player.intelligence);
+			(InsightProf.Checked, InsightNum.Text) = Controller.CPage_GetSkillProfs(player, "Insight", player.wisdom);
+			PassInsNum.Text = Controller.CPage_GetPassives(player, "Insight", player.wisdom);
+			(IntimProf.Checked, IntimNum.Text) = Controller.CPage_GetSkillProfs(player, "Intimidation", player.charisma);
+			(InvestProf.Checked, InvestNum.Text) = Controller.CPage_GetSkillProfs(player, "Investigation", player.intelligence);
+			(MedProf.Checked, MedNum.Text) = Controller.CPage_GetSkillProfs(player, "Medicine", player.wisdom);
+			(NatProf.Checked, NatNum.Text) = Controller.CPage_GetSkillProfs(player, "Nature", player.intelligence);
+			(PercepProf.Checked, PercepNum.Text) = Controller.CPage_GetSkillProfs(player, "Perception", player.wisdom);
+			PassPerNum.Text = Controller.CPage_GetPassives(player, "Perception", player.wisdom);
+			(PerfProf.Checked, PerfNum.Text) = Controller.CPage_GetSkillProfs(player, "Performance", player.charisma);
+			(PersProf.Checked, PersNum.Text) = Controller.CPage_GetSkillProfs(player, "Persuasion", player.charisma);
+			(RelProf.Checked, RelNum.Text) = Controller.CPage_GetSkillProfs(player, "Religion", player.intelligence);
+			(SleProf.Checked, SleNum.Text) = Controller.CPage_GetSkillProfs(player, "Sleight of Hand", player.dexterity);
+			(SteProf.Checked, SteNum.Text) = Controller.CPage_GetSkillProfs(player, "Stealth", player.dexterity);
+			(SurProf.Checked, SurNum.Text) = Controller.CPage_GetSkillProfs(player, "Survival", player.wisdom);
+			InitNum.Text = Controller.CPage_GetSkillProfs(player, "Initiative", player.dexterity).Item2;
 
 
 			Width -= 180;

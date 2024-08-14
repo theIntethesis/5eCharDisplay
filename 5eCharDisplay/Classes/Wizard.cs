@@ -52,7 +52,7 @@ namespace _5eCharDisplay.Classes
 			returned.HDrem = returned.level;
 			returned.skillProfs.Add(returned.Skill1);
 			returned.skillProfs.Add(returned.Skill2);
-
+			returned.spellcasting.spellPrepLevel = returned.level;
 
 			switch (returned.level)
 			{

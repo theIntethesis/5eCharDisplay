@@ -21,7 +21,20 @@ namespace _5eCharDisplay
         public List<string> WeaponProfAdd { get; set; }
         public Armor ArmorAdd { get; set; }
         public Weapon WeaponAdd { get; set; }
-        public (string, int) SkillBonus { get; set; }
+        public List<(string, int)> SkillBonus { get; set; }
+        public int SkillModifier(object sender, SkillModifierArgs e){
+            if (SkillBonus == null)
+                return 0;
+            foreach(var sb in SkillBonus)
+            {
+                if (sb != (null, 0))
+                {
+                    if (e.skill == sb.Item1)
+                        return sb.Item2;
+                }
+            }
+            return 0;
+        }
 
         public static Feat FromYAML(string fName, string asipick = "")
         {
@@ -56,7 +69,6 @@ namespace _5eCharDisplay
                         returned.asiboosts[5] = boost;
                 }
             }
-
             return returned;
         }
 

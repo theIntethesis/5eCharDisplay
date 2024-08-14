@@ -811,10 +811,7 @@ namespace _5eCharDisplay
 		{
             var serializer = new YamlDotNet.Serialization.SerializerBuilder().Build();
             var yaml = serializer.Serialize(cClass);
-            File.WriteAllText($@"./Data/Characters/{player.name}/{player.name}{cClass.classname}.yaml", yaml);/*
-            string[] classInfo = File.ReadAllLines($@".\Data\Characters\{player.name}\{player.name}{cClass.classname}.yaml");
-			(classInfo[0], classInfo[1]) = Controller.SPage_SaveSpellSlots(player, cClass);
-			File.WriteAllLines($@".\Data\Characters\{player.name}\{player.name}{cClass.classname}.yaml", classInfo);*/
+            File.WriteAllText($@"./Data/Characters/{player.name}/{player.name}{cClass.classname}.yaml", yaml);
 		}
 	}
 }

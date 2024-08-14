@@ -22,20 +22,16 @@ namespace _5eCharDisplay
 		static void WriteFeats()
 		{
 			Feat feat = new Feat();
-			feat.name = "Polearm Master";
-			feat.WeaponAdd = new();
-			feat.WeaponAdd.Name = "Polearm Master Attack";
-			feat.WeaponAdd.DamageDie = new();
-			feat.WeaponAdd.DamageDie.Add(new Die(1, 4));
-			feat.WeaponAdd.DamageType = new();
-			feat.WeaponAdd.DamageType.Add("Bludgeoning");
-			feat.WeaponAdd.Properties = new();
-			feat.WeaponAdd.Properties.Add("Versatile");
-			feat.description = "When you take the Attack action and attack with only a glaive, halberd, quarterstaff, or spear, you can use a bonus action to make a melee attack with the opposite end of the weapon. This attack uses the same ability modifier as the primary attack. The weapon's damage die for this attack is a d4, and it deals bludgeoning damage.\n\nWhile you are wielding a glaive, halberd, pike, quarterstaff, or spear, other creatures provoke an opportunity attack from you when they enter the reach you have with that weapon.";
+			feat.name = "Observant";
+			feat.description = "Increase your Intelligence or Wisdom score by 1, to a maximum of 20.\n\nIf you can see a creature's mouth while it is speaking a language you understand, you can interpret what it's saying by reading its lips.\n\nYou have a +5 bonus to your passive Wisdom (Perception) and passive Intelligence (Investigation) scores.";
 			feat.asiboosts = [0, 0, 0, 0, 0, 0];
+			feat.SkillBonus = new();
+			var i = ("Perception", 5);
+			feat.SkillBonus.Add(i);
+			i = ("Investigation", 5);
+            feat.SkillBonus.Add(i);
 
-
-			var serializer = new YamlDotNet.Serialization.SerializerBuilder().Build();
+            var serializer = new YamlDotNet.Serialization.SerializerBuilder().Build();
 			var yaml = serializer.Serialize(feat);
 			File.WriteAllText($@"./Data/Feats/{feat.name}.yaml", yaml);
 		}
