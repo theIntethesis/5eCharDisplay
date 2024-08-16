@@ -1,0 +1,13 @@
+name: Crossbow Expert
+description: >-
+  Thanks to extensive practice with the crossbow, you gain the following benefits:
+  	- You ignore the loading property of crossbows with which you are proficient.
+  	- Being within 5 feet of a hostile creature doesn't impose disadvantage on your ranged attack rolls.
+  	- When you use the attack action and attack with a one-handed weapon, you can use a bonus action to attack with a hand crossbow you are holding.
+asiboosts:
+- 0
+- 0
+- 0
+- 0
+- 0
+- 0

@@ -14,6 +14,7 @@ namespace _5eCharDisplay
     public class Feat
     {
         public string name { set; get; }
+        public string prerequisite { set; get; }
         public string description { set; get; }
         public int[] asiboosts { get; set; }
         public int addSpeed { get; set; }
@@ -21,19 +22,16 @@ namespace _5eCharDisplay
         public List<string> WeaponProfAdd { get; set; }
         public Armor ArmorAdd { get; set; }
         public Weapon WeaponAdd { get; set; }
-        public List<(string, int)> SkillBonus { get; set; }
-        public int SkillModifier(object sender, SkillModifierArgs e){
+        public Dictionary<string, int> SkillBonus { get; set; }
+        public void SkillModifier(object sender, SkillModifierArgs e){
             if (SkillBonus == null)
-                return 0;
+                return;
             foreach(var sb in SkillBonus)
             {
-                if (sb != (null, 0))
-                {
-                    if (e.skill == sb.Item1)
-                        return sb.Item2;
-                }
+                if(e.skill == sb.Key)
+                    e.ret += sb.Value;
             }
-            return 0;
+            return;
         }
 
         public static Feat FromYAML(string fName, string asipick = "")
@@ -56,17 +54,17 @@ namespace _5eCharDisplay
                     string matched = match.ToString();
                     int boost = int.Parse(match.Groups[2].Value);
                     if (matched.Contains("STR"))
-                        returned.asiboosts[0] = boost;
+                        returned.asiboosts[0] += boost;
                     if (matched.Contains("DEX"))
-                        returned.asiboosts[1] = boost;
+                        returned.asiboosts[1] += boost;
                     if (matched.Contains("CON"))
-                        returned.asiboosts[2] = boost;
+                        returned.asiboosts[2] += boost;
                     if (matched.Contains("INT"))
-                        returned.asiboosts[3] = boost;
+                        returned.asiboosts[3] += boost;
                     if (matched.Contains("WIS"))
-                        returned.asiboosts[4] = boost;
+                        returned.asiboosts[4] += boost;
                     if (matched.Contains("CHA"))
-                        returned.asiboosts[5] = boost;
+                        returned.asiboosts[5] += boost;
                 }
             }
             return returned;

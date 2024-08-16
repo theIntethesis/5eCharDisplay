@@ -194,9 +194,10 @@ namespace _5eCharDisplay
 		static internal string CPage_GetPassives(Character player, string prof, Statistic stat)
 		{
             int modifier = player.GetSkillModifier(prof, stat);
-
+			/*
             if ((prof == "Investigation" || prof == "Perception") && player.hasFeat("Observant"))
 				modifier += 5;
+			*/
 
 			return $"{modifier + 10}";
 		}

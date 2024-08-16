@@ -121,17 +121,10 @@ namespace _5eCharDisplay.Classes
 			{
 				if (returned.FeatNames.Count != 0)
 				{
-					int i = 0;
-					foreach (string s in returned.FeatNames)
+					for (int i = 0; i < returned.FeatNames.Count; i++)
 					{
-						if (s == "Ability Score Increase")
-						{
-							returned.featList.Add(Feat.FromYAML(s, returned.ASIChoices[i]));
-							i++;
-						}
-						else
-							returned.featList.Add(Feat.FromYAML(s));
-					}
+						returned.featList.Add(Feat.FromYAML(returned.FeatNames[i], returned.ASIChoices[i]));
+                    }
 				}
 			}
 

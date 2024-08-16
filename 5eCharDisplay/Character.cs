@@ -24,6 +24,7 @@ namespace _5eCharDisplay
         public string skill { get; }
 		public Statistic Stat { get; }
 		public int bonus { get; }
+		public int ret = 0;
     }
     [SupportedOSPlatform("windows")]
     public class Character
@@ -68,12 +69,13 @@ namespace _5eCharDisplay
 		internal charBackground myBackground;
 		public List<Armor> wornArmor;
 		public List<Weapon> equippedWeapons;
-		public delegate int SkillModifierHandler(object sender, SkillModifierArgs e);
+		public delegate void SkillModifierHandler(object sender, SkillModifierArgs e);
 		public event SkillModifierHandler GetSkillMod;
 		internal int GetSkillModifier(string skillName, Statistic stat)
 		{
-			var i = GetSkillMod?.Invoke(this, new SkillModifierArgs(skillName, stat));
-			return i.Value;
+			var e = new SkillModifierArgs(skillName, stat);
+            GetSkillMod.Invoke(this, e);
+			return e.ret;
 		}
 
 		public bool Spellcasting = false;
@@ -526,7 +528,7 @@ namespace _5eCharDisplay
 					total += C.proficiency;
 				}
 				total += e.Stat.getMod();
-				return total;
+				e.ret += total;
 			};
 
 			return returned;

@@ -22,14 +22,10 @@ namespace _5eCharDisplay
 		static void WriteFeats()
 		{
 			Feat feat = new Feat();
-			feat.name = "Observant";
-			feat.description = "Increase your Intelligence or Wisdom score by 1, to a maximum of 20.\n\nIf you can see a creature's mouth while it is speaking a language you understand, you can interpret what it's saying by reading its lips.\n\nYou have a +5 bonus to your passive Wisdom (Perception) and passive Intelligence (Investigation) scores.";
+			feat.name = "Healer";
+			//feat.prerequisite = "";
+			feat.description = "You are an able physician, allowing you to mend wounds quickly and get your allies back in the fight. You gain the following benefits:\n\t- When you use a healer's kit to stabilize a dying creature, that creature also regains 1 hit point.\n\t- As an action, you can spend one use of a healer's kit to tend to a creature and restore 1d6 + 4 hit points to it, plus additional hit points equal to the creature's maximum number of Hit Dice. The creature can't regain hit points from this feat again until it finishes a short or long rest.";
 			feat.asiboosts = [0, 0, 0, 0, 0, 0];
-			feat.SkillBonus = new();
-			var i = ("Perception", 5);
-			feat.SkillBonus.Add(i);
-			i = ("Investigation", 5);
-            feat.SkillBonus.Add(i);
 
             var serializer = new YamlDotNet.Serialization.SerializerBuilder().Build();
 			var yaml = serializer.Serialize(feat);
@@ -57,6 +53,8 @@ namespace _5eCharDisplay
         }
 		static void Main()
 		{
+			WriteFeats();
+			return;
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new CharacterSelect());

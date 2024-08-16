@@ -15,5 +15,5 @@ asiboosts:
 - 0
 - 0
 SkillBonus:
-- {}
-- {}
+  Perception: 5
+  Investigation: 5

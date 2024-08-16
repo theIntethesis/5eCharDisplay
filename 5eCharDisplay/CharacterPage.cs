@@ -338,11 +338,12 @@ namespace _5eCharDisplay
 				if (c.getHitDie().Equals(die))
 				{
 					int rem = c.affectHD(-1);
-					int healing = die.roll();
+					int healing = die.roll() + player.constitution.getMod();
+
 					if (player.hasFeat("Durable"))
-						if (healing == 1)
-							healing = 2;
-					player.affectHitPoints(healing + player.constitution.getMod());
+						healing = Math.Max(healing, Math.Max(player.constitution.getMod() * 2, 2));
+
+					player.affectHitPoints(healing);
 					HPCurrent.Text = player.hitPoints.ToString();
 					labelText.Text = $"{rem}d{die.getSides()}";
 					break;
