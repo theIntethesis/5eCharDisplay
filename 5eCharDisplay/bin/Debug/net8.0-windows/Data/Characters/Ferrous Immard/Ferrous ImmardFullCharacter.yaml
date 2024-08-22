@@ -83,10 +83,9 @@ myClasses:
   - ''
   FeatNames:
   - Ability Score Increase
-  - Dual Wielder
   ASIChoices:
   - INT1CHA1
-  - ''
+  - INT1
   spellcasting:
     prepMethod: KnowSomePrepSome
     Cantrips:
@@ -94,7 +93,16 @@ myClasses:
     - Light
     - Message
     - Shocking Grasp
-    PreparedSpells: []
+    PreparedSpells:
+    - Absorb Elements
+    - Blood Transfusion
+    - Magic Missile
+    - Shield
+    - Silvery Barbs
+    - Counterspell
+    - Shatter
+    - Galder's Tower
+    - Tasha's Hideous Laughter
     FirstLevelSpells:
     - Absorb Elements
     - Blood Transfusion
@@ -149,3 +157,4 @@ myClasses:
     - 0
     - 0
     - 0
+    spellPrepLevel: 6

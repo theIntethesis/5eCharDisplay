@@ -22,26 +22,14 @@ namespace _5eCharDisplay
 		static void WriteFeats()
 		{
 			Feat feat = new Feat();
-			feat.name = "Healer";
-			//feat.prerequisite = "";
-			feat.description = "You are an able physician, allowing you to mend wounds quickly and get your allies back in the fight. You gain the following benefits:\n\t- When you use a healer's kit to stabilize a dying creature, that creature also regains 1 hit point.\n\t- As an action, you can spend one use of a healer's kit to tend to a creature and restore 1d6 + 4 hit points to it, plus additional hit points equal to the creature's maximum number of Hit Dice. The creature can't regain hit points from this feat again until it finishes a short or long rest.";
+			feat.name = "Inspiring Leader";
+			feat.prerequisite = "Charisma 13 or higher";
+			feat.description = "You can spend 10 minutes inspiring your companions, shoring up their resolve to fight. When you do, choose up to six friendly creatures (which can include yourself) within 30 feet of you who can see or hear you and who can understand you. Each creature can gain temporary hit points equal to your level plus your Charisma modifier. A creature can't gain temporary hit points from this feat again until it has finished a short or long rest.";
 			feat.asiboosts = [0, 0, 0, 0, 0, 0];
 
             var serializer = new YamlDotNet.Serialization.SerializerBuilder().Build();
 			var yaml = serializer.Serialize(feat);
 			File.WriteAllText($@"./Data/Feats/{feat.name}.yaml", yaml);
-		}
-		static void MoveToNewSpellcasting()
-		{
-			Character Ferrous = Character.fromYAML("Arkheth Phac");
-			Spellcasting newlock = new Spellcasting();
-			charClass oldlock = Ferrous.myClasses.Find(c => c.classname == charClass.ClassName.Warlock);
-
-			Ferrous.myClasses.Find(c => c.classname == charClass.ClassName.Warlock).spellcasting = newlock;
-			var war = Ferrous.myClasses.Find(c => c.classname == charClass.ClassName.Warlock);
-			var serializer = new YamlDotNet.Serialization.SerializerBuilder().Build();
-			var yaml = serializer.Serialize(war);
-			File.WriteAllText($@"./Data/Characters/{Ferrous.name}/{Ferrous.name}Warlock.yaml", yaml);
 		}
 		static void miscFunction()
 		{

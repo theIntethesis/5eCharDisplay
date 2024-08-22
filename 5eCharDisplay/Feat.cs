@@ -21,6 +21,7 @@ namespace _5eCharDisplay
         public List<string> SkillProfAdd { get; set; }
         public List<string> WeaponProfAdd { get; set; }
         public Armor ArmorAdd { get; set; }
+        public List<string> ArmorProficiency { set; get; }
         public Weapon WeaponAdd { get; set; }
         public Dictionary<string, int> SkillBonus { get; set; }
         public void SkillModifier(object sender, SkillModifierArgs e){
